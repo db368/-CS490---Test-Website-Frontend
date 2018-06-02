@@ -17,18 +17,61 @@ div.examquestions {
     background-color: pink;
     height:75%;
 }
+th, td{
+    border:1px solid;
+    padding: 8px;
+}
+
+tr:nth-child(even){
+    background-color:#FFFFFF;
+    padding: 16px;
+}
+
 </style>
 </head>
 <body>
     <div class="examquestions">
     <?php
+        //This will eventually be replaced with a curl post to the database for all exam names
         $examquestions = array(); //Time to pupulate this with dumb stuff
-    for($i=0; $i<100; $i++){
-        array_push($examquestions, 'Exam <i> '. bin2hex(random_bytes(rand(5,10)))) . '</i>';
+        $examids = array();
+        $diffs = array();
+        $tas = 100; //Test Array Size
+        $scores = array();
+
+    for($i=0; $i<$tas; $i++){
+        array_push($examquestions, 'Exam '. bin2hex(random_bytes(rand(5, 10))))  ;
+        array_push($examids, $i);
+        $r = rand(0, 2);
+        switch ($r){
+        case 1:
+            array_push($diffs, "Easy");
+            break;
+        case 2:
+            array_push($diffs, "Medium");
+            break;
+        case 3:
+            array_push($diffs, "Hard");
+            break;
+        default:
+                array_push($diffs, "UV"); //Dig the prowess!
+        }
+        array_push($scores, rand(1, 20));
     }
-    foreach ($examquestions as $exam){
-        echo $exam . "<br>";
+    echo '<table style="width:100%">';
+    echo '<form action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php">';
+    echo '<tr> <th> Remove </th> <th> Question </th> <th> Difficulty </th> <th> Score </th> </tr>';
+    for ($i=0; $i<$tas; $i++){
+        $cid = array_pop($examids); // This is the only variable used twice
+        echo '<tr>';
+        echo '<td> <input type="checkbox" name="qid" value="'. $cid . '"> </td>';
+        echo '<td>'. array_pop($examquestions) . '</td>';
+        echo '<td> ' . array_pop($diffs) . '</td>';
+        echo '<td> <input type="number" name="score" value="'. array_pop($scores) . '"></td>';
+        echo '</tr>';
     }
+    echo "</form>";
+    echo "</table>";
 ?>
     </div>
 
