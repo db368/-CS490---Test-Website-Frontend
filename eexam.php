@@ -40,7 +40,7 @@ tr:nth-child(even){
         $scores = array();
 
     for($i=0; $i<$tas; $i++){
-        array_push($examquestions, 'Exam '. bin2hex(random_bytes(rand(5, 10))))  ;
+        array_push($examquestions, 'Exam '. rand(1000, 9999));
         array_push($examids, $i);
         $r = rand(0, 2);
         switch ($r){
