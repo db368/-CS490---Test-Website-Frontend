@@ -33,7 +33,7 @@ tr:nth-child(even){
     <div class="examquestions">
     <?php
         //This will eventually be replaced with a curl post to the database for all exam names
-        $examquestions = array(); //Time to pupulate this with dumb stuff
+        $examquestions = array(); //Time to pupulate this with test stuff
         $examids = array();
         $diffs = array();
         $tas = 100; //Test Array Size
@@ -44,13 +44,13 @@ tr:nth-child(even){
         array_push($examids, $i);
         $r = rand(0, 2);
         switch ($r){
-        case 1:
+        case 0:
             array_push($diffs, "Easy");
             break;
-        case 2:
+        case 1:
             array_push($diffs, "Medium");
             break;
-        case 3:
+        case 2:
             array_push($diffs, "Hard");
             break;
         default:
@@ -59,15 +59,18 @@ tr:nth-child(even){
         array_push($scores, rand(1, 20));
     }
     echo '<table style="width:100%">';
-    echo '<form method="post" action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php">';
-    echo '<tr> <th> Remove </th> <th> Question </th> <th> Difficulty </th> <th> Score </th> </tr>';
+    echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
     for ($i=0; $i<$tas; $i++){
+        echo '<form method="post" action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php">';
         $cid = array_pop($examids); // This is the only variable used twice
         echo '<tr>';
-        echo '<td> <input type="checkbox" name="qid" value="'. $cid . '"> </td>';
+        echo '<input type="hidden" name="qid" value="'. $cid . '">';
         echo '<td>'. array_pop($examquestions) . '</td>';
         echo '<td> ' . array_pop($diffs) . '</td>';
         echo '<td> <input type="number" name="score" value="'. array_pop($scores) . '"></td>';
+        echo '<td> <input type="submit" name="identifier" value="Update"> </td>';
+        echo '<td> <input type="submit" name="identifier" value="Remove"> </td>';
+        echo '</form>';
         echo '</tr>';
     }
     echo "</table>";
