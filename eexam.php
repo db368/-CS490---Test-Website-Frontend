@@ -59,7 +59,7 @@ tr:nth-child(even){
         array_push($scores, rand(1, 20));
     }
     echo '<table style="width:100%">';
-    echo '<form action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php">';
+    echo '<form method="post" action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php">';
     echo '<tr> <th> Remove </th> <th> Question </th> <th> Difficulty </th> <th> Score </th> </tr>';
     for ($i=0; $i<$tas; $i++){
         $cid = array_pop($examids); // This is the only variable used twice
@@ -70,10 +70,12 @@ tr:nth-child(even){
         echo '<td> <input type="number" name="score" value="'. array_pop($scores) . '"></td>';
         echo '</tr>';
     }
-    echo "</form>";
     echo "</table>";
+    //TODO: Make the submit button actually float
 ?>
-    </div>
+    <input type="submit" name="submit" value="Submit Changes">
+</div>
+    </form>
 
     <div class="testbankquestions">
         How does this look?
