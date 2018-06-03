@@ -34,7 +34,7 @@ tr:nth-child(even){
     <?php
         //This will eventually be replaced with a curl post to the database for all exam names
         $examquestions = array(); //Time to pupulate this with test stuff
-        $examids = array();
+        $examids = array(); //These are actually question ids
         $diffs = array();
         $tas = 100; //Test Array Size
         $scores = array();
@@ -68,8 +68,8 @@ tr:nth-child(even){
         echo '<td>'. array_pop($examquestions) . '</td>';
         echo '<td> ' . array_pop($diffs) . '</td>';
         echo '<td> <input type="number" name="score" value="'. array_pop($scores) . '"></td>';
-        echo '<td> <input type="submit" name="identifier" value="Update"> </td>';
-        echo '<td> <input type="submit" name="identifier" value="Remove"> </td>';
+        echo '<td> <input type="submit" name="identifier" value="aq_exam">  </td>';
+        echo '<td> <input type="submit" name="identifier" value="req_exam"> </td>';
         echo '</form>';
         echo '</tr>';
     }
