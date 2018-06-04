@@ -37,20 +37,21 @@
     $diff = "Easy";
     $purpose = "a_testbank";
     echo '<form action="debug.php" method="post">';
-    foreach (array("Easy", "Medium", "Hard") as $rdiff){
-        echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
-        if ($rdiff==$diff){ echo "checked";}
-        echo '> ' . $rdiff;
+foreach (array("Easy", "Medium", "Hard") as $rdiff){
+    echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
+    if ($rdiff==$diff) { echo "checked";
     }
+    echo '> ' . $rdiff;
+}
     echo "<br>";
     echo 'Question Text: ';
     echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
     $i = 1;
-    foreach ($almagamation as $case => $sol){
-        echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '">';
-        echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
+foreach ($almagamation as $case => $sol){
+    echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '">';
+    echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
     $i++;
-    }
+}
     echo '<input type="hidden" name="identifier" value="'. $purpose . '">';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";

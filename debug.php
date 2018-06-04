@@ -1,22 +1,19 @@
 <?php //debug.php
 
-// PHASE 1: AUTHENTICATION
-
-//Print all posted variables
 echo "<h3> Post Variables </h3>";
 
-if (!(isset($_POST))){
+if (!(isset($_POST))) {
         echo "NO POST DUDE";
         exit;
 }
 foreach ($_POST as $name => $val){
-     if (is_array($val)){
-                echo " " . $name . ':';
-                echo var_dump($val) . "<br>";
-        }
-        else {
-                echo " " . $name . ':' . $val . "<br>";
-        }
+    if (is_array($val)) {
+               echo " " . $name . ':';
+               echo var_dump($val) . "<br>";
+    }
+    else {
+            echo " " . $name . ':' . $val . "<br>";
+    }
 }
 
 $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -26,7 +23,7 @@ $target = "https://web.njit.edu/~jll25/CS490/switch.php";
 //}
 
 
-if ($target != "none"){
+if ($target != "none") {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "$target");
         curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
@@ -42,9 +39,9 @@ if ($target != "none"){
 
         echo "<h3> Cool formatted version of the JSON </h3>";
         $jarray = json_decode($return_val, true);
-        foreach ($jarray as $name => $val){
-                echo " " . $name . ':' . $val . "<br>";
-        }
+    foreach ($jarray as $name => $val){
+            echo " " . $name . ':' . $val . "<br>";
+    }
 }
 
 

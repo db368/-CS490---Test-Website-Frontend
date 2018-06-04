@@ -100,20 +100,20 @@ tr:nth-child(even){
             */
             echo '<table style="width:100%">';
             echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
-            for ($i=0; $i<count($qbids); $i++){
-                echo '<form method="post" action="debug.php">';
-                if (in_array($qbid[i], $examids)){ //This question is already on the array, skip it
-                    continue;
-                }
-                echo '<tr>';
-                echo '<input type="hidden" name="qid" value="'. $qbid[i] . '">';
-                echo '<td>'. $questionbank[i] . '</td>';
-                echo '<td> ' . $diffs[i] . '</td>';
-                echo '<td>'. count($testcases[i]). '></td>';
-                echo '<td> <input type="submit" name="identifier" value="aq_exam">  </td>';
-                echo '</form>';
-                echo '</tr>';
+        for ($i=0; $i<count($qbids); $i++){
+            echo '<form method="post" action="debug.php">';
+            if (in_array($qbid[i], $examids)) { //This question is already on the array, skip it
+                continue;
             }
+            echo '<tr>';
+            echo '<input type="hidden" name="qid" value="'. $qbid[i] . '">';
+            echo '<td>'. $questionbank[i] . '</td>';
+            echo '<td> ' . $diffs[i] . '</td>';
+            echo '<td>'. count($testcases[i]). '></td>';
+            echo '<td> <input type="submit" name="identifier" value="aq_exam">  </td>';
+            echo '</form>';
+            echo '</tr>';
+        }
 
         ?>
     </div>
