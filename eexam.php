@@ -8,14 +8,14 @@ div.testbankquestions {
     overflow: auto;
     width: 50%;
     background-color: lightgreen;
-    height:75%;
+    height:100%;
 }
 div.examquestions {
     float: left;
     overflow: auto;
     width: 50%;
     background-color: lightblue;
-    height:75%;
+    height:100%;
 }
 th, td{
     border:1px solid;
