@@ -7,14 +7,14 @@ div.testbankquestions {
     float: right;
     overflow: auto;
     width: 50%;
-    background-color: cyan;
+    background-color: lightgreen;
     height:75%;
 }
 div.examquestions {
     float: left;
     overflow: auto;
     width: 50%;
-    background-color: pink;
+    background-color: lightblue;
     height:75%;
 }
 th, td{
@@ -23,7 +23,7 @@ th, td{
 }
 
 tr:nth-child(even){
-    background-color:#FFFFFF;
+    background-color:lightblue;
     padding: 16px;
 }
 
@@ -31,6 +31,7 @@ tr:nth-child(even){
 </head>
 <body>
     <div class="examquestions">
+    <h1> Exam Questions </h1>
     <?php
         //This will eventually be replaced with a curl post to the database for all exam names
         $examquestions = array(); //Time to pupulate this with test stuff
@@ -40,7 +41,7 @@ tr:nth-child(even){
         $scores = array();
 
     for($i=0; $i<$tas; $i++){
-        array_push($examquestions, 'Exam '. rand(1000, 9999));
+        array_push($examquestions, 'Question '. rand(1000, 9999));
         array_push($examids, $i);
         $r = rand(0, 2);
         switch ($r){
@@ -78,12 +79,43 @@ tr:nth-child(even){
 ?>
     <!--<input type="submit" name="submit" value="Submit Changes"> Maybe turn this on again later-->
 </div>
-
     <div class="testbankquestions">
-        <?php // So here's what I'm going to want to do
-            $examquestions = array();
-            $questionbank = array();
-            ?>
+    <h1>Test Bank Questions</h1>
+        <?php
+            $examids = array(); //Ids in the exam bank
+            $qbids = array();
+            $questionbank = array(); //Questions in the question bank
+            $testcases=array();
+            $diffs = array();
+            $tas = 100; //Test Array Size
+            /*for ($i = 0; $i<$tas; i++)
+            {
+                array_push($examquestions, 'Question '. rand(1000, 9999));
+                array_push($qbids, $i);
+                if (rand(0,20) >15){
+                    array_push($examids, $i);
+                }
+                array_push($examids, $i);
+            }
+            */
+            echo '<table style="width:100%">';
+            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
+            for ($i=0; $i<count($qbids); $i++){
+                echo '<form method="post" action="debug.php">';
+                if (in_array($qbid[i], $examids)){ //This question is already on the array, skip it
+                    continue;
+                }
+                echo '<tr>';
+                echo '<input type="hidden" name="qid" value="'. $qbid[i] . '">';
+                echo '<td>'. $questionbank[i] . '</td>';
+                echo '<td> ' . $diffs[i] . '</td>';
+                echo '<td>'. count($testcases[i]). '></td>';
+                echo '<td> <input type="submit" name="identifier" value="aq_exam">  </td>';
+                echo '</form>';
+                echo '</tr>';
+            }
+
+        ?>
     </div>
 </body>
 </html>
