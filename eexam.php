@@ -69,8 +69,8 @@ tr:nth-child(even){
         echo '<td>'. array_pop($examquestions) . '</td>';
         echo '<td> ' . array_pop($diffs) . '</td>';
         echo '<td> <input type="number" name="score" value="'. array_pop($scores) . '"></td>';
-        echo '<td> <input type="submit" name="identifier" value="aq_exam">  </td>';
-        echo '<td> <input type="submit" name="identifier" value="req_exam"> </td>';
+        echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
+        echo '<td> <button type="submit" name ="identifier" value="req_exam"> Remove </button></td>';
         echo '</form>';
         echo '</tr>';
     }
@@ -119,7 +119,7 @@ tr:nth-child(even){
             echo '<td>'. $questionbank[$i] . '</td>';
             echo '<td> ' . $diffs[$i] . '</td>';
             echo '<td>'. count($testcases[$i]). '</td>';
-            echo '<td> <input type="submit" name="identifier" value="aq_exam">  </td>';
+            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
             echo '</form>';
             echo '</tr>';
         }
