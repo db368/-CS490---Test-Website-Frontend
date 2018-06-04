@@ -10,8 +10,9 @@
     $exams = array("Exam1", "Exam2", "Exam3");
     $ids = array("39", "393", "3939");
     $both = array_combine($ids, $exams);
-
-    echo '<form action="http://afsaccess3.njit.edu/~db368/CS490/debug.php" method="post">';
+//    echo '<table>';
+ //   echo '<th>';
+    echo '<form action="debug.php" method="post">';
     echo '<input type="hidden" name="identifier" value="e_get_questions">';
 foreach ($both as $id => $exam){
     echo '<button type="submit" name="id" value=' . $id .'>';
