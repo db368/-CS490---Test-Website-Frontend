@@ -21,9 +21,9 @@ foreach ($_POST as $name => $val){
 
 $target = "https://web.njit.edu/~jll25/CS490/switch.php";
 //$target = "https://web.njit.edu/~db368/CS490/debug.php"; //Incase you wanted to debug the debugger
-if (isset($_POST["url"])){
-        $target = $_POST["url"];
-}
+//if (isset($_POST["url"])){
+//        $target = $_POST["url"];
+//}
 
 
 if ($target != "none"){

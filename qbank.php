@@ -39,7 +39,7 @@
             <!--Begin Table Fun -->
             <tr> <th>
                 <form method="post" action="debug.php" class="inline">
-                    <input type="hidden" name="identifier" value="get_question"> </input>
+                    <input type="hidden" name="identifier" value="e_get_questions"> </input>
                     <button type="submit" name="qid" value="39" class="link-button"> Write a method def Subtract(a,b) to subtract integer A from Integer B.   </button>
              </form>
          </th></tr>
