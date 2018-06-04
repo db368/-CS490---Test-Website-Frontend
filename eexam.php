@@ -88,33 +88,42 @@ tr:nth-child(even){
             $testcases=array();
             $diffs = array();
             $tas = 100; //Test Array Size
-            /*for ($i = 0; $i<$tas; i++)
-            {
-                array_push($examquestions, 'Question '. rand(1000, 9999));
-                array_push($qbids, $i);
-                if (rand(0,20) >15){
-                    array_push($examids, $i);
-                }
+        for ($i = 0; $i<$tas; $i++)
+        {
+            array_push($examquestions, 'Question '. rand(1000, 9999));
+            array_push($qbids, $i);
+            //if (rand(0,20) > 15){
+            if (false) {
                 array_push($examids, $i);
             }
-            */
+            array_push($examids, $i);
+            array_push($questionbank, "Question ". $i);
+            $numcases = rand(1, 5);
+            $cases = array();
+            for ($k=0; $k<$numcases; $k++){
+                array_push($cases, 39);
+            }
+            array_push($testcases, $cases);
+            array_push($diffs, "Difficulty");
+        }
             echo '<table style="width:100%">';
             echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
         for ($i=0; $i<count($qbids); $i++){
             echo '<form method="post" action="debug.php">';
-            if (in_array($qbid[i], $examids)) { //This question is already on the array, skip it
+            /*if (in_array($qbids[$i], $examids)) { //This question is already on the array, skip it
                 continue;
-            }
+            }*/
             echo '<tr>';
-            echo '<input type="hidden" name="qid" value="'. $qbid[i] . '">';
-            echo '<td>'. $questionbank[i] . '</td>';
-            echo '<td> ' . $diffs[i] . '</td>';
-            echo '<td>'. count($testcases[i]). '></td>';
+            echo '<form method="post" action="debug.php">';
+            echo '<input type="hidden" name="qid" value="'. $qbids[$i] . '">';
+            echo '<td>'. $questionbank[$i] . '</td>';
+            echo '<td> ' . $diffs[$i] . '</td>';
+            echo '<td>'. count($testcases[$i]). '</td>';
             echo '<td> <input type="submit" name="identifier" value="aq_exam">  </td>';
             echo '</form>';
             echo '</tr>';
         }
-
+        echo "</table>"
         ?>
     </div>
 </body>
