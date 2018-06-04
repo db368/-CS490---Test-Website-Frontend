@@ -36,7 +36,7 @@
     $almagamation = array_combine($testcases, $solutions);
     $diff = "Easy";
     $purpose = "a_testbank";
-    echo '<form action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php" method="post">';
+    echo '<form action="debug.php" method="post">';
     foreach (array("Easy", "Medium", "Hard") as $rdiff){
         echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
         if ($rdiff==$diff){ echo "checked";}

@@ -61,7 +61,7 @@ tr:nth-child(even){
     echo '<table style="width:100%">';
     echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
     for ($i=0; $i<$tas; $i++){
-        echo '<form method="post" action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php">';
+        echo '<form method="post" action="debug.php">';
         $cid = array_pop($examids); // This is the only variable used twice
         echo '<tr>';
         echo '<input type="hidden" name="qid" value="'. $cid . '">';

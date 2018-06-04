@@ -38,7 +38,7 @@
             </tr>
             <!--Begin Table Fun -->
             <tr> <th>
-                <form method="post" action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php" class="inline">
+                <form method="post" action="debug.php" class="inline">
                     <input type="hidden" name="identifier" value="get_question"> </input>
                     <button type="submit" name="qid" value="39" class="link-button"> Write a method def Subtract(a,b) to subtract integer A from Integer B.   </button>
              </form>
