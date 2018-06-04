@@ -48,7 +48,7 @@
     $i = 1;
     foreach ($almagamation as $case => $sol){
         echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '">';
-        echo 'Solution '. $i .' :<input type="text" name="solution[]' . $i . ']" value="'. $sol . '"><br>';
+        echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
     $i++;
     }
     echo '<input type="hidden" name="identifier" value="'. $purpose . '">';
