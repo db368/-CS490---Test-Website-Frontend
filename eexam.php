@@ -76,12 +76,14 @@ tr:nth-child(even){
     echo "</table>";
     //TODO: Make the submit button actually float
 ?>
-    <input type="submit" name="submit" value="Submit Changes">
+    <!--<input type="submit" name="submit" value="Submit Changes"> Maybe turn this on again later-->
 </div>
-    </form>
 
     <div class="testbankquestions">
-        How does this look?
+        <?php // So here's what I'm going to want to do
+            $examquestions = array();
+            $questionbank = array();
+            ?>
     </div>
 </body>
 </html>
