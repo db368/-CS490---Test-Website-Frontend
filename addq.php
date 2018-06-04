@@ -35,7 +35,7 @@
     $solutions = array("Solution 1", "Solution 2", "Solution 3");
     $almagamation = array_combine($testcases, $solutions);
     $diff = "Easy";
-    $purpose = "a_question";
+    $purpose = "a_testbank";
     echo '<form action="http://afsaccess3.njit.edu/~db368/CS490/debug/debug.php" method="post">';
     foreach (array("Easy", "Medium", "Hard") as $rdiff){
         echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
@@ -47,11 +47,11 @@
     echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
     $i = 1;
     foreach ($almagamation as $case => $sol){
-        echo 'Test Case '. $i .' : <input type="text" name="question ' . $i .'" value="'. $case . '">';
-        echo 'Solution '. $i .' :<input type="text" name="solution ' . $i . '" value="'. $sol . '"><br>';
+        echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '">';
+        echo 'Solution '. $i .' :<input type="text" name="solution[]' . $i . ']" value="'. $sol . '"><br>';
     $i++;
     }
-    echo '<input type="hidden" name="purpose" value="'. $purpose . '">';
+    echo '<input type="hidden" name="identifier" value="'. $purpose . '">';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
 ?>
