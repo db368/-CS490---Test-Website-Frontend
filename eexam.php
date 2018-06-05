@@ -37,6 +37,7 @@ tr:nth-child(even){
         echo "No ID!??!";
         exit;
     }
+    else {$Eid = $_POST["id"]; }
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, $target);
@@ -77,6 +78,7 @@ tr:nth-child(even){
     echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
     foreach ($questions as $question){
         echo '<form method="post" action="debug.php">';
+        echo '<input type="hidden" name="eid" value="'. $Eid . '">';
         $qid = $question['Qid']; // This is the only variable used twice
         echo '<tr>';
         echo '<input type="hidden" name="qid" value="'. $cid . '">';
@@ -97,6 +99,7 @@ tr:nth-child(even){
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
         <?php
+        $Eid = $_POST['id'];
         //Obtain Question Bank
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();
@@ -139,6 +142,9 @@ tr:nth-child(even){
             echo '<tr>';
             echo '<form method="post" action="debug.php">';
             echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
+            echo '<input type="hidden" name="eid" value="'. $Eid . '">';
+            echo '<input type="hidden" name="score" value="0">';
+
             echo '<td>'. $question['Question'] . '</td>';
             echo '<td> ' . $question['Difficulty'] . '</td>';
             //echo '<td>'. count($testcases[$i]). '</td>';
