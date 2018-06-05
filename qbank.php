@@ -53,7 +53,7 @@
             }
             $questions = json_decode($return_val, true);
             echo '<form method="post" action="debug.php" class="inline">';
-            echo '<input type="hidden" name="identifier" value="e_question">';
+            echo '<input type="hidden" name="identifier" value="qb_get_question">';
 
 	    //Begin Printing Table
             foreach ($questions as $incoming){
