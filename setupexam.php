@@ -4,7 +4,7 @@ $target = "https://web.njit.edu/~jll25/CS490/switch.php";
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, "$target");
 curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_questions', 'id=')));
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_questions', 'id' => $_POST["id"])));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $return_val=curl_exec($ch);
 curl_close($ch);
