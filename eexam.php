@@ -51,7 +51,6 @@ tr:nth-child(even){
     $questions = json_decode($return_val, true);
     if ($questions == null) {
         echo "No questions yet!";
-        exit;
     }
     //No more test code
     /*
@@ -75,24 +74,26 @@ tr:nth-child(even){
         array_push($scores, rand(1, 20));
     }
     */
-    echo '<table style="width:100%">';
-    echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
-    foreach ($questions as $question){
-        echo '<form method="post" action="debug.php">';
-        echo '<input type="hidden" name="eid" value="'. $Eid . '">';
-        $qid = $question['Qid']; // This is the only variable used twice
-        echo '<tr>';
-        echo '<input type="hidden" name="qid" value="'. $cid . '">';
-        echo '<td>'. $question['Question'] . '</td>';
-        echo '<td> ' . $question['Difficulty'] . '</td>';
-        echo '<td> <input type="number" name="score" value="'. $question['Total_points'] . '"></td>';
-        echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
-        echo '<td> <button type="submit" name ="identifier" value="req_exam"> Remove </button></td>';
-        echo '</form>';
-        echo '</tr>';
-    }
+    else{
+        echo '<table style="width:100%">';
+        echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
+        foreach ($questions as $question){
+            echo '<form method="post" action="debug.php">';
+            echo '<input type="hidden" name="eid" value="'. $Eid . '">';
+            $qid = $question['Qid']; // This is the only variable used twice
+            echo '<tr>';
+            echo '<input type="hidden" name="qid" value="'. $cid . '">';
+            echo '<td>'. $question['Question'] . '</td>';
+            echo '<td> ' . $question['Difficulty'] . '</td>';
+            echo '<td> <input type="number" name="score" value="'. $question['Total_points'] . '"></td>';
+            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
+            echo '<td> <button type="submit" name ="identifier" value="req_exam"> Remove </button></td>';
+            echo '</form>';
+            echo '</tr>';
+        }
 
-    echo "</table>";
+        echo "</table>";
+    }
     //TODO: Make the submit button actually float
 ?>
     <!--<input type="submit" name="submit" value="Submit Changes"> Maybe turn this on again later-->
