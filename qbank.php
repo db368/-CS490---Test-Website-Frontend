@@ -65,7 +65,7 @@
                 if (isset($incoming["Difficulty"])) {$qdiff = $incoming['Difficulty'];
                 }
                 echo "<tr>";
-                echo '<td> <button type="submit" name="qid" value="'. $qid .'" class="link-button"> '. $qtext. '</button></td>';
+                echo '<td> <button type="submit" name="questionid" value="'. $qid .'" class="link-button"> '. $qtext. '</button></td>';
                 echo '<td>'.$qdiff.'</td>';
                 echo "</tr>";
             }
