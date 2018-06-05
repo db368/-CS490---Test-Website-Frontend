@@ -17,9 +17,12 @@ $target = "debug.php";
 $ch2= curl_init();
 curl_setopt($ch2, CURLOPT_URL, "$target");
 curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query($return_val));
-curl_exec($ch2);
+$return_debug=curl_exec($ch2);
 curl_close($ch2);
+
+echo $returndebug;
 /*
 $qjson = json_decode($qreturn, true);
 $i=0;
