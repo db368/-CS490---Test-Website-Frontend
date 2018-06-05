@@ -83,7 +83,7 @@ foreach ($exams as $exam){
 </div>
 <div>
     <h2> Add new exam </h2>
-    <form action="http://afsaccess3.njit.edu/~db368/CS490/debug.php" method="post">
+    <form action="https://web.njit.edu/~jll25/CS490/switch.php" method="post">
         <input type="hidden" name = "identifier" value="a_exam">
         <input type="text" name="examname">
         <input type="submit" value="Add Exam">
