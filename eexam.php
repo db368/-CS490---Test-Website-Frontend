@@ -46,13 +46,14 @@ tr:nth-child(even){
     $return_val=curl_exec($ch);
     curl_close($ch);
 
-    $questions = json_decode($return_val);
+    $questions = json_decode($return_val, true);
     if ($questions == null){
         echo "No questions yet!";
         exit;
     }
     //No more test code
-    /*for($i=0; $i<$tas; $i++){
+    /*
+    for($i=0; $i<$tas; $i++){
         array_push($examquestions, 'Question '. rand(1000, 9999));
         array_push($examids, $i);
         $r = rand(0, 2);
@@ -87,6 +88,7 @@ tr:nth-child(even){
         echo '</form>';
         echo '</tr>';
     }
+
     echo "</table>";
     //TODO: Make the submit button actually float
 ?>
