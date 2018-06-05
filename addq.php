@@ -51,7 +51,7 @@
     $diff = "Easy";
     $purpose = "a_testbank";*/
 
-    echo '<form action="debug.php" method="post">';
+    echo '<form action="qblooper.php" method="post">';
 foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
     if ($rdiff==$diff) { echo "checked";
