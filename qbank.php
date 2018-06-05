@@ -51,10 +51,11 @@
                 echo "<h1> ERROR: NO RETURN VALUE </h1>";
                 exit;
             }
-            $questions = json_decode($returnval, true);
+            $questions = json_decode($return_val, true);
             echo '<form method="post" action="debug.php" class="inline">';
             echo '<input type="hidden" name="identifier" value="e_get_question">';
-            //Begin Printing Table
+            
+	    //Begin Printing Table
             foreach ($questions as $incoming){
                 $qid = "error"; $qtext = "error"; $qdiff = "error";
                 if (isset($incoming['Qid'])) { $qid = $incoming['Qid'];
