@@ -37,7 +37,8 @@ tr:nth-child(even){
         echo "No ID!??!";
         exit;
     }
-    else {$Eid = $_POST["id"]; }
+    else {$Eid = $_POST["id"];
+    }
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, $target);
