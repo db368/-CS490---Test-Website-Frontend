@@ -22,7 +22,7 @@ curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query($return_val));
 $return_debug=curl_exec($ch2);
 curl_close($ch2);
 
-echo $returndebug;
+echo $return_debug;
 /*
 $qjson = json_decode($qreturn, true);
 $i=0;
