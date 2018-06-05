@@ -1,7 +1,7 @@
 <?php //Druswitch.php
 
 //First of all, I'm not uploading the password/username to github. That's a bad idea. Instead lets load it from a secret config file.
-if !isset($_POST['identifier']) {echo "No identifier!"; exit;
+if (!isset($_POST['identifier']) {echo "No identifier!"; exit;
 }
 
 $secretfilepath = "/afs/cad/u/d/b/db368/secret.ini";
@@ -21,14 +21,14 @@ case "aq_exam":
     $qid = $POST['qid']
     $score = $POST['score']
     $add ="Insert into ExQuestions (Exam_id, Question_id, Total_points ) VALUES ('.$eid.', '.$qid.','.$score.')";
-    if ($datab->query($add));
+    if ($datab->query($add)) {
+    }
     {
         echo "SUCCESS!";
     }
     else{
         echo "FAILURE!";
     }
-
 
 }
 
