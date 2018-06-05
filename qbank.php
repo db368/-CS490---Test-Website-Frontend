@@ -30,19 +30,46 @@
 <body>
     <h1> Question Bank</h1>
     <p> Click on the question to edit it!</p>
-    <div style="background-color:cyan">
+    <div>
         <table style ="width:100%">
             <tr>
                 <th> Question</th>
-                <th> Test Cases</th>
+                <th> Difficulty </th>
             </tr>
             <!--Begin Table Fun -->
-            <tr> <th>
-                <form method="post" action="debug.php" class="inline">
-                    <input type="hidden" name="identifier" value="e_get_question"> </input>
-                    <button type="submit" name="qid" value="39" class="link-button"> Write a method def Subtract(a,b) to subtract integer A from Integer B.   </button>
-             </form>
-         </th></tr>
+            <?php
+            // Obtain Questions
+            $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+            $ch= curl_init();
+            curl_setopt($ch, CURLOPT_URL, "$target");
+            curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'v_testbank')));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $return_val=curl_exec($ch);
+            curl_close($ch);
+            if ($return_val == null) {
+                echo "<h1> ERROR: NO RETURN VALUE </h1>";
+                exit;
+            }
+            $questions = json_decode($returnval, true);
+            echo '<form method="post" action="debug.php" class="inline">';
+            echo '<input type="hidden" name="identifier" value="e_get_question">';
+            //Begin Printing Table
+            foreach ($questions as $incoming){
+                $qid = "error"; $qtext = "error"; $qdiff = "error";
+                if (isset($incoming['Qid'])) { $qid = $incoming['Qid'];
+                }
+                if (isset($incoming['Question'])) { $qtext = $incoming['Question'];
+                }
+                if (isset($incoming["Difficulty"])) {$qdiff = $incoming['Difficulty'];
+                }
+                echo "<tr>";
+                echo '<td> <button type="submit" name="qid" value="'. $qid .'" class="link-button"> '. $qtext. '</button></td>';
+                echo '<td>'.$qdiff.'</td>';
+                echo "</tr>";
+            }
+        ?>
+        </form>
         </table>
     </div>
     <!--End the button Nonsense -->
