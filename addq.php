@@ -34,7 +34,7 @@
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, "$target");
     curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question','Questionid'=>$_POST['questionid'])));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question','questionid'=>$_POST['questionid'])));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
@@ -50,11 +50,11 @@ if ($return_val == null) {
     $almagamation = array_combine($testcases, $solutions);
     $diff = "Easy";
     $purpose = "a_testbank";*/
-if (isset($_POST['Question'])){
+if (isset($_POST['Question'])) {
     $qtext = $_POST['Question'];
 }
 $qtext = $_POST['Question'];
-if (isset($_POST['TestCase'])){
+if (isset($_POST['TestCase'])) {
     $testcases= $_POST['TestCase'];
 }
 $diff = $_POST['Difficulty'];
