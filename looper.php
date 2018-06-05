@@ -1,9 +1,10 @@
-<?php// LOOPER: Sends out a request, then goes to target url.
+<?php
+// LOOPER: Sends out a request, then goes to target url.
 
 //Send data to the DB
-$target = "https://web.njit.edu/~jll25/CS490/switch.php";
+$target = 'https://web.njit.edu/~jll25/CS490/switch.php';
 $ch= curl_init();
-curl_setopt($ch, CURLOPT_URL, "$target");
+curl_setopt($ch, CURLOPT_URL, $target);
 curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
 curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
