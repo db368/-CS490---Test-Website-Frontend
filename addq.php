@@ -68,7 +68,7 @@ foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo 'Question Text: ';
     echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
     $i = 1;
-foreach ($case){ // Solutions aren't supported by the DB yet.
+foreach ($testcase as $case){ // Solutions aren't supported by the DB yet.
     echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '"><br>';
     //echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
     $i++;
