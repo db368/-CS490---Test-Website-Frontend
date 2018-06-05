@@ -27,7 +27,6 @@
 </head>
 
 <body>
-    <h1> Modify Question </h1>
 <?php
     //Obtain Question from Database
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -39,8 +38,12 @@
     $return_val=curl_exec($ch);
     curl_close($ch);
 if ($return_val == null) {
-    echo "<h1> ERROR: NO RETURN VALUE </h1>";
-    exit;
+    echo "<h1> Add New Question </h1>";
+    $purpose = "a_testbank";
+}
+else{
+	echo "<h1> Modify Question </h1>";
+	$purpose = "e_question";
 }
     //Begin Table
     /* Debug Code.
@@ -66,7 +69,7 @@ if (count($soln) < count($testcases)){
 }
 
 
-echo '<form action="qblooper.php" method="post">';
+echo '<form action="debug.php" method="post">';
 foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
     if ($rdiff==$diff) { echo "checked";
@@ -82,7 +85,8 @@ foreach ($testcases as $case){ // Solutions aren't supported by the DB yet.
     echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
     $i++;
 }
-    echo '<input type="hidden" name="identifier" value="'. $purpose . '">';
+    echo '<input type = "hidden" name="qid" value='. $_POST['questionid']. '>';
+    echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
 ?>
