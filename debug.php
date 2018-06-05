@@ -32,6 +32,11 @@ if ($target != "none") {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
         curl_close($ch);
+        if ($return_val == null)
+        {
+            echo "<h1 color=red> RETURNED NULL <h1>";
+            exit;
+        }
         echo "<h3> Raw Returned Json: </h3>" .  $return_val . "<br> <br>";
 
         echo "<h3> var_dump of json_decode for returned json:</h3> ";
