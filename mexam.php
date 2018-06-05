@@ -10,17 +10,20 @@
     $exams = array("Exam1", "Exam2", "Exam3");
     $ids = array("39", "393", "3939");
     $both = array_combine($ids, $exams);
-//    echo '<table>';
- //   echo '<th>';
+    echo '<table width=100%>';
+    echo '<th> EXAMS </th>';
     echo '<form action="debug.php" method="post">';
     echo '<input type="hidden" name="identifier" value="e_get_questions">';
 foreach ($both as $id => $exam){
-    echo '<button type="submit" name="id" value=' . $id .'>';
-    echo $exam;
-    echo '</button> <br>';
+    echo '<tr>';
+    echo '<td> <button type="submit" name="id" value="' . $id .'>'. $exam . '"</button> </td>';
+    echo '</tr>';
+
 }
     echo '</form>';
+    echo '</table>';
 ?>
+
 </div>
 <div>
     <h2> Add a new exam </h2>
