@@ -34,14 +34,14 @@
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, "$target");
     curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question','questionid'=>$_POST['qid'])));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question','Questionid'=>$_POST['questionid'])));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
-    if ($return_val == null) {
-        echo "<h1> ERROR: NO RETURN VALUE </h1>";
-        exit;
-    }
+if ($return_val == null) {
+    echo "<h1> ERROR: NO RETURN VALUE </h1>";
+    exit;
+}
     //Begin Table
     /* Debug Code.
     $qtext = "Question Text";
@@ -50,7 +50,14 @@
     $almagamation = array_combine($testcases, $solutions);
     $diff = "Easy";
     $purpose = "a_testbank";*/
-
+if (isset($_POST['Question'])){
+    $qtext = $_POST['Question'];
+}
+$qtext = $_POST['Question'];
+if (isset($_POST['TestCase'])){
+    $testcases= $_POST['TestCase'];
+}
+$diff = $_POST['Difficulty'];
     echo '<form action="qblooper.php" method="post">';
 foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
