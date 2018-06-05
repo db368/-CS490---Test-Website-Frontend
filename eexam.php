@@ -33,7 +33,7 @@ tr:nth-child(even){
     <div class="examquestions">
     <h1> Exam Questions </h1>
     <?php
-    if (!isset($_POST['id'])){
+    if (!isset($_POST['id'])) {
         echo "No ID!??!";
         exit;
     }
@@ -47,7 +47,7 @@ tr:nth-child(even){
     curl_close($ch);
 
     $questions = json_decode($return_val, true);
-    if ($questions == null){
+    if ($questions == null) {
         echo "No questions yet!";
         exit;
     }
@@ -97,12 +97,18 @@ tr:nth-child(even){
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
         <?php
-            $examids = array(); //Ids in the exam bank
-            $qbids = array();
-            $questionbank = array(); //Questions in the question bank
-            $testcases=array();
-            $diffs = array();
-            $tas = 100; //Test Array Size
+        //Obtain Question Bank
+        $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+        $ch= curl_init();
+        curl_setopt($ch, CURLOPT_URL, $target);
+        curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array('identifier'=>'v_testbank'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $return_val=curl_exec($ch);
+        curl_close($ch);
+        $questions = json_decode($return_val, true);
+
+        /* Test Data
         for ($i = 0; $i<$tas; $i++)
         {
             array_push($examquestions, 'Question '. rand(1000, 9999));
@@ -121,19 +127,21 @@ tr:nth-child(even){
             array_push($testcases, $cases);
             array_push($diffs, "Difficulty");
         }
+        */
             echo '<table style="width:100%">';
-            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
-        for ($i=0; $i<count($qbids); $i++){
+            // FOR RELEASE: echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
+            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Add to Exam </th> </tr>';
+        foreach ($questions as $question){
             echo '<form method="post" action="debug.php">';
-            /*if (in_array($qbids[$i], $examids)) { //This question is already on the array, skip it
-                continue;
-            }*/
+            //if (in_array($qbids[$i], $examids)) {  //TODO:This question is already on the array, skip it
+            //   continue;
+            //}
             echo '<tr>';
             echo '<form method="post" action="debug.php">';
-            echo '<input type="hidden" name="qid" value="'. $qbids[$i] . '">';
-            echo '<td>'. $questionbank[$i] . '</td>';
-            echo '<td> ' . $diffs[$i] . '</td>';
-            echo '<td>'. count($testcases[$i]). '</td>';
+            echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
+            echo '<td>'. $question['Question'] . '</td>';
+            echo '<td> ' . $question['Difficulty'] . '</td>';
+            //echo '<td>'. count($testcases[$i]). '</td>';
             echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
             echo '</form>';
             echo '</tr>';
