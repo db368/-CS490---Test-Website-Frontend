@@ -33,14 +33,26 @@ tr:nth-child(even){
     <div class="examquestions">
     <h1> Exam Questions </h1>
     <?php
-        //This will eventually be replaced with a curl post to the database for all exam names
-        $examquestions = array(); //Time to pupulate this with test stuff
-        $examids = array(); //These are actually question ids
-        $diffs = array();
-        $tas = 100; //Test Array Size
-        $scores = array();
+    if (!isset($_POST['id'])){
+        echo "No ID!??!";
+        exit;
+    }
+    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+    $ch= curl_init();
+    curl_setopt($ch, CURLOPT_URL, $target);
+    curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+    curl_setopt($ch, CURLOPT_POSTFIELDS, array('identifier'=>'e_get_questions', 'id' => $_POST["id"]));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $return_val=curl_exec($ch);
+    curl_close($ch);
 
-    for($i=0; $i<$tas; $i++){
+    $questions = json_decode($return_val);
+    if ($questions == null){
+        echo "No questions yet!";
+        exit;
+    }
+    //No more test code
+    /*for($i=0; $i<$tas; $i++){
         array_push($examquestions, 'Question '. rand(1000, 9999));
         array_push($examids, $i);
         $r = rand(0, 2);
@@ -59,16 +71,17 @@ tr:nth-child(even){
         }
         array_push($scores, rand(1, 20));
     }
+    */
     echo '<table style="width:100%">';
     echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
-    for ($i=0; $i<$tas; $i++){
+    foreach ($questions as $question){
         echo '<form method="post" action="debug.php">';
-        $cid = array_pop($examids); // This is the only variable used twice
+        $qid = $question['Qid']; // This is the only variable used twice
         echo '<tr>';
         echo '<input type="hidden" name="qid" value="'. $cid . '">';
-        echo '<td>'. array_pop($examquestions) . '</td>';
-        echo '<td> ' . array_pop($diffs) . '</td>';
-        echo '<td> <input type="number" name="score" value="'. array_pop($scores) . '"></td>';
+        echo '<td>'. $question['Question'] . '</td>';
+        echo '<td> ' . $question['Difficulty'] . '</td>';
+        echo '<td> <input type="number" name="score" value="'. $question['Total_points'] . '"></td>';
         echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
         echo '<td> <button type="submit" name ="identifier" value="req_exam"> Remove </button></td>';
         echo '</form>';
