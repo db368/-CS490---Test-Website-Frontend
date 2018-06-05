@@ -62,7 +62,7 @@ if ($return_val == null) {
 
     echo '<table width=100%>';
     echo '<tr><th> EXAMS </th></tr>';
-    echo '<form action="debug.php" method="post">';
+    echo '<form action="texam.php" method="post">';
     echo '<input type="hidden" name="identifier" value="e_get_questions">';
 foreach ($exams as $exam){
     // Could probably wrap this up in a function eventually
@@ -83,7 +83,7 @@ foreach ($exams as $exam){
 </div>
 <div>
     <h2> Add new exam </h2>
-    <form action="texam.php" method="post">
+    <form action="https://web.njit.edu/~jll25/CS490/switch.php" method="post">
         <input type="hidden" name = "identifier" value="a_exam">
         <input type="text" name="examname">
         <input type="submit" value="Add Exam">
