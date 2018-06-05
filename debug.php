@@ -26,7 +26,7 @@ foreach ($_POST as $name => $val){
 
 if ($target != "none") {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "$target");
+        curl_setopt($ch, CURLOPT_URL, $target);
         curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
         curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
