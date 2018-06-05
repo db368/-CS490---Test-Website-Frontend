@@ -78,7 +78,7 @@ tr:nth-child(even){
         echo '<table style="width:100%">';
         echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
         foreach ($questions as $question){
-            echo '<form method="post" action="debug.php">';
+            echo '<form method="post" action="looper.php">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
             $qid = $question['Qid']; // This is the only variable used twice
             echo '<tr>';
@@ -137,12 +137,11 @@ tr:nth-child(even){
             // FOR RELEASE: echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
             echo '<tr><th> Question </th> <th> Difficulty </th> <th> Add to Exam </th> </tr>';
         foreach ($questions as $question){
-            echo '<form method="post" action="debug.php">';
             //if (in_array($qbids[$i], $examids)) {  //TODO:This question is already on the array, skip it
             //   continue;
             //}
             echo '<tr>';
-            echo '<form method="post" action="debug.php">';
+            echo '<form method="post" action="looper.php">';
             echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
             echo '<input type="hidden" name="score" value="0">';
