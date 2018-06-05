@@ -69,7 +69,7 @@ if (count($soln) < count($testcases)){
 }
 
 
-echo '<form action="debug.php" method="post">';
+echo '<form action="qblooper.php" method="post">';
 foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
     if ($rdiff==$diff) { echo "checked";
@@ -85,8 +85,10 @@ foreach ($testcases as $case){ // Solutions aren't supported by the DB yet.
     echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
     $i++;
 }
+if ($purpose == "e_question"){
     echo '<input type = "hidden" name="qid" value='. $_POST['questionid']. '>';
-    echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
+  }  
+echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
 ?>
