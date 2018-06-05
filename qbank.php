@@ -53,8 +53,8 @@
             }
             $questions = json_decode($return_val, true);
             echo '<form method="post" action="debug.php" class="inline">';
-            echo '<input type="hidden" name="identifier" value="e_get_question">';
-            
+            echo '<input type="hidden" name="identifier" value="e_question">';
+
 	    //Begin Printing Table
             foreach ($questions as $incoming){
                 $qid = "error"; $qtext = "error"; $qdiff = "error";
