@@ -50,15 +50,14 @@ if ($return_val == null) {
     $almagamation = array_combine($testcases, $solutions);
     $diff = "Easy";
     $purpose = "a_testbank";*/
-if (isset($_POST['Question'])) {
-    $qtext = $_POST['Question'];
-}
-$qtext = $_POST['Question'];
-if (isset($_POST['TestCase'])) {
-    $testcases= $_POST['TestCase'];
-}
-$diff = $_POST['Difficulty'];
-    echo '<form action="qblooper.php" method="post">';
+
+$question = json_decode($return_val, true);
+
+$qtext = $question['Question'];
+$diff = $question['Difficulty'];
+$testcases = $question['Testcases'];
+
+echo '<form action="qblooper.php" method="post">';
 foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
     if ($rdiff==$diff) { echo "checked";
@@ -69,9 +68,9 @@ foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo 'Question Text: ';
     echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
     $i = 1;
-foreach ($almagamation as $case => $sol){
-    echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '">';
-    echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
+foreach ($case){ // Solutions aren't supported by the DB yet.
+    echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '"><br>';
+    //echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
     $i++;
 }
     echo '<input type="hidden" name="identifier" value="'. $purpose . '">';
