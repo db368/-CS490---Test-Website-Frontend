@@ -49,8 +49,15 @@ if ($target != "none") {
         echo "<h3> Cool formatted version of the JSON </h3>";
         $jarray = json_decode($return_val, true);
     foreach ($jarray as $name => $val){
-            echo " " . $name . ':' . $val . "<br>";
+        if (is_array($val)) {
+                   echo " " . $name . ':';
+                   echo var_dump($val) . "<br>";
+        }
+        else {
+                echo " " . $name . ':' . $val . "<br>";
+        }
     }
+
 }
 
 ?>
