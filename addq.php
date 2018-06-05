@@ -51,11 +51,20 @@ if ($return_val == null) {
     $diff = "Easy";
     $purpose = "a_testbank";*/
 
-$question = json_decode($return_val, true);
-
+$question = json_decode($return_val, true)[0];
 $qtext = $question['Question'];
 $diff = $question['Difficulty'];
-$testcases = $question['Testcases'];
+$soln = $question['Answer'];
+if(sizeof($question['TestCase']) > 0){ 
+	$testcases = $question['TestCase'];
+}
+else{ 
+	$testcases = array("Testcase1", "Testcase2", "Testcase3", "Testcase4");
+}
+if (count($soln) < count($testcases)){
+	array_fill($soln, count($soln) - count($testcases), "Solution");
+}
+
 
 echo '<form action="qblooper.php" method="post">';
 foreach (array("Easy", "Medium", "Hard") as $rdiff){
@@ -68,9 +77,9 @@ foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo 'Question Text: ';
     echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
     $i = 1;
-foreach ($testcase as $case){ // Solutions aren't supported by the DB yet.
-    echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '"><br>';
-    //echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
+foreach ($testcases as $case){ // Solutions aren't supported by the DB yet.
+    echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '">';
+    echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
     $i++;
 }
     echo '<input type="hidden" name="identifier" value="'. $purpose . '">';
