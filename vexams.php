@@ -62,7 +62,7 @@ if ($return_val == null) {
 
     echo '<table width=100%>';
     echo '<tr><th> EXAMS </th></tr>';
-    echo '<form action="setupexam".php" method="post">';
+    echo '<form action="setupexam.php" method="post">';
     echo '<input type="hidden" name="identifier" value="e_get_questions">';
 foreach ($exams as $exam){
     // Could probably wrap this up in a function eventually
