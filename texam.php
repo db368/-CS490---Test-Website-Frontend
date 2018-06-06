@@ -59,6 +59,15 @@ if ($number != 1) {
     echo '<button type=submit name=currentquestion value='.($number-1).'> Previous Question </button>';
 }
     echo "</form>";
-
+    echo '<form method="post" action="examlandingpage.php">';
+foreach($questions as $q){
+    echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
+    echo '<input type=hidden name=answers['.$i.'] value="'.$answers[$i].'">';
+    $i=$i+1;
+} 
+    echo '<button type=submit name=submit value=submit> Submit Answers </button>';
+    echo '</form>';
 ?>
+
+
 </body>
