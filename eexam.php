@@ -26,6 +26,10 @@ tr:nth-child(even){
     background-color:white;
     padding: 16px;
 }
+th{
+    color: gray;
+}
+
 
 </style>
 </head>
