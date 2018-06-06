@@ -27,7 +27,7 @@ tr:nth-child(even){
     padding: 16px;
 }
 th{
-    color: gray;
+    background-color: gray;
 }
 
 
