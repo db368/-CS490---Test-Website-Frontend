@@ -1,7 +1,7 @@
 <?php
 //Get the questions for the exam
 $target = "https://web.njit.edu/~jll25/CS490/switch.php";
-//$target = "http://afsaccess3.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/debug.php";
+//$target = "http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/debug.php";
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, $target);
 curl_setopt($ch, CURLOPT_POST, 1); // Set it to post

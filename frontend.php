@@ -8,7 +8,7 @@ $unknownurl = "ui.html";
 
 //PHASE 1: AUTHENTICATION
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://afsaccess3.njit.edu/~db368/CS490/controller.php");
+curl_setopt($ch, CURLOPT_URL, "http://afsaccess2.njit.edu/~db368/CS490/controller.php");
 curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('username' => $_POST["username"], 'password' => $_POST["password"], 'phase' => '1')));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -23,7 +23,7 @@ if ($role == "Student") {
 } else if ($role == "Instructor") {
     header('Location: https://web.njit.edu/~db368/CS490/controller.php');
 }else{
-    header('Location: http://afsaccess3.njit.edu/~db368/CS490/ui.html');
+    header('Location: http://afsaccess2.njit.edu/~db368/CS490/ui.html');
 }
 exit;
 
