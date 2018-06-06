@@ -52,8 +52,8 @@ foreach ($eqarray as $eq){
 		$qbid = $qb['Qid'];
 		if ($qbtext == $eqtext and !in_array($qbid, $usedids)){ //Compare Question Text
 			array_push($usedids, $qb['Qid']);
-			$eq['id'] = $qb['Qid'];
-			array_push($uqarray, $eq);
+			//$eq['id'] = $qb['Qid'];
+			//array_push($uqarray, $eq);
 			break;
 		}
 	}
@@ -62,7 +62,7 @@ foreach ($eqarray as $eq){
 //echo var_dump($uqarray);
 
 $alarray = array();
-$alarray['questions']=$uqarray;
+$alarray['questions']=$usedids;
 $alarray['currentquestion']='1';
 
 
