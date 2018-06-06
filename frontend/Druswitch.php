@@ -18,7 +18,7 @@ if (mysqli_connect_errno()) {echo "Something went wrong";
 //Lets hope we make it this far
 switch($_POST['identifier']){
 case "aq_exam":
-    $eid = $_POST['eid'];
+    $eid = $_POST['id'];
     $qid = $_POST['qid'];
     $score = $_POST['score'];
 
