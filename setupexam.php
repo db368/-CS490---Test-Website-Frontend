@@ -28,11 +28,13 @@ curl_close($ch3);
 $uqarray = array(); //Final destination for question ids
 $eqarray = json_decode($return_val, true); //Question Bank Array
 $qbarray = json_decode($qb_return, true); //Exam Questions
-
+/*
 echo "<h1> DUMPING QUESTION BANK </h1> <br>";
 echo var_dump($qbarray). '<br>';
 echo "<h1> DUMPING EXAM QUESTIONS </h1> <br>";
 echo var_dump($eqarray). '<br>';
+*/
+
 
 //God Tier Hacks Incoming
 //So e_get_questions doesn't return id. That's really bad.
@@ -41,6 +43,7 @@ echo var_dump($eqarray). '<br>';
 $usedids = array(); //Make a little sub array to handle duplicates
 //echo "Sorting...<br>";
 //echo "<h1> DUMPING ULTIMATE ARRAY </h1> <br>";
+
 foreach ($eqarray as $eq){
 	$eqtext = $eq['Question'];
 	$eqdiff = $eq['Difficulty'];
@@ -56,24 +59,23 @@ foreach ($eqarray as $eq){
 	}
 }
 
-echo var_dump($uqarray);
+//echo var_dump($uqarray);
+
+$alarray = array();
+$alarray['questions']=$uqarray;
+$alarray['currentquestion']='1';
 
 
-
-
-
-
-/*
-$target = "http://afsaccess3.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/texam.php";
-//$target = "http://afsaccess3.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/debug.php";
-$ch2= curl_init();
+$target = "http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/texam.php";
+//$target = "http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/debug.php";
+$ch2 = curl_init();
 curl_setopt($ch2, CURLOPT_URL, "$target");
 curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
-curl_setopt($ch2, CURLOPT_POSTFIELDS, $alarray);
+curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query($alarray));
 curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 $page = curl_exec($ch2);
 curl_close($ch2);
 
 echo $page;
-*/
+
 ?>
