@@ -19,11 +19,11 @@ $jason = json_decode($return_val);
 $role = $jason[0]->Role;
 //PHASE 2: REDIRECTION
 if ($role == "Student") {
-    header('Location: https://web.njit.edu/~jll25/CS490/student.php');
+    header('Location: http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/student.html');
 } else if ($role == "Instructor") {
-    header('Location: https://web.njit.edu/~db368/CS490/controller.php');
+    header('Location: http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/instructor.html');
 }else{
-    header('Location: http://afsaccess2.njit.edu/~db368/CS490/ui.html');
+    header('Location: http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/ui.html');
 }
 exit;
 
