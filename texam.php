@@ -7,7 +7,10 @@
     $questions = $_POST['questions'];
     $number = $_POST['currentquestion'];
     $qid = $questions[$number];
-   
+    
+    echo "<h1> Incoming POST </h1>"; 
+    echo var_dump($_POST);
+
     echo "<h1> Incoming questions </h1>"; 
     echo var_dump($questions);
     echo "<br> Current Question Number is ". $number. " and the id is ". $qid . "<br>";
@@ -30,18 +33,20 @@
     echo "<h1> QUESTION ".$number." </h1><br>";
     echo "<p>" . $qtext . "</p><br>";
 
-    echo '<form method="post" action="texam.php">';
-    $i=0;
+
+//Now we get to do the fun work of posting it again
+echo '<form method="post" action="texam.php">';
+$i=0;
 foreach($questions as $q){
     echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
     $i=$i+1;
 }
     echo '<input type=textbox name=answer><br>';
-if ($number < count($questions)) {
-    echo '<button type=submit name=currentnumber value='.($i+1).'> Next Question </button>';
+if ($number < count($questions)-1) {
+    echo '<button type=submit name=currentquestion value='.($number+1).'> Next Question </button>';
 }
 if ($number != 1) {
-    echo '<button type=submit name=current number value='.($i-1).'> Previous Question </button>';
+    echo '<button type=submit name=currentquestion value='.($number-1).'> Previous Question </button>';
 }
     echo "</form>";
 
