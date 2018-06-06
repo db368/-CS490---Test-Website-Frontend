@@ -62,6 +62,7 @@ foreach ($eqarray as $eq){
 //echo var_dump($uqarray);
 
 $alarray = array();
+$alarray['exid'] = $_POST["id"];
 $alarray['questions']=$usedids;
 $alarray['currentquestion']='1';
 

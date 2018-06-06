@@ -6,6 +6,8 @@
 <?php
     $questions = $_POST['questions'];
     $number = $_POST['currentquestion'];
+    $exid = $_POST['exid'];
+    //On first run answers will not be set
     if (isset($_POST['answers'])){
 	 $answers = $_POST['answers'];
     }
@@ -52,6 +54,7 @@ foreach($questions as $q){
 }
 
     echo '<input type=textbox name=answers['.$number.'] value='. $answers[$number] .'><br>';
+    echo '<input type=hidden name=exid value="'.$exid.'">';
 if ($number < count($questions)-1) {
     echo '<button type=submit name=currentquestion value='.($number+1).'> Next Question </button>';
 }
@@ -59,12 +62,16 @@ if ($number != 1) {
     echo '<button type=submit name=currentquestion value='.($number-1).'> Previous Question </button>';
 }
     echo "</form>";
+
+// Submit button stuff
     echo '<form method="post" action="examlandingpage.php">';
+    $i=0;
 foreach($questions as $q){
     echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
     echo '<input type=hidden name=answers['.$i.'] value="'.$answers[$i].'">';
     $i=$i+1;
 } 
+    echo '<input type=hidden name=exid value="'.$exid.'">';
     echo '<button type=submit name=submit value=submit> Submit Answers </button>';
     echo '</form>';
 ?>
