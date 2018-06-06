@@ -29,10 +29,10 @@ $uqarray = array(); //Final destination for question ids
 $eqarray = json_decode($return_val, true); //Question Bank Array
 $qbarray = json_decode($qb_return, true); //Exam Questions
 /*
-echo "<h1> DUMPING QUESTION BANK </h1> <br>";
-echo var_dump($qbarray). '<br>';
-echo "<h1> DUMPING EXAM QUESTIONS </h1> <br>";
-echo var_dump($eqarray). '<br>';
+//.echo "<h1> DUMPING QUESTION BANK </h1> <br>";
+//echo var_dump($qbarray). '<br>';
+//echo "<h1> DUMPING EXAM QUESTIONS </h1> <br>";
+//echo var_dump($eqarray). '<br>';
 */
 
 

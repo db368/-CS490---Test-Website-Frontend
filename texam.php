@@ -34,7 +34,7 @@ else {
 
     //echo "<h1> RETURN FROM THE SERVER </h1> <br>";
     $question=json_decode($return_val, true)[0];
-    var_dump($question);
+    //var_dump($question);
     $qtext = $question["Question"];
 
     //echo "<h1> CURRENT ANSWERS </h1><br>";
