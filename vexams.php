@@ -35,7 +35,8 @@ tr:nth-child(even){
 
 </style>
 <body>
-<h1> Manage Exams </h1>
+<h1> View Exams </h1>
+<p> Click on an exam to take it! </p>
 <div>
 <?php
     //Obtain Exams
