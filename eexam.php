@@ -7,7 +7,7 @@ div.testbankquestions {
     float: right;
     overflow: auto;
     width: 50%;
-    background-color: lightgreen;
+    background-color: orange;
     height:100%;
 }
 div.examquestions {
@@ -23,7 +23,7 @@ th, td{
 }
 
 tr:nth-child(even){
-    background-color:lightblue;
+    background-color:white;
     padding: 16px;
 }
 
@@ -86,7 +86,7 @@ tr:nth-child(even){
             echo '<td>'. $question['Question'] . '</td>';
             echo '<td> ' . $question['Difficulty'] . '</td>';
             echo '<td> <input type="number" name="score" value="'. $question['Total_points'] . '"></td>';
-            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
+            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Update </button>  </td>';
             echo '<td> <button type="submit" name ="identifier" value="req_exam"> Remove </button></td>';
             echo '</form>';
             echo '</tr>';
