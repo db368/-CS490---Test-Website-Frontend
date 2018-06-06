@@ -1,11 +1,11 @@
 <?php
 //Get the questions for the exam
-//$target = "https://web.njit.edu/~jll25/CS490/switch.php";
-$target = "http://afsaccess3.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/debug.php";
+$target = "https://web.njit.edu/~jll25/CS490/switch.php";
+//$target = "http://afsaccess3.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/debug.php";
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, $target);
 curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_questions', 'Eid' => $_POST["id"])));
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_questions', 'id' => $_POST["id"])));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $return_val=curl_exec($ch);
 curl_close($ch);
@@ -39,7 +39,8 @@ $alarray = array(); //Build an almighty array to hold the questions and manage o
 $alarray['questions']=$qarray;
 $alarray['currentquestion'] = '1';
 
-$target = "etake.php";
+//$target = "debug.php";
+$target = "http://afsaccess3.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/debug.php";
 $ch2= curl_init();
 curl_setopt($ch2, CURLOPT_URL, "$target");
 curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
