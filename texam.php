@@ -6,8 +6,13 @@
 <?php
     $questions = $_POST['questions'];
     $number = $_POST['currentquestion'];
+    if (isset($_POST['answers'])){
+	 $answers = $_POST['answers'];
+    }
+    else {
+	$answers = array(); 
+    }
     $qid = $questions[$number];
-    
     echo "<h1> Incoming POST </h1>"; 
     echo var_dump($_POST);
 
@@ -30,7 +35,10 @@
     var_dump($question);
     $qtext = $question["Question"];
 
-    echo "<h1> QUESTION ".$number." </h1><br>";
+    echo "<h1> CURRENT ANSWERS </h1><br>";
+    echo var_dump($answers);
+
+    echo "<h1> QUESTION ".$number." </h1>";
     echo "<p>" . $qtext . "</p><br>";
 
 
@@ -39,9 +47,11 @@ echo '<form method="post" action="texam.php">';
 $i=0;
 foreach($questions as $q){
     echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
+    echo '<input type=hidden name=answers['.$i.'] value="'.$answers[$i].'">';
     $i=$i+1;
 }
-    echo '<input type=textbox name=answer><br>';
+
+    echo '<input type=textbox name=answers['.$number.'] value='. $answers[$number] .'><br>';
 if ($number < count($questions)-1) {
     echo '<button type=submit name=currentquestion value='.($number+1).'> Next Question </button>';
 }
