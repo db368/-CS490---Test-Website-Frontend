@@ -49,18 +49,18 @@ $Exam_encoded = json_encode($Examid_array);
 echo $Exam_encoded;
 
 }
-else { 
+else {
 	//if there is neither examid, or difficulty
 	$all = "select * from Questions;";
 	$allqu = $conn->query($all);
 	$all_array = array();
 	if ($allqu->num_rows > 0) {
-    
+
     while($row = $allqu->fetch_assoc()) {
     	$all_array[]=$row;
 }
 $allq = json_encode($all_array);
-echo $allq;   
+echo $allq;
 }
 }
 }
@@ -94,7 +94,7 @@ echo $Examv_encode;
 
 break;
 
-//creates exams 
+//creates exams
 case "a_exam":
 
 
@@ -275,12 +275,10 @@ break;
 
 //delete
 case "req_exam":
-;
 
 $eid = $_POST['eid'];
 
 $qid = $_POST['qid'];
-
 
 
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
@@ -362,7 +360,7 @@ if($add)
 else {return 0;}
 
 
- 
+
 
 default:
 header('Location: https://web.njit.edu/~jll25/CS490/student.html');
