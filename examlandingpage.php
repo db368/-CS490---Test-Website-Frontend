@@ -24,4 +24,4 @@
     <a href="vexams.php">  Click here to return to the exam dialog </a>
 </body>
 
-</html;
+</html>
