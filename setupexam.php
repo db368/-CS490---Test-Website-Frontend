@@ -31,7 +31,7 @@ $qjson = json_decode($return_val, true);
 $i=0;
 $qarray = array();
 foreach($qjson as $question){
-    $qarray[$i]=$question; // Build a new array with numbers as keys
+    $qarray[$i]=$question['id']; // Build a new array with numbers as keys
     $i++;
 }
 
