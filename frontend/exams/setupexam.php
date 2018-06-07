@@ -15,7 +15,7 @@ if ($return_val == null) {
     echo "<h1> ERROR: NO RETURN VALUE </h2>";
 }
 
-//Get Qbank 
+//Get Qbank
 $ch3= curl_init();
 curl_setopt($ch3, CURLOPT_URL, "$target");
 curl_setopt($ch3, CURLOPT_POST, 1); // Set it to post
@@ -67,7 +67,7 @@ $alarray['questions']=$usedids;
 $alarray['currentquestion']='1';
 
 
-$target = "http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/texam.php";
+$target = "http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/exams/texam.php";
 //$target = "http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debug.php";
 $ch2 = curl_init();
 curl_setopt($ch2, CURLOPT_URL, "$target");

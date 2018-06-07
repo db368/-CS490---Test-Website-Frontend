@@ -13,7 +13,7 @@ curl_close($ch);
 //Finally, we load the url that we wanted to redirect to.
 //One little tweak to the post
 $_POST['id'] = $_POST['eid'];
-$target = 'http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/eexam.php';
+$target = 'http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/exams/eexam.php';
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, "$target");
 curl_setopt($ch, CURLOPT_POST, 1); // Set it to post

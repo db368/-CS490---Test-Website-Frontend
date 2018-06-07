@@ -45,7 +45,7 @@ else {
 
 
 //Now we get to do the fun work of posting it again
-echo '<form method="post" action="texam.php">';
+echo '<form method="post" action="/exams/texam.php">';
 $i=0;
 foreach($questions as $q){
     echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
