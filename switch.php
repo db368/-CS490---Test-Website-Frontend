@@ -280,7 +280,7 @@ $eid = $_POST['eid'];
 
 $qid = $_POST['qid'];
 
-
+if(isset($_POST['qid'])){
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 $deleteq ="Delete from ExQuestions where Exam_id = '$eid' and Question_id ='$qid'";
 $deleteqresult = $conn->query($deleteq);
@@ -288,7 +288,8 @@ if($deleteqresult)
 {
   return 1;}
 else {return 0;}
-if(!isset($_POST['qid'])){
+}
+else{
 $deletee="Delete from Exams where Eid = '$eid'";
 $deleteeresult = $conn->query($deletee);
 		if ($deleteeresult)
