@@ -83,7 +83,7 @@ foreach ($exams as $exam){
 </div>
 <div>
     <h2> Add new exam </h2>
-    <form action="aelooper.php" method="post">
+    <form action="loopers/aelooper.php" method="post">
         <input type="hidden" name = "identifier" value="a_exam">
         <input type="text" name="examname">
         <input type="submit" value="Add Exam">
