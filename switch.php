@@ -288,13 +288,14 @@ if($deleteqresult)
 {
   return 1;}
 else {return 0;}
-		
+if(!isset($_POST['qid'])){
 $deletee="Delete from Exams where Eid = '$eid'";
 $deleteeresult = $conn->query($deletee);
 		if ($deleteeresult)
 		{
 			return 1;}
 		else{return 0;}
+}
 break;
 
 //add question to test bank
