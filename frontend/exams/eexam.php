@@ -82,7 +82,7 @@ th{
         echo '<table style="width:100%">';
         echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
         foreach ($questions as $question){
-            echo '<form method="post" action="../loopers/exlooper.php">';
+            echo '<form method="post" action="../debug.php">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
             $qid = $question['Qid']; // This is the only variable used twice
             echo '<tr>';
@@ -145,7 +145,8 @@ th{
             //   continue;
             //}
             echo '<tr>';
-            echo '<form method="post" action="../loopers/exlooper.php">';
+            //echo '<form method="post" action="../loopers/exlooper.php">';
+            echo '<form method="post" action="../debug.php">';
             echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
             echo '<input type="hidden" name="score" value="0">';
