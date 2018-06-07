@@ -92,6 +92,6 @@ echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
 ?>
-    <a href='/frontend/qbank/qbank.php'> Cancel </a>
+    <a href='qbank.php'> Cancel </a>
 </body>
 </html>

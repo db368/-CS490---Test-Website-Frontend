@@ -145,7 +145,7 @@ th{
             //   continue;
             //}
             echo '<tr>';
-            echo '<form method="loopers/post" action="exlooper.php">';
+            echo '<form method="../loopers/post" action="exlooper.php">';
             echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
             echo '<input type="hidden" name="score" value="0">';
