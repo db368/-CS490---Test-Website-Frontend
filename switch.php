@@ -282,12 +282,19 @@ $qid = $_POST['qid'];
 
 
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-$delete ="Delete from ExQuestions where Exam_id = '$eid' and Question_id ='$qid'";
-$deleteresult = $conn->query($delete);
-if($deleteresult)
+$deleteq ="Delete from ExQuestions where Exam_id = '$eid' and Question_id ='$qid'";
+$deleteqresult = $conn->query($deleteq);
+if($deleteqresult)
 {
   return 1;}
 else {return 0;}
+		
+$deletee="Delete from Exams where Eid = '$eid'";
+$deleteeresult = $conn->query($deletee);
+		if ($deleteeresult)
+		{
+			return 1;}
+		else{return 0;}
 break;
 
 //add question to test bank
