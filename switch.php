@@ -359,6 +359,12 @@ if($add)
 }
 else {return 0;}
 
+$updatescore = "update ExQuestions set Total_points = '$score' where Exam_id = '$eid' and Question_id = 'qid'";
+$updatescoreresult = $conn->query($updatescore);
+if ($updatescoreresult)
+{return 1;}
+		else {return 0};
+
 
 
 
