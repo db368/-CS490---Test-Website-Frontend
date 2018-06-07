@@ -313,28 +313,10 @@ $solution = $_POST['solution'];
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
-/*
-if(is_array($case)){
-    foreach ($case as $row) {
-        $case  = mysql_real_escape_string($case[$row][Testcase 1]);
-        $case  = mysql_real_escape_string($case[$row][1]);
-        $case3 = mysql_real_escape_string($case[$row][2]);
-        $case4 = mysql_real_escape_string($case[$row][3]);
-        $add2 = "INSERT INTO TC(TestCase) VALUES ('$case')";
-        mysqli_query($conn, $add2);
-    }
-}
+		
+		//fix textcases 
 
-if(is_array($solution)){
-    foreach ($solution as $row) {
-        $solution1 = mysql_real_escape_string($case[$row][0]);
-        $solution2= mysql_real_escape_string($case[$row][1]);
-        $solution3 = mysql_real_escape_string($case[$row][2]);
-        $solution4 = mysql_real_escape_string($case[$row][3]);
-        $add3 = "INSERT INTO TC(Answer) VALUES ('$solution')";
-        mysqli_query($conn, $add3);
-    }
-}*/
+
 
 $addresult = $conn->query($add);
 
@@ -361,12 +343,14 @@ $score = $_POST['score'];
 
 
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+		
+//add if exists to put number in		
 $add ="INSERT INTO 'ExQuestions'('Exam_id', 'Question_id', 'Total_points') VALUES ('$eid','$qid','$score')";
 $addresult = $conn->query($add);
 if($add)
 {return 1;
 }
-else {return 0;}
+
 
 $updatescore = "update ExQuestions set Total_points = '$score' where Exam_id = '$eid' and Question_id = 'qid'";
 $updatescoreresult = $conn->query($updatescore);
