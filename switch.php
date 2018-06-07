@@ -313,8 +313,8 @@ $solution = $_POST['solution'];
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
-		
-		//fix textcases 
+
+		//fix textcases
 
 
 
@@ -343,8 +343,8 @@ $score = $_POST['score'];
 
 
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-		
-//add if exists to put number in		
+
+//add if exists to put number in
 $add ="INSERT INTO 'ExQuestions'('Exam_id', 'Question_id', 'Total_points') VALUES ('$eid','$qid','$score')";
 $addresult = $conn->query($add);
 if($add)
@@ -357,6 +357,14 @@ $updatescoreresult = $conn->query($updatescore);
 if ($updatescoreresult)
 {return 1;}
 		else {return 0};
+break;
+
+//remove an exam
+case 'r_exam':
+$eid = $_POST['eid'];
+$conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+$remove = "delete from Exams where Eid = '$eid'";
+$removequery = conn->query($remove);
 
 
 
