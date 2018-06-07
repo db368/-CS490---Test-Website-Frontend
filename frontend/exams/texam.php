@@ -7,12 +7,12 @@
     $questions = $_POST['questions'];
     $number = $_POST['currentquestion'];
     $exid = $_POST['exid'];
-    //On first run answers will not be set
+    //On first run answer will not be set
 if (isset($_POST['answers'])) {
-    $answers = $_POST['answers'];
+    $answer = $_POST['answers'];
 }
 else {
-    $answers = array();
+    $answer = array();
 }
     $qid = $questions[$number];
     //echo "<h1> Incoming POST </h1>";
@@ -20,7 +20,7 @@ else {
 
     //echo "<h1> Incoming questions </h1>";
     //echo var_dump($questions);
-    //echo "<br> Current Question Number is ". $number. " and the id is ". $qid . "<br>";
+    //echo "<br> Current Question Number is ". $number. " anid the id is ". $qid . "<br>";
 
    //CURL to get the actual useful question information;
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -37,8 +37,8 @@ else {
     //var_dump($question);
     $qtext = $question["Question"];
 
-    //echo "<h1> CURRENT ANSWERS </h1><br>";
-    //echo var_dump($answers);
+    //echo "<h1> CURRENT answer </h1><br>";
+    //echo var_dump($answer);
 
     echo "<h1> QUESTION ".$number." </h1>";
     echo "<p>" . $qtext . "</p><br>";
@@ -49,11 +49,11 @@ echo '<form method="post" action="texam.php">';
 $i=0;
 foreach($questions as $q){
     echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
-    echo '<input type=hidden name=answers['.$i.'] value="'.$answers[$i].'">';
+    echo '<input type=hidden name=answer['.$i.'] value="'.$answer[$i].'">';
     $i=$i+1;
 }
 
-    echo '<input type=textbox name=answers['.$number.'] value='. $answers[$number] .'><br>';
+    echo '<input type=textbox name=answer['.$number.'] value='. $answer[$number] .'><br>';
     echo '<input type=hidden name=exid value="'.$exid.'">';
 if ($number < count($questions)-1) {
     echo '<button type=submit name=currentquestion value='.($number+1).'> Next Question </button>';
@@ -64,15 +64,16 @@ if ($number != 1) {
     echo "</form>";
 
 // Submit button stuff
-    echo '<form method="post" action="examlandingpage.php">';
+    //echo '<form method="post" action="examlandingpage.php">';
+    echo '<form method="post" action="../debug.php">';
     $i=0;
 foreach($questions as $q){
     echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
-    echo '<input type=hidden name=answers['.$i.'] value="'.$answers[$i].'">';
+    echo '<input type=hidden name=answer['.$i.'] value="'.$answer[$i].'">';
     $i=$i+1;
 }
     echo '<input type=hidden name=exid value="'.$exid.'">';
-    echo '<button type=submit name=submit value=submit> Submit Answers </button>';
+    echo '<button type=submit name=identifier value=answer> Submit answer </button>';
     echo '</form>';
 ?>
 
