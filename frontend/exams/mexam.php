@@ -61,10 +61,8 @@ if ($return_val == null) {
     */
 
     echo '<table width=100%>';
-    echo '<tr><th> EXAMS </th></tr>';
-    echo '<form action="eexam.php" method="post">';
-    echo '<input type="hidden" name="identifier" value="e_get_questions">';
-foreach ($exams as $exam){
+    echo '<tr><th> EXAMS </th> REMOVE </tr>';
+    foreach ($exams as $exam){
     // Could probably wrap this up in a function eventually
     $exid = "error"; $exname = "error";
     if (isset($exam['Eid'])) { $exid = $exam['Eid'];
@@ -73,7 +71,11 @@ foreach ($exams as $exam){
     }
 
     echo '<tr>';
-    echo '<td> <button type="submit" class="link-button" name="id" value="' . $exid .'">'. $exname . '</button> </td>';
+    echo '<form action="eexam.php" method="post">';
+    echo '<input type="hidden" name="id" value="'.$exid.'">';
+    //echo '<td> <button type="submit" class="link-button" name="identifier" value="' . $exid .'">'. $exname . '</button> </td>';
+    echo '<td> <button type="submit" class="link-button" name="identifier" value="qb_get_question">'. $exname . '</button> </td>';
+    echo '</form>';
     echo '</tr>';
 }
     echo '</form>';
