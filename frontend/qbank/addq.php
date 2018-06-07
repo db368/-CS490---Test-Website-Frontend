@@ -58,10 +58,10 @@ $question = json_decode($return_val, true)[0];
 $qtext = $question['Question'];
 $diff = $question['Difficulty'];
 $soln = $question['Answer'];
-if(sizeof($question['TestCase']) > 0){ 
+if(sizeof($question['TestCase']) > 0){
 	$testcases = $question['TestCase'];
 }
-else{ 
+else{
 	$testcases = array("Testcase1", "Testcase2", "Testcase3", "Testcase4");
 }
 if (count($soln) < count($testcases)){
@@ -87,11 +87,11 @@ foreach ($testcases as $case){ // Solutions aren't supported by the DB yet.
 }
 if ($purpose == "e_question"){
     echo '<input type = "hidden" name="qid" value='. $_POST['questionid']. '>';
-  }  
+  }
 echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
 ?>
-    <a href='qbank.php'> Cancel </a>
+    <a href='/frontend/qbank/qbank.php'> Cancel </a>
 </body>
 </html>
