@@ -364,8 +364,9 @@ case 'r_exam':
 $eid = $_POST['eid'];
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 $remove = "delete from Exams where Eid = '$eid'";
-$removequery = conn->query($remove);
+$removequery = $conn->query($remove);
 
+break;
 
 
 
