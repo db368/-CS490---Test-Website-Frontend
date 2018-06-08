@@ -249,7 +249,7 @@ $updateq = $conn->query($updatq);
 $updatetc =  "UPDATE TC SET TestCase = '$answer' where Question_id ='$qid'";
 $updateq = $conn->query($updatq);
 
-
+/*
 $update = "UPDATE Questions SET Question='$question','Difficulty'='$difficulty' WHERE Qid = '$qid'";
 $addresult = $conn->query($update);
 if($addresult)
@@ -270,7 +270,7 @@ if(!isset($_POST['testcases'])){ return 1;}
 	}
 }
 }
-}
+}*/
 break;
 
 //delete
@@ -314,11 +314,13 @@ $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
 
-		//fix textcases
-
-
-
 $addresult = $conn->query($add);
+
+$sql = array();
+  foreach( $data as $row ) {
+		    $sql[] = '("'.mysql_real_escape_string($row['testcase']).'", '.mysql_real_escape_string($row['solutions']).')';
+		}
+		mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));
 
 if($addresult)
 {$addresult1 = $conn->query($add2);
@@ -334,11 +336,8 @@ break;
 case "aq_exam":
 $aqe= $_POST['aq_exam'];
 
-
 $eid = $_POST['eid'];
-
 $qid = $_POST['qid'];
-
 $score = $_POST['score'];
 
 
@@ -365,10 +364,7 @@ $eid = $_POST['eid'];
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 $remove = "delete from Exams where Eid = '$eid'";
 $removequery = $conn->query($remove);
-
 break;
-
-
 
 default:
 header('Location: https://web.njit.edu/~jll25/CS490/student.html');
