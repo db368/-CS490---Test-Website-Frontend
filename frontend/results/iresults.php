@@ -58,11 +58,9 @@ tr:nth-child(even){
     } 
     $exams = json_decode($return_val, true);
     
-    var_dump($exams);	
+    //var_dump($exams);	
     echo "<table>";
     echo "<tr> <th> EXAM </th> <th> RELEASE </th> </tr>"; //Only need to do a single form I think
-    echo '<form method="post" action="../debug.php">';
-    echo '<input type="hidden" name="identifier" value="results">';
     foreach($exams as $exam){
         echo "<tr>";
         $exid = "error"; $exname = "error";
@@ -70,11 +68,12 @@ tr:nth-child(even){
         }
         if (isset($exam['Name'])) { $exname = $exam['Name'];
         }
-        echo '<td> <button type="submit" class="link-button" name="id" value="'. $exid .'"> '.$exname.' </button> </td>';
-	echo '<td> <button type="submit" name=id value="'.$exid.'"> RELEASE  </button> </td>';
-        echo '</tr>';
+    	echo '<form method="post" action="../debug.php">';
+    	echo '<input type="hidden" name="id" value="'.$exid.'">';
+        echo '<td> <button type="submit" class="link-button" name="identifier" value="results"> '.$exname.' </button> </td>';
+	echo '<td> <button type="submit" name=identifier value="release"> RELEASE  </button> </td>';
+    	echo "</form></tr>";
     }
-    echo "</form>";
     echo "</table>";
 
     ?>
