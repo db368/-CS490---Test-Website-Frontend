@@ -316,19 +316,18 @@ $add= "Insert into Questions(Question, Difficulty) values ('$question', '$diffic
 
 $addresult = $conn->query($add);
 
+echo "<pre>";
+print_r($case);
+echo "</pre>";
+
+
 $sql = array();
-  foreach( $data as $row ) {
-		    $sql[] = '("'.mysql_real_escape_string($row['testcase']).'", '.mysql_real_escape_string($row['solutions']).')';
+  foreach( $testcase as $row ) {
+		    $sql[] = '("'.mysql_real_escape_string($row['testcases']).'", '.mysql_real_escape_string($row['solution']).')';
 		}
 		mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));
 
-if($addresult)
-{$addresult1 = $conn->query($add2);
-if($addresult1){
-	  return 1;}
-	else {return 0;}
-}
-else {return 0;}
+
 break;
 
 //add question to exam
