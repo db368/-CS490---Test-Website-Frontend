@@ -35,7 +35,8 @@ th{
 </head>
 <body>
     <div class="examquestions">
-    <h1> Exam Questions </h1>
+    <h1> Exam Questions <form>
+     </h1>
     <?php
     if (!isset($_POST['id'])) {
         echo "No ID!??!";
@@ -43,6 +44,24 @@ th{
     }
     else {$Eid = $_POST["id"];
     }
+    if (isset($_POST['filter'])) {
+        $filter=$_POST['filter'];
+    }
+    else{
+        $filter='none';
+    }
+
+    //Before we even curl, lets define this filter box
+    echo '<form action="eexam.php" method="post" id="filter">';
+    echo '<input type=hidden name=id value="'.$Eid.'>';
+    echo '</form> <select form="filter">'
+    echo '<option value="none"> None </option>';
+    echo '<option value="Easy"> Easy </option>';
+    echo '<option value="Medium"> Medium </option>';
+    echo '<option value="Hard"> Hard </option>';
+    echo '</select>';
+
+    //Now you curl
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, $target);
@@ -60,8 +79,13 @@ th{
         echo '<table style="width:100%">';
         echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
         foreach ($questions as $question){
+            //Filter Logic
+            if ($filter != 'none' and $filter != $question['Difficulty']) {
+                break; //Break on any question that doesn't match the filter.
+            }
             echo '<form method="post" action="../debug.php">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
+
             $qid = $question['Qid']; // This is the only variable used twice
             echo '<tr>';
             echo '<input type="hidden" name="qid" value="'. $cid . '">';
