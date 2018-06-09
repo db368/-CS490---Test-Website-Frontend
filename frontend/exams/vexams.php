@@ -38,8 +38,6 @@ tr:nth-child(even){
 
 </style>
 <body>
-<h1> View Exams </h1>
-<p> Click on an exam to take it! </p>
 <div>
 <?php
     //Obtain Exams
@@ -50,13 +48,14 @@ tr:nth-child(even){
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'v_exams')));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
-    curl_close($ch);
 if ($return_val == null) {
     echo "<h1> ERROR: NO RETURN VALUE </h1>";
     exit;
 }
     $exams = json_decode($return_val, true);
 
+    echo "<h1> View Exams </h1>";
+    echo "<p> Click on an exam to take it! </p>";
     //Build Table
     /* Test Code
     $exams = array("Exam1", "Exam2", "Exam3");
@@ -68,6 +67,10 @@ if ($return_val == null) {
     echo '<tr><th> EXAMS </th></tr>';
     echo '<form action="setupexam.php" method="post">';
     echo '<input type="hidden" name="identifier" value="e_get_questions">';
+
+//Okay, time to do a million Curl requests.
+
+
 foreach ($exams as $exam){
     // Could probably wrap this up in a function eventually
     $exid = "error"; $exname = "error";
