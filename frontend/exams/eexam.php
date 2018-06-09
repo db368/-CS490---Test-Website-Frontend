@@ -35,8 +35,7 @@ th{
 </head>
 <body>
     <div class="examquestions">
-    <h1> Exam Questions <form>
-     </h1>
+    <h1> Exam Questions   </h1>
     <?php
     if (!isset($_POST['id'])) {
         echo "No ID!??!";
@@ -53,13 +52,15 @@ th{
 
     //Before we even curl, lets define this filter box
     echo '<form action="eexam.php" method="post" id="filter">';
-    echo '<input type=hidden name=id value="'.$Eid.'>';
-    echo '</form> <select form="filter">'
+    echo '<input type=hidden name=id value="'.$Eid.'">';
+    echo '<input type="submit" value="Apply Filter">';
+    echo '<select name="filter">';
     echo '<option value="none"> None </option>';
     echo '<option value="Easy"> Easy </option>';
     echo '<option value="Medium"> Medium </option>';
     echo '<option value="Hard"> Hard </option>';
     echo '</select>';
+    echo '</form>'; 
 
     //Now you curl
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
