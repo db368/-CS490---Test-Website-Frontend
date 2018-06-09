@@ -53,6 +53,8 @@ if ($return_val == null) {
     exit;
 }
     $exams = json_decode($return_val, true);
+	
+
 
     echo "<h1> View Exams </h1>";
     echo "<p> Click on an exam to take it! </p>";
@@ -71,7 +73,7 @@ if ($return_val == null) {
 
 foreach ($exams as $exam){
     //First of all, lets see if this thing has any questions
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_questions', 'id' => $exam["id"])));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_questions', 'id' => $exam["Eid"])));
     if (curl_exec($ch) == NULL){
         break;
     }
@@ -85,6 +87,7 @@ foreach ($exams as $exam){
     echo '<td> <button type="submit" class="link-button" name="id" value="' . $exid .'">'. $exname . '</button> </td>';
     echo '</tr>';
 }
+    curl_close($ch);
     echo '</form>';
     echo '</table>';
 ?>
