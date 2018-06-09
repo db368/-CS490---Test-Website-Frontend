@@ -60,20 +60,21 @@ $soln = $question['Answer'];
 $testcases = $question['TestCase'];
 
 
-echo '<form action="../loopers/qblooper.php" method="post">';
+//echo '<form action="../loopers/qblooper.php" method="post">';
+echo '<form action="../debug.php" method="post">';
 foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
     if ($rdiff==$diff) { echo "checked";
     }
     echo '> ' . $rdiff;
 }
-
     echo "<br>";
     echo 'Question Text: ';
     echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
+
 for ($i = 0; $i<sizeof($testcases) || $i<4; $i++){ // Solutions aren't supported by the DB yet.
-    echo 'Test Case '. $i + 1 .' : <input type="text" name="testcase[' . $i .']" value="'. $testcases[$i] . '">';
-    echo 'Solution '. $i + 1 .' :<input type="text" name="solution[' . $i . ']" value="'. $soln[$i] . '"><br>';
+    echo 'Test Case '. ($i + 1) .' : <input type="text" name="testcase[' . $i .']" value="'. $testcases[$i] . '">';
+    echo 'Solution '. ($i + 1) .' :<input type="text" name="solution[' . $i . ']" value="'. $soln[$i] . '"><br>';
 }
 if ($purpose == "e_question") {
     echo '<input type = "hidden" name="qid" value='. $_POST['questionid']. '>';
