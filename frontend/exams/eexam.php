@@ -60,7 +60,7 @@ th{
     echo '<option value="Medium"> Medium </option>';
     echo '<option value="Hard"> Hard </option>';
     echo '</select>';
-    echo '</form>'; 
+    echo '</form>';
 
     //Now you curl
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -108,24 +108,24 @@ th{
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
         <?php
-if (isset($_POST['tbfilter'])) {
-        $tbfilter=$_POST['tbfilter'];
-    }
-    else{
-        $tbfilter='none';
-    }
+        if (isset($_POST['tbfilter'])) {
+                $tbfilter=$_POST['tbfilter'];
+        }
+        else{
+            $tbfilter='none';
+        }
 
-	//Before we even curl, lets define this filter box
-	    echo '<form action="eexam.php" method="post" id="filter">';
-	    echo '<input type=hidden name=id value="'.$Eid.'">';
-	    echo '<input type="submit" value="Apply Filter">';
-	    echo '<select name="tbfilter">';
-	    echo '<option value="none"> None </option>';
-	    echo '<option value="Easy"> Easy </option>';
-	    echo '<option value="Medium"> Medium </option>';
-	    echo '<option value="Hard"> Hard </option>';
-	    echo '</select>';
-	    echo '</form>'; 
+        //Before we even curl, lets define this filter box
+        echo '<form action="eexam.php" method="post" id="filter">';
+        echo '<input type=hidden name=id value="'.$Eid.'">';
+        echo '<input type="submit" value="Apply Filter">';
+        echo '<select name="tbfilter">';
+        echo '<option value="none"> None </option>';
+        echo '<option value="Easy"> Easy </option>';
+        echo '<option value="Medium"> Medium </option>';
+        echo '<option value="Hard"> Hard </option>';
+        echo '</select>';
+        echo '</form>';
 
         $Eid = $_POST['id'];
         //Obtain Question Bank
@@ -150,7 +150,7 @@ if (isset($_POST['tbfilter'])) {
                 continue; //Break on any question that doesn't match the filter.
             }
 
-	echo '<tr>';
+            echo '<tr>';
             //echo '<form method="post" action="../loopers/exlooper.php">';
             echo '<form method="post" action="../debug.php">';
             echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
