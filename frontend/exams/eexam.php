@@ -108,6 +108,25 @@ th{
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
         <?php
+if (isset($_POST['tbfilter'])) {
+        $tbfilter=$_POST['tbfilter'];
+    }
+    else{
+        $tbfilter='none';
+    }
+
+	//Before we even curl, lets define this filter box
+	    echo '<form action="eexam.php" method="post" id="filter">';
+	    echo '<input type=hidden name=id value="'.$Eid.'">';
+	    echo '<input type="submit" value="Apply Filter">';
+	    echo '<select name="tbfilter">';
+	    echo '<option value="none"> None </option>';
+	    echo '<option value="Easy"> Easy </option>';
+	    echo '<option value="Medium"> Medium </option>';
+	    echo '<option value="Hard"> Hard </option>';
+	    echo '</select>';
+	    echo '</form>'; 
+
         $Eid = $_POST['id'];
         //Obtain Question Bank
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -127,7 +146,11 @@ th{
             //if (in_array($qbids[$i], $examids)) {  //TODO:This question is already on the array, skip it
             //   continue;
             //}
-            echo '<tr>';
+            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
+                break; //Break on any question that doesn't match the filter.
+            }
+
+	echo '<tr>';
             //echo '<form method="post" action="../loopers/exlooper.php">';
             echo '<form method="post" action="../debug.php">';
             echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
