@@ -55,11 +55,11 @@ else{
     $purpose = "a_testbank";*/
 $question = json_decode($return_val, true)[0];
 $qtext = $question['Question'];
-if (isset($question['Difficulty'])){
- $diff =  $question['Difficulty'];
+if (isset($question['Difficulty'])) {
+    $diff =  $question['Difficulty'];
 }
 else{
-	$diff = "Easy";
+    $diff = "Easy";
 }
 
 $soln = $question['Answer'];
