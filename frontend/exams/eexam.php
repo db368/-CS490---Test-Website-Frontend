@@ -82,7 +82,7 @@ th{
         foreach ($questions as $question){
             //Filter Logic
             if ($filter != 'none' and $filter != $question['Difficulty']) {
-                break; //Break on any question that doesn't match the filter.
+                continue; //Break on any question that doesn't match the filter.
             }
             echo '<form method="post" action="../debug.php">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
@@ -147,7 +147,7 @@ if (isset($_POST['tbfilter'])) {
             //   continue;
             //}
             if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
-                break; //Break on any question that doesn't match the filter.
+                continue; //Break on any question that doesn't match the filter.
             }
 
 	echo '<tr>';

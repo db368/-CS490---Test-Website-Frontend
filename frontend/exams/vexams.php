@@ -75,7 +75,7 @@ foreach ($exams as $exam){
     //First of all, lets see if this thing has any questions
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_questions', 'id' => $exam["Eid"])));
     if (curl_exec($ch) == NULL){
-        break;
+        continue;
     }
     $exid = "error"; $exname = "error";
     if (isset($exam['Eid'])) { $exid = $exam['Eid'];
