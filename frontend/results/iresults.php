@@ -55,10 +55,10 @@ tr:nth-child(even){
     if ($return_val == null) {
         echo "<h3> ERROR: EXAM LIST COULD NOT BE RETRIEVED </h3>";
         exit;
-    } 
+    }
     $exams = json_decode($return_val, true);
-    
-    //var_dump($exams);	
+
+    //var_dump($exams);
     echo "<table>";
     echo "<tr> <th> EXAM </th> <th> RELEASE </th> </tr>"; //Only need to do a single form I think
     foreach($exams as $exam){
@@ -68,11 +68,11 @@ tr:nth-child(even){
         }
         if (isset($exam['Name'])) { $exname = $exam['Name'];
         }
-    	echo '<form method="post" action="../debug.php">';
-    	echo '<input type="hidden" name="id" value="'.$exid.'">';
+        echo '<form method="post" action="../debug.php">';
+        echo '<input type="hidden" name="id" value="'.$exid.'">';
         echo '<td> <button type="submit" class="link-button" name="identifier" value="results"> '.$exname.' </button> </td>';
-	echo '<td> <button type="submit" name=identifier value="release"> RELEASE  </button> </td>';
-    	echo "</form></tr>";
+        echo '<td> <button type="submit" name=identifier value="release"> RELEASE  </button> </td>';
+        echo "</form></tr>";
     }
     echo "</table>";
 
