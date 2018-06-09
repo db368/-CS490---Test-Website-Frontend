@@ -68,11 +68,12 @@
                 echo "<tr>";
                 echo '<td> <button type="submit" name="identifier" value="qb_get_question" class="link-button"> '. $qtext . '</button></td>';
                 echo '<td>'.$qdiff.'</td>';
-                echo '<td> <button type= "submit" name="identifier" value="qb_removequestion"> Remove </button></td>';
+                //echo '<td> <button type= "submit" name="identifier" value="qb_removequestion" onclick=\'this.form.action="../loopers/qblooper.php";\'/> Remove </button></td>';
+                echo '<td> <button type= "submit" name="identifier" value="r_testbank" onclick=\'this.form.action="../debug.php";\'/> Remove </button></td>';
                 echo "</tr>";
+		echo "</form>";
             }
         ?>
-        </form>
         </table>
     </div>
     <!--End the button Nonsense -->
