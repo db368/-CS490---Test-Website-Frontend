@@ -61,7 +61,7 @@ tr:nth-child(even){
     var_dump($exams);	
     echo "<table>";
     echo "<tr> <th> EXAM </th> <th> RELEASE </th> </tr>"; //Only need to do a single form I think
-    echo '<form target="../debug.php">';
+    echo '<form method="post" action="../debug.php">';
     echo '<input type="hidden" name="identifier" value="results">';
     foreach($exams as $exam){
         echo "<tr>";
