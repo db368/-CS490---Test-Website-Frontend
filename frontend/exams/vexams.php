@@ -49,7 +49,7 @@ tr:nth-child(even){
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
 if ($return_val == null) {
-    echo "<h1> ERROR: NO RETURN VALUE </h1>";
+    echo "<h1> ERROR: EXAM LIST COULD NOT BE RETRIEVED </h1>";
     exit;
 }
     $exams = json_decode($return_val, true);
@@ -68,11 +68,13 @@ if ($return_val == null) {
     echo '<form action="setupexam.php" method="post">';
     echo '<input type="hidden" name="identifier" value="e_get_questions">';
 
-//Okay, time to do a million Curl requests.
-
 
 foreach ($exams as $exam){
-    // Could probably wrap this up in a function eventually
+    //First of all, lets see if this thing has any questions
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_questions', 'id' => $exam["id"])));
+    if (curl_exec($ch) == NULL){
+        break;
+    }
     $exid = "error"; $exname = "error";
     if (isset($exam['Eid'])) { $exid = $exam['Eid'];
     }
