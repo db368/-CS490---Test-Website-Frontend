@@ -323,11 +323,15 @@ $getairesult = $conn->query($getai);
 
 
     $sql = array();
+		/*
     foreach( $testcases as $row ) {
         $sql[] = '("'.mysql_real_escape_string($row['testcases']).'", '.mysql_real_escape_string($row['solution']).')';
     }
-    mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));
+    mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));*/
 
+		 for($i=0; $i<sizeof($testcases)){
+			 $testcaseresult = "Insert into TC(Eid,TestCase) values '$getairesult','$testcases[$i]';";
+		 }
 
     break;
 
