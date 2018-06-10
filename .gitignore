@@ -1,2 +1,6 @@
 secret.ini
+<<<<<<< HEAD
 frontend\Druswitch.php
+=======
+frontend/Druswitch.php
+>>>>>>> bbaad5ecee0397a5d029e46f608d924cfe707394
