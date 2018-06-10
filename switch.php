@@ -329,7 +329,7 @@ $getairesult = $conn->query($getai);
     }
     mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));*/
 
-		 for($i=0; $i<sizeof($testcases)){
+		 for($i=0; $i<sizeof($testcases); $i++){
 			 $testcaseresult = "Insert into TC(Eid,TestCase) values '$getairesult','$testcases[$i]';";
 		 }
 
