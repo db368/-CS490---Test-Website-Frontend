@@ -304,8 +304,8 @@ case "a_testbank":
 $ate = $_POST['a_testbank'];
 
 
-$question = $_POST['question'];
-$difficulty = $_POST['difficulty'];
+$question = $_POST['Question'];
+$difficulty = $_POST['Difficulty'];
 $case = $_POST['testcases'];
 $solution = $_POST['solution'];
 
@@ -354,7 +354,7 @@ $updatescore = "update ExQuestions set Total_points = '$score' where Exam_id = '
 $updatescoreresult = $conn->query($updatescore);
 if ($updatescoreresult)
 {return 1;}
-		else {return 0};
+		else {return 0;}
 break;
 
 //remove an exam
