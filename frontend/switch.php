@@ -297,13 +297,14 @@ $ate = $_POST['a_testbank'];
 
 $question = $_POST['question'];
 $difficulty = $_POST['difficulty'];
-$case = $_POST['testcases'];
+$case = $_POST['testcase'];
 $solution = $_POST['solution'];
 
 
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
+$addresult = $conn->query($add);
 /*
 if(is_array($case)){
     foreach ($case as $row) {
@@ -327,7 +328,7 @@ if(is_array($solution)){
     }
 }*/
 
-$addresult = $conn->query($add);
+
 
 if($addresult)
 {$addresult1 = $conn->query($add2);
