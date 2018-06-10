@@ -37,8 +37,9 @@ th{
 </head>
 <body>
     <div class="editquestions">
-    <h1> Exam Questions   </h1>
+    <h1> Edit Question   </h1>
     <?php
+    //Check if the post is set.
     if (!isset($_POST['id'])) {
         echo "No ID!??!";
         exit;
