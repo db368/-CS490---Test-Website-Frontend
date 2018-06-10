@@ -303,11 +303,15 @@ case "a_testbank":
 
     $question = $_POST['question'];
     $difficulty = $_POST['difficulty'];
-    $case = $_POST['testcases'];
+    $case = $_POST['testcase'];
     $solution = $_POST['solution'];
 
 
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+
+$getai = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'jll25' AND TABLE_NAME = 'Questions';";
+$getairesult = $conn->query($getai);
+
 
     $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
 
@@ -319,11 +323,17 @@ case "a_testbank":
 
 
     $sql = array();
-    foreach( $testcase as $row ) {
+		/*
+    foreach( $testcases as $row ) {
         $sql[] = '("'.mysql_real_escape_string($row['testcases']).'", '.mysql_real_escape_string($row['solution']).')';
     }
-    mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));
+    mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));*/
 
+		 for($i=0; $i<sizeof($testcases); $i++){
+			 $testcaseresult = "Insert into TC(Eid,TestCase) values '$getairesult','$testcases[$i]';";
+			 $testcaseresultq= $conn->query($testcaseresult);
+
+		 }
 
     break;
 
