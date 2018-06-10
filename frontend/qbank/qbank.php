@@ -41,6 +41,7 @@
             <?php
             // Obtain Questions
             $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+            //$target = "https://web.njit.edu/~jll25/CS490/switch.php";
             $ch= curl_init();
             curl_setopt($ch, CURLOPT_URL, "$target");
             curl_setopt($ch, CURLOPT_POST, 1); // Set it to post

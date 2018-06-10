@@ -28,7 +28,7 @@
 
 <body>
 <?php
-if (!isset($_POST['questionid'])) {
+if (!isset($_POST['id'])) {
     echo "<h1> Add New Question </h1>";
     $purpose = "a_testbank";
 
@@ -43,7 +43,7 @@ else {
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, "$target");
     curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question','questionid'=>$_POST['questionid'])));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question','questionid'=>$_POST['id'])));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
