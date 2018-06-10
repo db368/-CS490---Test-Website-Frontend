@@ -7,16 +7,14 @@
 div.testbankquestions {
     float: right;
     overflow: auto;
-    width: 50%;
-    background-color: white;
     height:100%;
+    width:50%
 }
 div.editquestions {
     float: left;
     overflow: auto;
-    width: 50%;
-    background-color: white;
-    height:100%;
+    width:49%;
+    padding-bottom:10px; 
 }
 
 
@@ -25,7 +23,6 @@ div.editquestions {
 </head>
 <body>
     <div class="editquestions">
-    <h1> Edit Question   </h1>
     <?php
     if (!isset($_POST['id'])) {
         echo "<h1> Add New Question </h1>";
@@ -68,6 +65,7 @@ div.editquestions {
 
 
     //echo '<form action="../loopers/qblooper.php" method="post">';
+    echo '<div class="form">';
     echo '<form action="../debug.php" method="post">';
     foreach (array("Easy", "Medium", "Hard") as $rdiff){
         echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
@@ -89,6 +87,7 @@ div.editquestions {
     echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
         echo '<button type="submit" class="link-button"> Submit </button>';
         echo "</form>";
+    echo "</div>";
 
 
     /*

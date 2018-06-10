@@ -17,10 +17,11 @@
     --color-secondary-2-2: #CC2E8E;
     --color-secondary-2-3: #9B005E;
     --color-secondary-2-4: #7A004A;
-
+    ;
     --alternatingcolor: #FFD8BA;
+    --backgroundcolor: #998E8E;
+    --divbg: #FFFFFF;
 }
-
 
 .link-button {
     background: none;
@@ -39,33 +40,74 @@
 .link-button:active {
     color: red;
 }
-table{
+div.form{
+    background-color: #ECECEC;
+    margin:auto;
+    width:90%;
+    padding:5px;
+    box-shadow: 0px 0px 0px;
+    border-radius: 4px;
+
+}
+h1 {
+    text-align: center;
+    font-style: bold;
+    font-size: 24px;
+    text-decoration: underline;
+    font-variant: small-caps;
+}
+
+header {
+    background-color: var(--color-primary-4);
+}
+
+input[type=text] {
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px;
+}
+
+body {
+    background: linear-gradient(to top right, white, gray);
+    /* Standard syntax (must be last) */
+    border-top: 5px ridge gray;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+div {
+    background-color: var(--divbg);
+    box-shadow: 0px 0px 20px black;
+    border-radius: 1px
+}
+
+table {
     border-collapse: collapse;
 }
-td{
-    border:1px solid;
+
+td {
+    border: 1px solid;
     border-style: solid;
     padding: 8px;
     text-align: center;
 }
-tr{
 
-}
-th{
+tr {}
+
+th {
     background-color: var(--color-primary-0);
     font-style: italic;
     font-size: 24px;
-    padding-top:6px;
-    padding-bottom:6px;
-    padding-left:6px;
-    padding-right:6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
     color: #FFFFFF;
     border: 1px solid black;
     border-style: solid;
-
 }
 
-tr:nth-child(even){
-    background-color:var(--alternatingcolor);
+tr:nth-child(even) {
+    background-color: var(--alternatingcolor);
     padding: 16px;
 }
