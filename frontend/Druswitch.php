@@ -1,10 +1,8 @@
 <?php //Druswitch.php
 
-//First of all, I'm not uploading the password/username to github. That's a bad idea. Instead lets load it from a secret config file.
-if (!isset($_POST['identifier'])) {echo "No identifier!";
+//Forbidden Code
+if (!isset($_POST['identifier'])) {die("No identifier!");
 }
-//echo var_dump($_POST);
-//echo "Is this thing on?";
 $secretfilepath = "secret.ini";
 $up = parse_ini_file($secretfilepath);
 $username = $up['username'];
@@ -29,7 +27,14 @@ case "aq_exam":
     if (!$datab->query($add)) {
         echo "FAILURE!";
     }
+    break;
+case "a_testbank":
+    $diff = $_POST['difficulty'];
+    $question = $_POST['question'];
+    $testcases = $_POST['testcase'];
+    $solutions = $_POST['solutions'];
 
+    echo json_encode($testcases);
+    break;
 }
-
 ?>

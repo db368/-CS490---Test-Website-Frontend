@@ -1,44 +1,98 @@
 <html>
 <head>
     <title> Question Bank/Add </title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 <style>
-
 
 div.testbankquestions {
     float: right;
     overflow: auto;
     width: 50%;
-    background-color: orange;
+    background-color: white;
     height:100%;
 }
 div.editquestions {
     float: left;
     overflow: auto;
     width: 50%;
-    background-color: lightblue;
+    background-color: white;
     height:100%;
 }
-th, td{
-    border:1px solid;
-    padding: 8px;
-}
 
-tr:nth-child(even){
-    background-color:white;
-    padding: 16px;
-}
-th{
-    background-color: gray;
-}
 
 
 </style>
 </head>
 <body>
     <div class="editquestions">
-    <h1> Exam Questions   </h1>
+    <h1> Edit Question   </h1>
     <?php
+    if (!isset($_POST['id'])) {
+        echo "<h1> Add New Question </h1>";
+        $purpose = "a_testbank";
+
+        $qtext = "";
+        $diff =  "Easy";
+        $soln = array("", "", "", "");
+        $testcases = array("", "", "", "");
+    }
+    else {
+        //Obtain Question from Database
+        $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+        $ch= curl_init();
+        curl_setopt($ch, CURLOPT_URL, "$target");
+        curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question','questionid'=>$_POST['id'])));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $return_val=curl_exec($ch);
+        curl_close($ch);
+
+        echo "<h1> Modify Question </h1>";
+        $purpose = "e_question";
+
+        $question = json_decode($return_val, true)[0];
+        $qtext = $question['Question'];
+        $diff =  $question['Difficulty'];
+        $soln = $question['Answer'];
+        $testcases = $question['TestCase'];
+
+    }
+        //Begin Table
+        /* Debug Code.
+        $qtext = "Question Text";
+        $testcases= array("Testcase 1", "Testcase 2", "Testcase 3");
+        $solutions = array("Solution 1", "Solution 2", "Solution 3");
+        $almagamation = array_combine($testcases, $solutions);
+        $diff = "Easy";
+        $purpose = "a_testbank";*/
+
+
+    //echo '<form action="../loopers/qblooper.php" method="post">';
+    echo '<form action="../debug.php" method="post">';
+    foreach (array("Easy", "Medium", "Hard") as $rdiff){
+        echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
+        if ($rdiff==$diff) { echo "checked";
+        }
+        echo '> ' . $rdiff;
+    }
+        echo "<br>";
+        echo 'Question Text: ';
+        echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
+
+    for ($i = 0; $i<sizeof($testcases) || $i<4; $i++){ // Solutions aren't supported by the DB yet.
+        echo 'Test Case '. ($i + 1) .' : <input type="text" name="testcase[' . $i .']" value="'. $testcases[$i] . '">';
+        echo 'Solution '. ($i + 1) .' :<input type="text" name="solution[' . $i . ']" value="'. $soln[$i] . '"><br>';
+    }
+    if ($purpose == "e_question") {
+        echo '<input type = "hidden" name="qid" value='. $_POST['id']. '>';
+    }
+    echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
+        echo '<button type="submit" class="link-button"> Submit </button>';
+        echo "</form>";
+
+
+    /*
+    //Check if the post is set
     if (!isset($_POST['id'])) {
         echo "No ID!??!";
         exit;
@@ -104,8 +158,9 @@ th{
         echo "</table>";
     }
     //TODO: Make the submit button actually float
-?>
-    <!--<input type="submit" name="submit" value="Submit Changes"> Maybe turn this on again later-->
+    */
+    ?>
+    <!-- <input type="submit" name="submit" value="Submit Changes"> Maybe turn this on again later -->
 </div>
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
@@ -119,7 +174,6 @@ th{
 
         //Before we even curl, lets define this filter box
         echo '<form action="eexam.php" method="post" id="filter">';
-        echo '<input type=hidden name=id value="'.$Eid.'">';
         echo '<input type="submit" value="Apply Filter">';
         echo '<select name="tbfilter">';
         echo '<option value="none"> None </option>';
@@ -129,7 +183,6 @@ th{
         echo '</select>';
         echo '</form>';
 
-        $Eid = $_POST['id'];
         //Obtain Question Bank
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();
@@ -139,6 +192,10 @@ th{
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
         curl_close($ch);
+        if ($return_val == null){
+            echo "<h2> No questions are available at this time!</h2>";
+            exit;
+        }
         $questions = json_decode($return_val, true);
 
             echo '<table style="width:100%">';
