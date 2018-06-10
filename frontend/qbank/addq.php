@@ -28,6 +28,16 @@
 
 <body>
 <?php
+if (!isset($_POST['questionid'])) {
+    echo "<h1> Add New Question </h1>";
+    $purpose = "a_testbank";
+
+    $qtext = "";
+    $diff =  "Easy";
+    $soln = array("", "", "", "");
+    $testcases = array("", "", "", "");
+}
+else {
     //Obtain Question from Database
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
     $ch= curl_init();
@@ -37,13 +47,16 @@
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
-if ($return_val == null) {
-    echo "<h1> Add New Question </h1>";
-    $purpose = "a_testbank";
-}
-else{
+
     echo "<h1> Modify Question </h1>";
     $purpose = "e_question";
+
+    $question = json_decode($return_val, true)[0];
+    $qtext = $question['Question'];
+    $diff =  $question['Difficulty'];
+    $soln = $question['Answer'];
+    $testcases = $question['TestCase'];
+
 }
     //Begin Table
     /* Debug Code.
@@ -53,17 +66,6 @@ else{
     $almagamation = array_combine($testcases, $solutions);
     $diff = "Easy";
     $purpose = "a_testbank";*/
-$question = json_decode($return_val, true)[0];
-$qtext = $question['Question'];
-if (isset($question['Difficulty'])) {
-    $diff =  $question['Difficulty'];
-}
-else{
-    $diff = "Easy";
-}
-
-$soln = $question['Answer'];
-$testcases = $question['TestCase'];
 
 
 //echo '<form action="../loopers/qblooper.php" method="post">';
