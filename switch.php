@@ -329,12 +329,14 @@ $getairesult = $conn->query($getai);
     }
     mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));*/
 
-		 for($i=0; $i<sizeof($testcases);$i++){
-			 $testcaseresult = "Insert into TC(Eid,TestCase) values '$getairesult','$testcases[$i]';";
+		 for($i=0; $i<sizeof($testcase);$i++){
+			 $testcaseresult = "Insert into TC(Eid,TestCase,Answer) values '$getairesult','$testcase[$i]','$solution[$i]';";
 			 $testcaseresultq= $conn->query($testcaseresult);
 			 if(!$testcaseresultq){echo "error";}
 
 		 }
+
+
 
     break;
 
