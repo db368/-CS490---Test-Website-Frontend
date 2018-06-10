@@ -317,6 +317,7 @@ $getairesult = $conn->query($getai);
 
     $addresult = $conn->query($add);
 
+
     echo "<pre>";
     print_r($case);
     echo "</pre>";
@@ -336,8 +337,6 @@ $getairesult = $conn->query($getai);
 
 		 }
 
-
-
     break;
 
 //add question to exam
@@ -353,11 +352,18 @@ case "aq_exam":
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
     //add if exists to put number in
-    $add ="INSERT INTO 'ExQuestions'('Exam_id', 'Question_id', 'Total_points') VALUES ('$eid','$qid','$score')";
-    $addresult = $conn->query($add);
+//    $add ="INSERT INTO 'ExQuestions'('Exam_id', 'Question_id', 'Total_points') VALUES ('$eid','$qid','$score')";
+  //  $addresult = $conn->query($add);
 
-	if($add) {return 1;
-    }
+	$adde = "insert into ExQuestions(Exam_id, Question_id, Total_points) values ('$eid', '$qid', '$score');";
+
+	if ($conn->query($adde) === TRUE) {
+	    echo "Added question successfully";
+	} else {
+	    echo "Error: " . $adde . "<br>" . $conn->error;
+	}
+
+
     $updatescore = "update ExQuestions set Total_points = '$score' where Exam_id = '$eid' and Question_id = 'qid'";
     $updatescoreresult = $conn->query($updatescore);
     if ($updatescoreresult) {return 1;
