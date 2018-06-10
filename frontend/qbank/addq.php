@@ -85,7 +85,7 @@ for ($i = 0; $i<sizeof($testcases) || $i<4; $i++){ // Solutions aren't supported
     echo 'Solution '. ($i + 1) .' :<input type="text" name="solution[' . $i . ']" value="'. $soln[$i] . '"><br>';
 }
 if ($purpose == "e_question") {
-    echo '<input type = "hidden" name="qid" value='. $_POST['questionid']. '>';
+    echo '<input type = "hidden" name="qid" value='. $_POST['id']. '>';
 }
 echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
     echo '<button type="submit" class="link-button"> Submit </button>';
