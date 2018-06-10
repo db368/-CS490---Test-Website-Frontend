@@ -42,8 +42,8 @@ if ($return_val == null) {
     $purpose = "a_testbank";
 }
 else{
-	echo "<h1> Modify Question </h1>";
-	$purpose = "e_question";
+    echo "<h1> Modify Question </h1>";
+    $purpose = "e_question";
 }
     //Begin Table
     /* Debug Code.
@@ -53,23 +53,21 @@ else{
     $almagamation = array_combine($testcases, $solutions);
     $diff = "Easy";
     $purpose = "a_testbank";*/
-
 $question = json_decode($return_val, true)[0];
 $qtext = $question['Question'];
-$diff = $question['Difficulty'];
-$soln = $question['Answer'];
-if(sizeof($question['TestCase']) > 0){
-	$testcases = $question['TestCase'];
+if (isset($question['Difficulty'])) {
+    $diff =  $question['Difficulty'];
 }
 else{
-	$testcases = array("Testcase1", "Testcase2", "Testcase3", "Testcase4");
-}
-if (count($soln) < count($testcases)){
-	array_fill($soln, count($soln) - count($testcases), "Solution");
+    $diff = "Easy";
 }
 
+$soln = $question['Answer'];
+$testcases = $question['TestCase'];
 
-echo '<form action="../loopers/qblooper.php" method="post">';
+
+//echo '<form action="../loopers/qblooper.php" method="post">';
+echo '<form action="../debug.php" method="post">';
 foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo '<input type="radio" name=difficulty value="' . $rdiff . '"';
     if ($rdiff==$diff) { echo "checked";
@@ -79,15 +77,14 @@ foreach (array("Easy", "Medium", "Hard") as $rdiff){
     echo "<br>";
     echo 'Question Text: ';
     echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
-    $i = 1;
-foreach ($testcases as $case){ // Solutions aren't supported by the DB yet.
-    echo 'Test Case '. $i .' : <input type="text" name="testcase[' . $i .']" value="'. $case . '">';
-    echo 'Solution '. $i .' :<input type="text" name="solution[' . $i . ']" value="'. $sol . '"><br>';
-    $i++;
+
+for ($i = 0; $i<sizeof($testcases) || $i<4; $i++){ // Solutions aren't supported by the DB yet.
+    echo 'Test Case '. ($i + 1) .' : <input type="text" name="testcase[' . $i .']" value="'. $testcases[$i] . '">';
+    echo 'Solution '. ($i + 1) .' :<input type="text" name="solution[' . $i . ']" value="'. $soln[$i] . '"><br>';
 }
-if ($purpose == "e_question"){
+if ($purpose == "e_question") {
     echo '<input type = "hidden" name="qid" value='. $_POST['questionid']. '>';
-  }
+}
 echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";

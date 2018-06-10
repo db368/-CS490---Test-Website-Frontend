@@ -35,6 +35,7 @@
             <tr>
                 <th> Question</th>
                 <th> Difficulty </th>
+                <th> Remove </th>
             </tr>
             <!--Begin Table Fun -->
             <?php
@@ -52,8 +53,6 @@
                 exit;
             }
             $questions = json_decode($return_val, true);
-            echo '<form method="post" action="addq.php" class="inline">';
-            echo '<input type="hidden" name="identifier" value="qb_get_question">';
 
 	    //Begin Printing Table
             foreach ($questions as $incoming){
@@ -64,13 +63,17 @@
                 }
                 if (isset($incoming["Difficulty"])) {$qdiff = $incoming['Difficulty'];
                 }
+                echo '<form method="post" action="addq.php" class="inline">';
+                echo '<input type="hidden" name="id" value="'.$qid.'">';
                 echo "<tr>";
-                echo '<td> <button type="submit" name="questionid" value="'. $qid .'" class="link-button"> '. $qtext. '</button></td>';
+                echo '<td> <button type="submit" name="identifier" value="qb_get_question" class="link-button"> '. $qtext . '</button></td>';
                 echo '<td>'.$qdiff.'</td>';
+                //echo '<td> <button type= "submit" name="identifier" value="qb_removequestion" onclick=\'this.form.action="../loopers/qblooper.php";\'/> Remove </button></td>';
+                echo '<td> <button type= "submit" name="identifier" value="r_testbank" onclick=\'this.form.action="../debug.php";\'/> Remove </button></td>';
                 echo "</tr>";
+		echo "</form>";
             }
         ?>
-        </form>
         </table>
     </div>
     <!--End the button Nonsense -->
