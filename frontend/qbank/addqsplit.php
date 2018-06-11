@@ -14,7 +14,7 @@ div.editquestions {
     float: left;
     overflow: auto;
     width:49%;
-    padding-bottom:10px; 
+    padding-bottom:10px;
 }
 
 
@@ -167,8 +167,11 @@ div.editquestions {
         if (isset($_POST['tbfilter'])) {
                 $tbfilter=$_POST['tbfilter'];
         }
+        if (isset($_POST['Qid'])) {
+                $Qid=$_POST['Qid'];
+        }
         else{
-            $tbfilter='none';
+            $Qid=0;
         }
 
         //Before we even curl, lets define this filter box
@@ -199,12 +202,13 @@ div.editquestions {
 
             echo '<table style="width:100%">';
             // FOR RELEASE: echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
-            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Add to Exam </th> </tr>';
+            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> </tr>';
         foreach ($questions as $question){
             //if (in_array($qbids[$i], $examids)) {  //TODO:This question is already on the array, skip it
             //   continue;
             //}
-            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
+            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty'] and $question['Qid'] != $Qid)
+                ]) {
                 continue; //Break on any question that doesn't match the filter.
             }
 
@@ -217,8 +221,7 @@ div.editquestions {
 
             echo '<td>'. $question['Question'] . '</td>';
             echo '<td> ' . $question['Difficulty'] . '</td>';
-            //echo '<td>'. count($testcases[$i]). '</td>';
-            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
+            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Edit</button>  </td>';
             echo '</form>';
             echo '</tr>';
         }
