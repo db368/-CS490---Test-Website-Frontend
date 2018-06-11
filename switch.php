@@ -113,20 +113,23 @@ case "a_exam":
 //inserting to answer from students
 case "answers":
     $aqe= $_POST['answers'];
-    $sid = $_POST['studentid'];
-		$eid =$_POST['eid'];
-    $qid = $_POST['questionid'];
-    $score = $_POST['answer'];
+    $conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+
+$sid = $_POST['sid'];
+$eid = $_POST['eid'];
+$qid = $_POST['qid'];
+$score = $_POST['score'];
+
+$adde = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$qid', '$score');";
 
 
-    $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+if ($conn->query($adde) === TRUE) {
+    echo "Answers added successfully";
+} else {
+    echo "Error: " . $adde . "<br>" . $conn->error;
+}
 
-		$adde = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$qid', '$score');";
-		if ($conn->query($adde) === TRUE) {
-    	echo "New record created successfully";
-		} else {
-    	echo "Error: " . $adde . "<br>" . $conn->error;
-		}
+
     break;
 
 //Used to grab all questions from exam id for editing an exam
@@ -140,7 +143,7 @@ case "e_get_questions":
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    $vieweq = "select Questions.Question, Questions.Difficulty, ExQuestions.Total_points from ExQuestions left join Questions on ExQuestions.Question_id = Questions.Qid where ExQuestions.Exam_id ='$eid'";
+    $vieweq = "select Questions.Qid, Questions.Question, Questions.Difficulty, ExQuestions.Total_points from ExQuestions left join Questions on ExQuestions.Question_id = Questions.Qid where ExQuestions.Exam_id ='$eid'";
 
     $Exameview = $conn->query($vieweq);
     $json_array = array();
@@ -216,7 +219,7 @@ case "e_question":
     $qid = $_POST['qid'];
     $question = $_POST['question'];
     $difficulty = $_POST['difficulty'];
-    $testcase = $_POST['testcases'];
+    $testcase = $_POST['testcase'];
     $answer = $_POST['solution'];
     $score = $_POST['score'];
 
@@ -229,6 +232,7 @@ case "e_question":
     if (isset($_POST['score'])){
     $update = "UPDATE ExQuestions SET Total_Points= '$score' WHERE Question_id = '$qid'";
     }
+
     */
 
     $updatq = "UPDATE Questions SET Question = '$question' where Qid ='$qid'";
@@ -238,6 +242,23 @@ case "e_question":
     $updatescore = $conn->query($updatescore);
 
 
+    foreach( $testcase as $index => $col ){
+      $query = "UPDATE TC SET TestCase='".mysql_real_escape_string($testcase).
+               "', Answer='".mysql_real_escape_string($answer)."' WHERE id=".$qid;
+                 }
+    $query = rtrim( $query, ',');
+    mysqli_query($conn,$query);
+     if ($conn->query($query) === TRUE) {
+        	echo "TestCase added successfully";
+    	}
+    	else {
+       		 echo "Error: " . $query . "<br>" . $conn->error;}
+
+        $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
+
+
+
+/*
     $updatetc =  "UPDATE TC SET TestCase = '$testcases' where Question_id ='$qid'";
     $updateq = $conn->query($updatq);
 
@@ -285,15 +306,7 @@ case "req_exam":
         else {return 0;
         }
     }
-    else{
-        $deletee="Delete from Exams where Eid = '$eid'";
-        $deleteeresult = $conn->query($deletee);
-        if ($deleteeresult) {
-            return 1;
-        }
-        else{return 0;
-        }
-    }
+
     break;
 
 //add question to test bank
@@ -313,10 +326,23 @@ $getai = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEM
 $getairesult = $conn->query($getai);
 
 
+
+$query = 'insert into TC (Qid,TC,Answer) values';
+
+foreach( $_POST['testcase'] as $index => $col ){
+    $query .= "('".$getai."' '".$case[$index]."', '".$solution[$index]."'),";
+}
+$query = rtrim( $query, ',');
+mysqli_query($conn,$query);
+ if ($conn->query($query) === TRUE) {
+    	echo "TestCase added successfully";
+	}
+	else {
+   		 echo "Error: " . $query . "<br>" . $conn->error;}
+
     $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
 
-    $addresult = $conn->query($add);
-
+    /*$addresult = $conn->query($add);
 
     echo "<pre>";
     print_r($case);
@@ -337,6 +363,8 @@ $getairesult = $conn->query($getai);
 
 		 }
 
+
+
     break;
 
 //add question to exam
@@ -352,20 +380,21 @@ case "aq_exam":
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
     //add if exists to put number in
-//    $add ="INSERT INTO 'ExQuestions'('Exam_id', 'Question_id', 'Total_points') VALUES ('$eid','$qid','$score')";
-  //  $addresult = $conn->query($add);
+    /*$add ="INSERT INTO ExQuestions(Exam_id, Question_id, Total_points) VALUES ('$eid','$qid','$score');";
+    $addresult = $conn->query($add);*/
 
-	$ieq ="INSERT INTO ExQuestions (Exam_id, Question_id, Total_Points)
-	VALUES ('$eid','$qid','$score')
-	ON DUPLICATE KEY
-	UPDATE Total_points = '$score';";
 
-	 if ($conn->query($ieq) === TRUE) {
-	    	echo "Added Exam question successfully";
-		}
-		else {
-	   		 echo "Error: " . $ieq . "<br>" . $conn->error;
-		}
+    $ieq ="INSERT INTO ExQuestions (Exam_id, Question_id, Total_points)
+    VALUES ('$eid','$qid','$score')
+    ON DUPLICATE KEY
+    UPDATE Total_points = '$score';";
+
+     if ($conn->query($ieq) === TRUE) {
+        	echo "Added Exam question  successfully";
+    	}
+    	else {
+       		 echo "Error: " . $ieq . "<br>" . $conn->error;
+    	}
 
     break;
 
@@ -374,21 +403,25 @@ case 'r_exam':
     $eid = $_POST['eid'];
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
-	$remove = "Delete from Exams where eid ='$eid';";
+    $deleteq ="Delete from ExQuestions where Exam_id = '$eid'";
+    if ($conn->query($deleteq) === TRUE) {
+        echo "Exam questions deleted successfully";
+    } else {
+        echo "Error: " . $deleteq . "<br>" . $conn->error;
+    }
 
-	if ($conn->query($remove) === TRUE) {
-	    echo "Exam deleted successfully";
-	} else {
-	    echo "Error: " . $remove . "<br>" . $conn->error;
-	}
-
-
+    $remove = "Delete from Exams where eid ='$eid';";
+    if ($conn->query($remove) === TRUE) {
+        echo "Exam deleted successfully";
+    } else {
+        echo "Error: " . $remove . "<br>" . $conn->error;
+    }
     break;
 
-  case 'release':
-	   $eid = $_POST['eid'];
-	   $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-	   $release = "update Exams set Release_Ready ='Yes' where eid ='$eid'";
+case 'release':
+	$eid = $_POST['eid'];
+	$conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+	$release = "update Exams set Release_Ready ='Yes' where eid ='$eid'";
 
 	if ($conn->query($release) === TRUE) {
 	    	echo "Exam is ready to be released";
@@ -399,7 +432,10 @@ case 'r_exam':
 
 break;
 
+case "results":
+//
 
+break;
 default:
     header('Location: https://web.njit.edu/~jll25/CS490/student.html');
 }
