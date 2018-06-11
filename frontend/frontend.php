@@ -8,7 +8,7 @@ $unknownurl = "ui.html";
 
 //PHASE 1: AUTHENTICATION
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://afsaccess2.njit.edu/~db368/CS490/controller.php");
+curl_setopt($ch, CURLOPT_URL, "http://web.njit.edu/~db368/CS490/controller.php");
 curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
 curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('username' => $_POST["username"], 'password' => $_POST["password"], 'phase' => '1')));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -19,11 +19,11 @@ $jason = json_decode($return_val);
 $role = $jason[0]->Role;
 //PHASE 2: REDIRECTION
 if ($role == "Student") {
-    header('Location: http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/student.html');
+    header('Location: http://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/student.html');
 } else if ($role == "Instructor") {
-    header('Location: http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/instructor.html');
+    header('Location: http://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/instructor.html');
 }else{
-    header('Location: http://afsaccess2.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/ui.html');
+    header('Location: http://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/ui.html');
 }
 exit;
 

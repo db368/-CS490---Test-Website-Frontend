@@ -71,9 +71,9 @@ th{
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
-
+    echo $return_val;
     $questions = json_decode($return_val, true);
-    if ($questions == null) {
+if ($questions == null) {
         echo "No questions yet!";
     }
     else{
@@ -89,7 +89,7 @@ th{
 
             $qid = $question['Qid']; // This is the only variable used twice
             echo '<tr>';
-            echo '<input type="hidden" name="qid" value="'. $cid . '">';
+            echo '<input type="hidden" name="qid" value="'. $qid . '">';
             echo '<td>'. $question['Question'] . '</td>';
             echo '<td> ' . $question['Difficulty'] . '</td>';
             echo '<td> <input type="number" name="score" value="'. $question['Total_points'] . '"></td>';

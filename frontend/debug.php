@@ -7,8 +7,8 @@
 <h1> Debug.php </h1>
 <?php //debug.php
 $target = "https://web.njit.edu/~jll25/CS490/switch.php";
-//$target = "https://http://afsaccess2.njit.edu/~jll25/CS490/switch.php";
-//$target = "http://afsaccess2.njit.edu/~db368/CS490/debug.php";
+//$target = "https://http://web.njit.edu/~jll25/CS490/switch.php";
+//$target = "http://web.njit.edu/~db368/CS490/debug.php";
 
 echo "Posting to: " . $target . "<br>";
 echo "<h3> Post Variables </h3>";
