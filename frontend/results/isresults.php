@@ -29,6 +29,7 @@
 </head>
 <body>
     <?php
+    $debug = 1;
     echo "<div>";
     echo "<h1> RESULTS FOR ".$_POST['exname']."</h1>";
         //First, we get a list of exams
@@ -44,7 +45,17 @@
         exit;
     }
     $results = json_decode($return_val, true);
-    //var_dump($exams);
+
+    if ($debug) {
+        echo "<h2> POST INPUT </h2>";
+        echo "<div class='debug'>";
+        print_r($_POST);
+        echo "</div>";
+        echo '<br>';
+        echo "<h2> JSON OUTPUT </h2>";
+        echo "<div class='debug'>".$return_val."</div>";
+        echo '<br>';
+    }
     echo "<table>";
     echo "<tr> <th> STUDENT </th> <th> AVERAGE </th> </tr>"; //Only need to do a single form I think
     foreach($results as $student){
