@@ -355,28 +355,25 @@ case "aq_exam":
 //    $add ="INSERT INTO 'ExQuestions'('Exam_id', 'Question_id', 'Total_points') VALUES ('$eid','$qid','$score')";
   //  $addresult = $conn->query($add);
 
-	$adde = "insert into ExQuestions(Exam_id, Question_id, Total_points) values ('$eid', '$qid', '$score');";
+	$ieq ="INSERT INTO ExQuestions (Exam_id, Question_id, Total_Points)
+	VALUES ('$eid','$qid','$score')
+	ON DUPLICATE KEY
+	UPDATE Total_points = '$score';";
 
-	if ($conn->query($adde) === TRUE) {
-	    echo "Added question successfully";
-	} else {
-	    echo "Error: " . $adde . "<br>" . $conn->error;
-	}
+	 if ($conn->query($ieq) === TRUE) {
+	    	echo "Added Exam question  successfully";
+		}
+		else {
+	   		 echo "Error: " . $ieq . "<br>" . $conn->error;
+		}
 
-
-    $updatescore = "update ExQuestions set Total_points = '$score' where Exam_id = '$eid' and Question_id = 'qid'";
-    $updatescoreresult = $conn->query($updatescore);
-    if ($updatescoreresult) {return 1;
-    }
-    else {return 0;
-    }
     break;
 
 //remove an exam
 case 'r_exam':
     $eid = $_POST['eid'];
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-	
+
 	$remove = "Delete from Exams where eid ='$eid';";
 
 	if ($conn->query($remove) === TRUE) {
