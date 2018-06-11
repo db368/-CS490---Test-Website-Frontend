@@ -40,22 +40,34 @@
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'results', 'eid'=> $_POST['eid'])));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
-    if ($return_val == null) {
-        echo "<h3> ERROR: EXAM LIST COULD NOT BE RETRIEVED </h3>";
-        exit;
-    }
     $results = json_decode($return_val, true);
 
     if ($debug) {
         echo "<h2> POST INPUT </h2>";
         echo "<div class='debug'>";
-        print_r($_POST);
+        if ($_POST != null) {
+            print_r($_POST);
+        }
+        else{ echo "No Post!";
+        }
         echo "</div>";
         echo '<br>';
         echo "<h2> JSON OUTPUT </h2>";
-        echo "<div class='debug'>".$return_val."</div>";
+        echo "<div class='debug'>";
+        if ($return_val != null) {
+            echo $return_val;
+        }
+        else{
+            echo "No return value!";
+        }
+        echo "</div>";
         echo '<br>';
     }
+    if ($return_val == null) {
+        echo "<h2> ERROR: EXAM LIST COULD NOT BE RETRIEVED </h2>";
+        exit;
+    }
+
     echo "<table>";
     echo "<tr> <th> STUDENT </th> <th> AVERAGE </th> </tr>"; //Only need to do a single form I think
     foreach($results as $student){
