@@ -361,7 +361,7 @@ case "aq_exam":
 	UPDATE Total_points = '$score';";
 
 	 if ($conn->query($ieq) === TRUE) {
-	    	echo "Added Exam question  successfully";
+	    	echo "Added Exam question successfully";
 		}
 		else {
 	   		 echo "Error: " . $ieq . "<br>" . $conn->error;
@@ -384,6 +384,21 @@ case 'r_exam':
 
 
     break;
+
+  case 'release':
+	   $eid = $_POST['eid'];
+	   $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+	   $release = "update Exams set Release_Ready ='Yes' where eid ='$eid'";
+
+	if ($conn->query($release) === TRUE) {
+	    	echo "Exam is ready to be released";
+	}
+	else {
+   		 echo "Error: " . $release . "<br>" . $conn->error;}
+
+
+break;
+
 
 default:
     header('Location: https://web.njit.edu/~jll25/CS490/student.html');
