@@ -53,7 +53,7 @@ div.editquestions {
 		      exit;
 	   }
         echo "<h1> Modify Question </h1>";
-        echo $return_val;
+        //echo $return_val;
 	 $purpose = "e_question";
 
         $question = json_decode($return_val, true)[0];
@@ -65,7 +65,7 @@ div.editquestions {
     }
     if ($debug){
         echo "<h3> JSON OUTPUT </h3>";
-        echo "<div color=#99999>".$return_val."</div>";
+        echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>".$return_val."</div>";
         echo '<br>';
     }
         //Begin Table
