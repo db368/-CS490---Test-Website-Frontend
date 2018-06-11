@@ -83,6 +83,7 @@ if ($return_val == null) {
     echo '<form action="../debug.php" method="post">'; //Send message through AE looper. Exact functionality we want.
     echo '<input type="hidden" name="id" value="'.$exid.'">';
     echo '<td> <button type="submit" name="identifier" value="r_exam">'. REMOVE . '</button> </td>';
+    echo '<td> <button type="submit" name="identifier" value="r_exam">'. REMOVE . '</button> </td>';
     echo '</form>';
 
     echo '</tr>';
