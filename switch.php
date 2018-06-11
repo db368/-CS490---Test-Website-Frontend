@@ -114,19 +114,19 @@ case "a_exam":
 case "answers":
     $aqe= $_POST['answers'];
     $sid = $_POST['studentid'];
+		$eid =$_POST['eid'];
     $qid = $_POST['questionid'];
     $score = $_POST['answer'];
 
 
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-    $add ="INSERT INTO 'Answers'('Question_id', 'Answer') VALUES ('$qid','$score') where Sid ='$sid'";
-    $addresult = $conn->query($add);
-    if($add) {
-        return 1;
-    }
-    else {return 0;
-    }
 
+		$adde = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$qid', '$score');";
+		if ($conn->query($adde) === TRUE) {
+    	echo "New record created successfully";
+		} else {
+    	echo "Error: " . $adde . "<br>" . $conn->error;
+		}
     break;
 
 //Used to grab all questions from exam id for editing an exam
