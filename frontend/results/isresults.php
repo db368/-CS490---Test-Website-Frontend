@@ -21,7 +21,6 @@
 .link-button:active {
     color: red;
 }
-
 th, td{
     border:1px solid;
     padding: 8px;
@@ -42,38 +41,34 @@ tr:nth-child(even){
 
 </head>
 <body>
-    <h1> Results By Exam </h1>
-    <p> Click on an exam to get a student by student breakdown, or click on the release button to release an exam to the students </p>
-
     <?php
+    echo "<h1> RESULTS FOR ".$_POST['exname']."</h1>";
         //First, we get a list of exams
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();
         curl_setopt($ch, CURLOPT_URL, "$target");
         curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'v_exams')));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'results', 'eid'=> $_POST['eid'])));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
     if ($return_val == null) {
         echo "<h3> ERROR: EXAM LIST COULD NOT BE RETRIEVED </h3>";
         exit;
     }
-    $exams = json_decode($return_val, true);
-
+    $results = json_decode($return_val, true);
     //var_dump($exams);
     echo "<table>";
-    echo "<tr> <th> EXAM </th> <th> RELEASE </th> </tr>"; //Only need to do a single form I think
-    foreach($exams as $exam){
+    echo "<tr> <th> STUDENT </th> <th> AVERAGE </th> </tr>"; //Only need to do a single form I think
+    foreach($results as $student){
         echo "<tr>";
         $exid = "error"; $exname = "error";
-        if (isset($exam['Eid'])) { $exid = $exam['Eid'];
+        if (isset($student['sid'])) { $sid = $exam['sid'];
         }
-        if (isset($exam['Name'])) { $exname = $exam['Name'];
+        if (isset($student['average'])) { $average = $exam['average'];
         }
         echo '<form method="post" action="../debug.php">';
-        echo '<input type="hidden" name="id" value="'.$exid.'">';
-        echo '<td> <button type="submit" class="link-button" name="identifier" value="results"> '.$exname.' </button> </td>';
-        echo '<td> <button type="submit" name=identifier value="release"> RELEASE  </button> </td>';
+        echo '<input type="hidden" name="sid" value="'.$sid.'">';
+        echo '<td> <button type="submit" class="link-button" name="identifier" value="s_results"> '.$sid.' </button> </td>';
         echo "</form></tr>";
     }
     echo "</table>";
