@@ -24,7 +24,10 @@ div.editquestions {
 <body>
     <div class="editquestions">
     <?php
-    if (!isset($_POST['id'])) {
+
+    $debug = 0; //Use this to control hidden div
+    $debug = 1;
+    if (!isset($_POST['id']) or $_POST['id'] == null) {
         echo "<h1> Add New Question </h1>";
         $purpose = "a_testbank";
 
@@ -43,9 +46,15 @@ div.editquestions {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
         curl_close($ch);
-
+	
+	if (!$return_val){
+		echo "No question at value: ". $_POST['id'] .'?<br>';
+		echo "And the post is set: ". isset($_POST['id']) .'?<br>';
+		exit;
+	}
         echo "<h1> Modify Question </h1>";
-        $purpose = "e_question";
+        echo $return_val;
+	 $purpose = "e_question";
 
         $question = json_decode($return_val, true)[0];
         $qtext = $question['Question'];
@@ -167,8 +176,8 @@ div.editquestions {
         if (isset($_POST['tbfilter'])) {
                 $tbfilter=$_POST['tbfilter'];
         }
-        if (isset($_POST['Qid'])) {
-                $Qid=$_POST['Qid'];
+        if (isset($_POST['id'])) {
+                $Qid=$_POST['id'];
         }
         else{
             $Qid=0;
@@ -207,17 +216,15 @@ div.editquestions {
             //if (in_array($qbids[$i], $examids)) {  //TODO:This question is already on the array, skip it
             //   continue;
             //}
-            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty'] and $question['Qid'] != $Qid)
-                ]) {
+            if (($tbfilter != 'none' and $tbfilter != $question['Difficulty']) and ($Qid != null and  $question['id'] == $Qid))
+             {
                 continue; //Break on any question that doesn't match the filter.
             }
 
             echo '<tr>';
-            //echo '<form method="post" action="../loopers/exlooper.php">';
-            echo '<form method="post" action="../debug.php">';
-            echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
-            echo '<input type="hidden" name="eid" value="'. $Eid . '">';
-            echo '<input type="hidden" name="score" value="0">';
+            echo '<form method="post" action="addqsplit.php">';
+            //echo '<form method="post" action="../debug.php">';
+            echo '<input type="hidden" name="id" value="'. $question['Qid'] . '">';
 
             echo '<td>'. $question['Question'] . '</td>';
             echo '<td> ' . $question['Difficulty'] . '</td>';
