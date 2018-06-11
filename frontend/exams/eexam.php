@@ -89,7 +89,7 @@ th{
 
             $qid = $question['Qid']; // This is the only variable used twice
             echo '<tr>';
-            echo '<input type="hidden" name="qid" value="'. $cid . '">';
+            echo '<input type="hidden" name="qid" value="'. $qid . '">';
             echo '<td>'. $question['Question'] . '</td>';
             echo '<td> ' . $question['Difficulty'] . '</td>';
             echo '<td> <input type="number" name="score" value="'. $question['Total_points'] . '"></td>';
