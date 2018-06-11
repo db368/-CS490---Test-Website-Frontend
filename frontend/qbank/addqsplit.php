@@ -65,7 +65,9 @@ div.editquestions {
     }
     if ($debug){
 	echo "<h3> POST INPUT </h3>";
-        echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>". print_r($_POST) ."</div>";
+        echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>";
+	print_r($_POST);
+	echo "</div>";
         echo '<br>';
         echo "<h3> JSON OUTPUT </h3>";
         echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>".$return_val."</div>";
