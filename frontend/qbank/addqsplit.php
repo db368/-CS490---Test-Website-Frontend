@@ -64,18 +64,13 @@ div.editquestions {
 
     }
     if ($debug){
+	echo "<h3> POST INPUT </h3>";
+        echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>". print_r($_POST) ."</div>";
+        echo '<br>';
         echo "<h3> JSON OUTPUT </h3>";
         echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>".$return_val."</div>";
         echo '<br>';
     }
-        //Begin Table
-        /* Debug Code.
-        $qtext = "Question Text";
-        $testcases= array("Testcase 1", "Testcase 2", "Testcase 3");
-        $solutions = array("Solution 1", "Solution 2", "Solution 3");
-        $almagamation = array_combine($testcases, $solutions);
-        $diff = "Easy";
-        $purpose = "a_testbank";*/
 
 
     //echo '<form action="../loopers/qblooper.php" method="post">';
@@ -178,9 +173,12 @@ div.editquestions {
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
         <?php
-        if (isset($_POST['tbfilter'])) {
+        if (isset($_POST['tbfilter']) and $_POST['tbfilter'] != null) {
                 $tbfilter=$_POST['tbfilter'];
         }
+	else{
+                $tbfilter="none";
+	}
         if (isset($_POST['id'])) {
                 $Qid=$_POST['id'];
         }
@@ -189,7 +187,7 @@ div.editquestions {
         }
 
         //Before we even curl, lets define this filter box
-        echo '<form action="eexam.php" method="post" id="filter">';
+        echo '<form action="addqsplit.php" method="post" id="filter">';
         echo '<input type="submit" value="Apply Filter">';
         echo '<select name="tbfilter">';
         echo '<option value="none"> None </option>';
@@ -218,10 +216,7 @@ div.editquestions {
             // FOR RELEASE: echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
             echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> </tr>';
         foreach ($questions as $question){
-            //if (in_array($qbids[$i], $examids)) {  //TODO:This question is already on the array, skip it
-            //   continue;
-            //}
-            if (($tbfilter != 'none' and $tbfilter != $question['Difficulty']) and ($Qid != null and  $question['id'] == $Qid))
+            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty'])
              {
                 continue; //Break on any question that doesn't match the filter.
             }
@@ -230,6 +225,7 @@ div.editquestions {
             echo '<form method="post" action="addqsplit.php">';
             //echo '<form method="post" action="../debug.php">';
             echo '<input type="hidden" name="id" value="'. $question['Qid'] . '">';
+            echo '<input type="hidden" name="tbfilter" value="'.$tbfilter.'">';
 
             echo '<td>'. $question['Question'] . '</td>';
             echo '<td> ' . $question['Difficulty'] . '</td>';
