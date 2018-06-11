@@ -97,7 +97,7 @@ td {
     text-align: center;
 }
 
-tr {}
+tr {background-color: white;}
 
 th {
     background-color: var(--color-primary-0);

@@ -21,19 +21,6 @@
 .link-button:active {
     color: red;
 }
-th, td{
-    border:1px solid;
-    padding: 8px;
-    text-align: center;
-}
-th{
-    background-color: gray;
-}
-
-tr:nth-child(even){
-    background-color:lightgray;
-    padding: 16px;
-}
 </style>
 <head>
     <title> Results </title>
@@ -42,6 +29,7 @@ tr:nth-child(even){
 </head>
 <body>
     <?php
+    echo "<div>";
     echo "<h1> RESULTS FOR ".$_POST['exname']."</h1>";
         //First, we get a list of exams
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -66,9 +54,10 @@ tr:nth-child(even){
         }
         if (isset($student['average'])) { $average = $exam['average'];
         }
-        echo '<form method="post" action="../debug.php">';
+        //echo '<form method="post" action="../debug.php">';
+        echo '<form method="post" action="isresults.php">';
         echo '<input type="hidden" name="sid" value="'.$sid.'">';
-        echo '<td> <button type="submit" class="link-button" name="identifier" value="s_results"> '.$sid.' </button> </td>';
+        echo '<td> <button type="submit" class="link-button" name="eid" value="'.$exid.'"> '.$sid.' </button> </td>';
         echo "</form></tr>";
     }
     echo "</table>";

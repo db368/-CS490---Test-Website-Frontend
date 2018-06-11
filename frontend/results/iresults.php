@@ -70,8 +70,9 @@ tr:nth-child(even){
         }
         if (isset($exam['Name'])) { $exname = $exam['Name'];
         }
-        echo '<form method="post" action="../debug.php">';
-        echo '<input type="hidden" name="id" value="'.$exid.'">';
+        //echo '<form method="post" action="../debug.php">';
+        echo '<form method="post" action="isresults.php">';
+        echo '<input type="hidden" name="eid" value="'.$exid.'">';
         echo '<td> <button type="submit" class="link-button" name="identifier" value="results"> '.$exname.' </button> </td>';
         echo '<td> <button type="submit" name=identifier value="release"> RELEASE  </button> </td>';
         echo "</form></tr>";
