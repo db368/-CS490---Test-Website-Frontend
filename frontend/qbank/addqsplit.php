@@ -46,12 +46,12 @@ div.editquestions {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
         curl_close($ch);
-	
-	if (!$return_val){
-		echo "No question at value: ". $_POST['id'] .'?<br>';
-		echo "And the post is set: ". isset($_POST['id']) .'?<br>';
-		exit;
-	}
+
+	  if (!$return_val){
+         echo "No question at value: ". $_POST['id'] .'?<br>';
+		 echo "And the post is set: ". isset($_POST['id']) .'?<br>';
+		      exit;
+	   }
         echo "<h1> Modify Question </h1>";
         echo $return_val;
 	 $purpose = "e_question";
@@ -62,6 +62,11 @@ div.editquestions {
         $soln = $question['Answer'];
         $testcases = $question['TestCase'];
 
+    }
+    if ($debug){
+        echo "<h3> JSON OUTPUT </h3>";
+        echo "<div color=#99999>".$return_val."</div>";
+        echo '<br>';
     }
         //Begin Table
         /* Debug Code.
