@@ -67,7 +67,7 @@ $alarray['questions']=$usedids;
 $alarray['currentquestion']='1';
 
 
-$target = "http://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/exams/texam.php";
+$target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/exams/texam.php";
 //$target = "http://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debug.php";
 $ch2 = curl_init();
 curl_setopt($ch2, CURLOPT_URL, "$target");
