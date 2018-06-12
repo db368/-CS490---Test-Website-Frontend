@@ -67,11 +67,11 @@ div.editquestions {
         $sols = array();
         foreach ($question as $row){
             array_push($tcs, $row['TestCase']);
-            array_push($sols, $row['Solution']);
+            array_push($sols, $row['Answer']);
         }
         $qtext = $question['Question'];
         $diff =  $question['Difficulty'];
-        $soln = $tcs;
+        $soln = $sols;
         $testcases = $tcs;
     }
 
