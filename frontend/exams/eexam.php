@@ -84,7 +84,7 @@ th{
             if ($filter != 'none' and $filter != $question['Difficulty']) {
                 continue; //Break on any question that doesn't match the filter.
             }
-            echo '<form method="post" action="../debug.php">';
+            echo '<form method="post" action="../loopers/exlooper.php">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
 
             $qid = $question['Qid']; // This is the only variable used twice
@@ -147,8 +147,8 @@ th{
             }
 
             echo '<tr>';
-            //echo '<form method="post" action="../loopers/exlooper.php">';
-            echo '<form method="post" action="../debug.php">';
+            echo '<form method="post" action="../loopers/exlooper.php">';
+            //echo '<form method="post" action="../debug.php">';
             echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
             echo '<input type="hidden" name="eid" value="'. $Eid . '">';
             echo '<input type="hidden" name="score" value="0">';
