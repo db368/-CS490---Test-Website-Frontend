@@ -61,12 +61,18 @@ div.editquestions {
         echo "<h1> Modify Question </h1>";
         $purpose = "e_question";
 
-        $question = json_decode($return_val, true)[0];
+        //Okay so this question will come as multiple questions so we will need to be ready for that
+        $question = json_decode($return_val, true);
+        $tcs = array();
+        $sols = array();
+        foreach ($question as $row){
+            array_push($tcs, $row['TestCase']);
+            array_push($sols, $row['Solution']);
+        }
         $qtext = $question['Question'];
         $diff =  $question['Difficulty'];
-        $soln = $question['Answer'];
-        $testcases = $question['TestCase'];
-
+        $soln = $tcs;
+        $testcases = $tcs;
     }
 
     //Check to see if the number of testcases is set
