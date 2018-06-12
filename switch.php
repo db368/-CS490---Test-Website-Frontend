@@ -171,7 +171,7 @@ case "qb_get_question":
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    $viewe = "select Questions.Question, TC.TestCase, Questions.Difficulty from Questions left join TC on Questions.Qid= TC.Qid where Questions.Qid ='$qid'";
+    $viewe = "select Questions.Question, TC.TestCase, TC.Answer, Questions.Difficulty from Questions left join TC on Questions.Qid= TC.Qid where Questions.Qid ='$qid'";
     $Exameview = $conn->query($viewe);
     $json_array = array();
     if ($Exameview->num_rows > 0) {
@@ -241,13 +241,16 @@ case "e_question":
     $updatescore = "UPDATE ExQuestions SET Total_points = '$score' where Question_id ='$qid'";
     $updatescore = $conn->query($updatescore);
 
+    for ($i=0; $i <sizeof($case) ; $i++) {
+      // code...
 
-    foreach( $testcase as $index => $col ){
-      $query = "UPDATE TC SET TestCase='".mysql_real_escape_string($testcase).
-               "', Answer='".mysql_real_escape_string($answer)."' WHERE id=".$qid;
-                 }
-    $query = rtrim( $query, ',');
-    mysqli_query($conn,$query);
+    $query = "Update TC set TestCase ='$case[$i]', Answer ='$solution[$i] where Qid ='$qid'";
+    if ($conn->query($query) === TRUE) {
+         echo "TestCase and Solution added successfully";
+     }
+     else {
+          echo "Error: " . $query . $conn->error;}
+        }
      if ($conn->query($query) === TRUE) {
         	echo "TestCase added successfully";
     	}
@@ -312,38 +315,79 @@ case "req_exam":
 //add question to test bank
 case "a_testbank":
     $ate = $_POST['a_testbank'];
+    $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
     $question = $_POST['question'];
     $difficulty = $_POST['difficulty'];
     $case = $_POST['testcase'];
     $solution = $_POST['solution'];
+    var_dump($case, $solution);
+    print $case[0];
+
+    //$getai = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'jll25' AND TABLE_NAME = 'Questions';";
+    //$getairesult = $conn->query($getai);
+    //echo $getairesult;
+    $tc = "TC";
+    $TCquery =mysqli_query("show tables status where name = '$TC' ");
+    $row = mysql_fetch_array($TCquery);
+    $next_inc_value =$row["AUTO_INCREMENT"];
 
 
-    $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
-    $getai = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'jll25' AND TABLE_NAME = 'Questions';";
-    $getairesult = $conn->query($getai);
 
     $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
-        if ($conn->query($add)=== TRUE) {
+      if ($conn->query($add)=== TRUE) {
+          $last_id = $conn->insert_id;
               echo "question added successfully";
             }
               else {
                 echo "Error: " . $add . "<br>" . $conn->error;}
+      for ($i=0; $i <sizeof($case) ; $i++) {
+        // code...
 
+      $query = "insert into TC(Qid, TestCase, Answer) values('$last_id','$case[$i]','$solution[$i]')";
+      if ($conn->query($query) === TRUE) {
+           echo "TestCase and Solution added successfully";
+       }
+       else {
+            echo "Error: " . $query . $conn->error;}
+          }
 
-                foreach($case as $index=>$col){
-                $query = "insert into TC(Qid, TestCase, Answer) values('$getairesult','$case[$index]','$solution[$index]'),";
-                }
+                /*foreach($case as $index=>$col){
+                $query = "insert into TC( TestCase, Answer) values('$case[$index]','$solution[$index]'),";
+
 
                 $query = rtrim( $query, ',');
-                mysqli_query($conn,$query);
+
                  if ($conn->query($query) === TRUE) {
                     	echo "TestCase added successfully";
                 	}
                 	else {
                    		 echo "Error: " . $query . $conn->error;}
+                     }
+
+      /*for ($i=0; $i < sizeof($case) ; $i++) {
+        $testcaseresult = "Insert into TC(Eid,TestCase,Answer) values '$getairesult','$case[$i]','$solution[$i]';";
+ 			  $testcaseresultq= $conn->query($testcaseresult);
+ 			  if(!$testcaseresultq){echo "error";}
+
+      }
+
+
+
+    /*
+    foreach($case as $index=>$col){
+    $query = "insert into TC(TestCase, Answer) values('".$case[$index]."','".$solution[$index]."');";
+    }
+
+    $query = rtrim( $query, ',');
+    mysqli_query($conn,$query);
+     if ($conn->query($query) === TRUE) {
+        	echo "TestCase added successfully";
+    	}
+    	else {
+       		 echo "Error: " . $query . "<br>" . $conn->error;}
 
     break;
 
@@ -362,7 +406,7 @@ case "aq_exam":
     //add if exists to put number in
     /*$add ="INSERT INTO ExQuestions(Exam_id, Question_id, Total_points) VALUES ('$eid','$qid','$score');";
     $addresult = $conn->query($add);*/
-
+/*
 
     $ieq ="INSERT INTO ExQuestions (Exam_id, Question_id, Total_points)
     VALUES ('$eid','$qid','$score')
@@ -375,7 +419,7 @@ case "aq_exam":
     	else {
        		 echo "Error: " . $ieq . "<br>" . $conn->error;
     	}
-
+*/
     break;
 
 //remove an exam
@@ -412,8 +456,28 @@ case 'release':
 
 break;
 
+case "r_testbank":
+
+$qid = $_POST['id'];
+
+$conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+$deleteeq = "delete from ExQuestions where Question_id= '$qid'";
+if ($conn->query($deleteeq) === TRUE) {
+      echo "Exam questions has been deleted";
+}
+else {
+     echo "Error: " . $deleteeq . "<br>" . $conn->error;}
+
+$deleteq = "delete from Questions where Qid= '$qid'";
+     if ($conn->query($deleteq) === TRUE) {
+           echo "Questions has been deleted from the Testbank";
+     }
+     else {
+          echo "Error: " . $deleteq . "<br>" . $conn->error;}
+
+break;
 case "results":
-//
+
 
 break;
 default:
