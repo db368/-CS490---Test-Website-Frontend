@@ -1,7 +1,7 @@
 <html>
 <head>
     <title> Taking Exam </title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
@@ -18,6 +18,7 @@
     else {
         $answer = array();
     }
+    echo "<header><h1> EXAM </h1> </header>";
     $qid = $questions[$number];
     if($debug){
         echo "<div class=debug>";
@@ -44,7 +45,6 @@
     $qtext = $question["Question"];
 
     //Start actually printing the file
-    echo "<header> EXAM </header>";
     echo "<div class=login>";
     echo "<h1> QUESTION ".$number.": </h1>";
     echo "<p>" . $qtext . "</p><br>";
