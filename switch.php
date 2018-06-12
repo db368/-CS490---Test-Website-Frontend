@@ -404,9 +404,6 @@ case "aq_exam":
 
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
-    //add if exists to put number in
-    $add ="INSERT INTO ExQuestions(Exam_id, Question_id, Total_points) VALUES ('$eid','$qid','$score');";
-    $addresult = $conn->query($add);*/
 
 
     $ieq ="INSERT INTO ExQuestions (Exam_id, Question_id, Total_points)
@@ -471,6 +468,7 @@ else {
 
 $deleteq = "delete from Questions where Qid= '$qid'";
      if ($conn->query($deleteq) === TRUE) {
+
            echo "Questions has been deleted from the Testbank";
      }
      else {
