@@ -75,6 +75,23 @@ div.debug {
     margin: auto;
 }
 
+div.cool {
+    border: 5px white ridge;
+    margin: auto;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    font-variant: small-caps;
+    font-size: 24px;
+    max-width:50%;
+    text-align:center;
+    background:transparent;
+    box-shadow: 2px 1px 1px black;
+    text-shadow: 2px 1px 1px black;
+
+
+
+}
 h1 {
     text-align: center;
     font-style: bold;
@@ -85,7 +102,6 @@ h1 {
 
 header {
     background: linear-gradient(to top right, red, white);
-    background-color: var(--color-primary-4);
     width: 100%;
     color: white;
     text-align: center;
