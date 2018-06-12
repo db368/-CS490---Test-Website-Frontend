@@ -61,7 +61,7 @@ div.examquestions {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
-  //  echo $return_val;
+    //  echo $return_val;
     $questions = json_decode($return_val, true);
     if ($questions == null) {
         echo "No questions yet!";
@@ -98,12 +98,12 @@ div.examquestions {
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
     <?php
-        if (isset($_POST['tbfilter'])) {
-                $tbfilter=$_POST['tbfilter'];
-        }
-        else{
-            $tbfilter='none';
-        }
+    if (isset($_POST['tbfilter'])) {
+            $tbfilter=$_POST['tbfilter'];
+    }
+    else{
+        $tbfilter='none';
+    }
 
         //Before we even curl, lets define this filter box
         echo '<form action="eexam.php" method="post" id="filter">';
@@ -130,44 +130,45 @@ div.examquestions {
         $questions = json_decode($return_val, true);
 
 
-	// Okay so we have the question bank, now lets get every question that was on the specified exam
-	    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
-	    $ch= curl_init();
-	    curl_setopt($ch, CURLOPT_URL, $target);
-	    curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-	    curl_setopt($ch, CURLOPT_POSTFIELDS, array('identifier'=>'e_get_questions', 'id' => $_POST["id"]));
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	    $examreturn=curl_exec($ch);
-	    curl_close($ch);
-	    $examquestions = json_decode($examreturn, true);
+    // Okay so we have the question bank, now lets get every question that was on the specified exam
+        $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+        $ch= curl_init();
+        curl_setopt($ch, CURLOPT_URL, $target);
+        curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array('identifier'=>'e_get_questions', 'id' => $_POST["id"]));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $examreturn=curl_exec($ch);
+        curl_close($ch);
+        $examquestions = json_decode($examreturn, true);
 
 
-	echo '<table style="width:100%">';
+    echo '<table style="width:100%">';
         echo '<tr><th> Question </th> <th> Difficulty </th> <th> Add to Exam </th> </tr>';
-        foreach ($questions as $question){
-            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
-                continue; //Break on any question that doesn't match the filter.
-            }
-		
-	   //Brute force kludge to see if the question is already on the exam
-	    foreach($examquestions as $exquestion){
-		if ($question['Qid'] == $exquestion['Qid']){ continue 2;} //this should break the nested loop
-	    }
-
-            echo '<tr>';
-            echo '<form method="post" action="../loopers/exlooper.php">';
-            //echo '<form method="post" action="../debug.php">';
-            echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
-            echo '<input type="hidden" name="eid" value="'. $Eid . '">';
-            echo '<input type="hidden" name="score" value="0">';
-
-            echo '<td>'. $question['Question'] . '</td>';
-            echo '<td> ' . $question['Difficulty'] . '</td>';
-            //echo '<td>'. count($testcases[$i]). '</td>';
-            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
-            echo '</form>';
-            echo '</tr>';
+    foreach ($questions as $question){
+        if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
+            continue; //Break on any question that doesn't match the filter.
         }
+
+        //Brute force kludge to see if the question is already on the exam
+        foreach($examquestions as $exquestion){
+            if ($question['Qid'] == $exquestion['Qid']) { continue 2;
+            } //this should break the nested loop
+        }
+
+        echo '<tr>';
+        echo '<form method="post" action="../loopers/exlooper.php">';
+        //echo '<form method="post" action="../debug.php">';
+        echo '<input type="hidden" name="qid" value="'. $question['Qid'] . '">';
+        echo '<input type="hidden" name="eid" value="'. $Eid . '">';
+        echo '<input type="hidden" name="score" value="0">';
+
+        echo '<td>'. $question['Question'] . '</td>';
+        echo '<td> ' . $question['Difficulty'] . '</td>';
+        //echo '<td>'. count($testcases[$i]). '</td>';
+        echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Add to Exam </button>  </td>';
+        echo '</form>';
+        echo '</tr>';
+    }
         echo "</table>"
     ?>
     </div>

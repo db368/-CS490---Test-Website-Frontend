@@ -30,7 +30,7 @@ div.editquestions {
     if (!isset($_POST['id']) or $_POST['id'] == null or $_POST['identifier'] == "r_testbank") {
         echo "<h1> Add New Question </h1>";
         
-	$purpose = "a_testbank";
+        $purpose = "a_testbank";
         $qtext = "";
         $diff =  "Easy";
         $soln = array("", "", "", "");
@@ -138,14 +138,16 @@ div.editquestions {
             echo '<table style="width:100%">';
             echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> <th> Delete</th< </tr>';
         foreach ($questions as $question){
-       // Check to see if this question matches the filter     
-	if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
+            // Check to see if this question matches the filter
+            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
                 continue; //Break on any question that doesn't match the filter.
             }
 
-	// Check to see if this question is the one we're currently modifying
-	if ($question['Qid'] == $Qid){echo '<tr style="background-color:cyan;">';}	
-	else{ echo '<tr>';}
+            // Check to see if this question is the one we're currently modifying
+            if ($question['Qid'] == $Qid) {echo '<tr style="background-color:cyan;">';
+            }
+            else{ echo '<tr>';
+            }
 
             //echo '<form method="post" action="addqsplit.php">';
             echo '<form method="post" action="../loopers/qblooper.php">';
