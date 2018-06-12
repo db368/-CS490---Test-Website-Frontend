@@ -41,13 +41,17 @@
     color: red;
 }
 
+div {
+    background-color: var(--divbg);
+}
+
 div.form {
     background-color: #ECECEC;
-    margin: auto;
+    margin: 0 auto;
     width: 90%;
     padding: 5px;
     box-shadow: 0px 0px 0px;
-    border-radius: 4px;
+    border-radius: 10px;
 }
 
 div.debug {
@@ -69,20 +73,43 @@ header {
     background-color: var(--color-primary-4);
 }
 
-input[type=text] {
-    border-radius: 5px;
+input[type=text], input[type=password] {
+    padding: 5px;
     box-shadow: 0px 0px 2px;
 }
 
-textarea{
-	
-border-radius: 5px;
+textarea {
+    border-radius: 5px;
     box-shadow: 0px 0px 2px;
     width: 80%;
     height: 5em;
     wrap: hard;
 }
+*{
+    box-sizing: border-box;
+}
+.col25{
+    float:left;
+    width: 25%;
+    background-color: transparent;
+}
 
+.col50{
+    float:left;
+    width: 50%;
+    background-color: transparent;
+}
+.col75{
+    float:left;
+    width: 75%;
+    background-color: transparent;
+}
+.row:after{
+    content="";
+    display:table;
+    clear:both;
+    background-color: transparent;
+}
 input[type=submit] {
     border-radius: 5px;
     box-shadow: 0px 0px 2px;
@@ -95,12 +122,6 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 10px;
-}
-
-div {
-    background-color: var(--divbg);
-    box-shadow: 0px 0px 20px black;
-    border-radius: 1px padding-bottom:10%;
 }
 
 table {
