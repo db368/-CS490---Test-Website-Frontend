@@ -139,12 +139,30 @@ th{
         curl_close($ch);
         $questions = json_decode($return_val, true);
 
-        echo '<table style="width:100%">';
+
+	// Okay so we have the question bank, now lets get every question that was on the specified exam
+	    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+	    $ch= curl_init();
+	    curl_setopt($ch, CURLOPT_URL, $target);
+	    curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+	    curl_setopt($ch, CURLOPT_POSTFIELDS, array('identifier'=>'e_get_questions', 'id' => $_POST["id"]));
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	    $examreturn=curl_exec($ch);
+	    curl_close($ch);
+	    $examquestions = json_decode($examreturn, true);
+
+
+	echo '<table style="width:100%">';
         echo '<tr><th> Question </th> <th> Difficulty </th> <th> Add to Exam </th> </tr>';
         foreach ($questions as $question){
             if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
                 continue; //Break on any question that doesn't match the filter.
             }
+		
+	   //Brute force kludge to see if the question is already on the exam
+	    foreach($examquestions as $exquestion){
+		if ($question['Qid'] == $exquestion['Qid']){ continue 2;} //this should break the nested loop
+	    }
 
             echo '<tr>';
             echo '<form method="post" action="../loopers/exlooper.php">';
