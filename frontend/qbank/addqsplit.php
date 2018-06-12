@@ -29,24 +29,24 @@ div.editquestions {
     $debug = 1;
     if (!isset($_POST['id']) or $_POST['id'] == null or $_POST['identifier'] == "r_testbank") {
         echo "<h1> Add New Question </h1>";
-       
- 	//We just removed a quesiton, however we also may have had text in the fields.	Lets take a look
-        
-	/*$purpose = "a_testbank"; //Just because we tapped remove, doesn' mean we weren't just editing a question;
+
+        //We just removed a quesiton, however we also may have had text in the fields.    Lets take a look
+
+        /*$purpose = "a_testbank"; //Just because we tapped remove, doesn' mean we weren't just editing a question;
         $qtext = "";
         $diff =  "Easy";
         $soln = array("", "");
         $testcases = array("", "");
- 	*/
+        */
 
-	//ternary operator
-	//$var = <conditional>                   ? <yescase>          : <nocase>;
-	$purpose = (isset($_POST['identifier']))     ? $_POST['identifier'] : "a_testbank";    
-	$qtext = (isset($_POST['question']))     ? $_POST['question'] : "";    
-	$diff = (isset($_POST['difficulty']))    ? $_POST['difficulty'] : "Easy";    
-	$soln = (isset($_POST['solution']))      ? $_POST['solution'] : array("","");    
-	$testcases = (isset($_POST['testcase']) and $_POST['testcase'] != null) ? $_POST['testcase'] : array("","");    
-}
+        //ternary operator
+        //$var = <conditional>                   ? <yescase>          : <nocase>;
+        $purpose = (isset($_POST['identifier']))     ? $_POST['identifier'] : "a_testbank";
+        $qtext = (isset($_POST['question']))     ? $_POST['question'] : "";
+        $diff = (isset($_POST['difficulty']))    ? $_POST['difficulty'] : "Easy";
+        $soln = (isset($_POST['solution']))      ? $_POST['solution'] : array("","");
+        $testcases = (isset($_POST['testcase']) and $_POST['testcase'] != null) ? $_POST['testcase'] : array("","");
+    }
     else {
         //Obtain Question from Database
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -69,21 +69,21 @@ div.editquestions {
 
     }
 
-//Check to see if the number of testcases is set
-if (isset($_POST['numtc'])){
-	//It is, set it to that
-	$numtc = $_POST['numtc'];
-}
-else {//It's not, create a new variable
-	//This will differ depending on if we're working on a new question or modifying an existing one
-	if ($purpose == "e_question"){
-		// We're editing a question, set the number of testcases equsl to the amount it already has
-		$numtc = sizeof($question['TestCase']);
-	}
-	else{ // We're creating a new one. Start out with just 2.
-		$numtc = 2;
-	}	
-}
+    //Check to see if the number of testcases is set
+    if (isset($_POST['numtc'])) {
+        //It is, set it to that
+        $numtc = $_POST['numtc'];
+    }
+    else {//It's not, create a new variable
+        //This will differ depending on if we're working on a new question or modifying an existing one
+        if ($purpose == "e_question") {
+            // We're editing a question, set the number of testcases equsl to the amount it already has
+            $numtc = sizeof($question['TestCase']);
+        }
+        else{ // We're creating a new one. Start out with just 2.
+            $numtc = 2;
+        }
+    }
 
     if ($debug) {
         echo "<h3> POST INPUT </h3>";
