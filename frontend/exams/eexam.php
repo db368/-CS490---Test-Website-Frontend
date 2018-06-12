@@ -1,6 +1,7 @@
 <html>
 <head>
     <title> Exam Question Add </title>
+    <link rel="stylesheet" href="../styles.css">
 <style>
 
 div.testbankquestions {
@@ -17,18 +18,7 @@ div.examquestions {
     background-color: lightblue;
     height:100%;
 }
-th, td{
-    border:1px solid;
-    padding: 8px;
-}
 
-tr:nth-child(even){
-    background-color:white;
-    padding: 16px;
-}
-th{
-    background-color: gray;
-}
 
 
 </style>
@@ -71,7 +61,7 @@ th{
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
-    echo $return_val;
+  //  echo $return_val;
     $questions = json_decode($return_val, true);
     if ($questions == null) {
         echo "No questions yet!";
