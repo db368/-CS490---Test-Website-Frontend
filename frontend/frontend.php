@@ -26,7 +26,7 @@ switch ($role){
 		 $target="https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/student.php";
         break;
 case "Instructor":
-    $target = 'https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/instructor.html';
+    $target = 'https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/instructor.php';
 	break;
 default:
     $target='https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/ui.html';
