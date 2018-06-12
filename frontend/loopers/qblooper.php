@@ -12,10 +12,12 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $return_val=curl_exec($ch);
 }
+else{
+	$_POST["numtc"]+=1; //Increment this
+}
 
 //now this does use post data so it needs a curl
 
-//$_POST['id'] = $_POST['eid']; //hack? Kludge?
 $target = 'https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/qbank/addqsplit.php';
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, "$target");

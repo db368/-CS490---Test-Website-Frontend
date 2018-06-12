@@ -33,8 +33,8 @@ div.editquestions {
         $purpose = "a_testbank";
         $qtext = "";
         $diff =  "Easy";
-        $soln = array("", "", "", "");
-        $testcases = array("", "", "", "");
+        $soln = array("", "");
+        $testcases = array("", "");
     }
     else {
         //Obtain Question from Database
@@ -57,6 +57,23 @@ div.editquestions {
         $testcases = $question['TestCase'];
 
     }
+
+//Check to see if the number of testcases is set
+if (isset($_POST['numtc'])){
+	//It is, set it to that
+	$numtc = $_POST['numtc'];
+}
+else {//It's not, create a new variable
+	//This will differ depending on if we're working on a new question or modifying an existing one
+	if ($purpose == "e_question"){
+		// We're editing a question, set the number of testcases equsl to the amount it already has
+		$numtc = sizeof($question['TestCase']);
+	}
+	else{ // We're creating a new one. Start out with just 2.
+		$numtc = 2;
+	}	
+}
+
     if ($debug) {
         echo "<h3> POST INPUT </h3>";
         echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>";
@@ -68,7 +85,7 @@ div.editquestions {
         echo '<br>';
     }
 
-    //echo '<form action="../loopers/qblooper.php" method="post">';
+    echo '<form action="../loopers/qblooper.php" method="post">';
     echo '<div class="form">';
     echo '<form action="../debug.php" method="post">';
     foreach (array("Easy", "Medium", "Hard") as $rdiff){
@@ -81,14 +98,16 @@ div.editquestions {
         echo 'Question Text: ';
         echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
 
-    for ($i = 0; $i<sizeof($testcases) || $i<4; $i++){
+    for ($i = 0; $i<sizeof($testcases) || $i<$numtc; $i++){
         echo 'Test Case '. ($i + 1) .' : <input type="text" name="testcase[' . $i .']" value="'. $testcases[$i] . '">';
         echo 'Solution '. ($i + 1) .' :<input type="text" name="solution[' . $i . ']" value="'. $soln[$i] . '"><br>';
     }
     if ($purpose == "e_question") {
         echo '<input type = "hidden" name="qid" value='. $_POST['id']. '>';
     }
-    echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
+    echo '<input type="hidden" name="numtc" value="'. $numtc .'">';
+    echo '<button type="submit" name="identifier" value="doesntmatter"> Add another Testcase </button>';
+    echo '<button type="submit" name="identifier" value="'.$purpose.'"> Submit Question </button>';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
     echo "</div>";
