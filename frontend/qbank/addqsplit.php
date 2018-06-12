@@ -29,13 +29,23 @@ div.editquestions {
     $debug = 1;
     if (!isset($_POST['id']) or $_POST['id'] == null or $_POST['identifier'] == "r_testbank") {
         echo "<h1> Add New Question </h1>";
+       
+ 	//We just removed a quesiton, however we also may have had text in the fields.	Lets take a look
         
-        $purpose = "a_testbank";
+	/*$purpose = "a_testbank"; //Just because we tapped remove, doesn' mean we weren't just editing a question;
         $qtext = "";
         $diff =  "Easy";
         $soln = array("", "");
         $testcases = array("", "");
-    }
+ 	*/
+
+	//ternary operator
+	//$var = <conditional>                   ? <yescase>          : <nocase>;
+	$qtext = (isset($_POST['question']))     ? $_POST['question'] : "";    
+	$diff = (isset($_POST['difficulty']))    ? $_POST['difficulty'] : "";    
+	$soln = (isset($_POST['solution']))      ? $_POST['solution'] : array("","");    
+	$testcases = (isset($_POST['testcase']) and $_POST['testcase'] != null) ? $_POST['testcase'] : array("","");    
+}
     else {
         //Obtain Question from Database
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -106,7 +116,7 @@ else {//It's not, create a new variable
         echo '<input type = "hidden" name="qid" value='. $_POST['id']. '>';
     }
     echo '<input type="hidden" name="numtc" value="'. $numtc .'">';
-    echo '<button type="submit" name="identifier" value="doesntmatter"> Add another Testcase </button>';
+    echo '<button type="submit" name="identifier" value="a_tc"> Add another Testcase </button>';
     echo '<button type="submit" name="identifier" value="'.$purpose.'"> Submit Question </button>';
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
