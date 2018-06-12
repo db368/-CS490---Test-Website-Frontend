@@ -3,6 +3,7 @@
 //   ^S
 //Send data to the DB
 
+if (!_POST["identifier"] != "doesntmatter"){
 $target = 'https://web.njit.edu/~jll25/CS490/switch.php';
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, $target);
@@ -10,8 +11,7 @@ curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
 curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $return_val=curl_exec($ch);
-curl_close($ch);
-
+}
 
 //now this does use post data so it needs a curl
 
