@@ -74,6 +74,15 @@ input[type=text] {
     box-shadow: 0px 0px 2px;
 }
 
+textarea{
+	
+border-radius: 5px;
+    box-shadow: 0px 0px 2px;
+    width: 80%;
+    height: 5em;
+    wrap: hard;
+}
+
 input[type=submit] {
     border-radius: 5px;
     box-shadow: 0px 0px 2px;
