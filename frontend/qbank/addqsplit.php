@@ -115,7 +115,7 @@ div.editquestions {
     }
         echo "<br>";
         echo '<label for="question"> Question Text:</question> <br>';
-        echo '<textarea name="question" value="'. $qtext . '"> </textarea><br> <br>';
+        echo '<textarea name="question">' . $qtext .' </textarea><br> <br>';
 
     for ($i = 0; $i<sizeof($testcases) || $i<$numtc; $i++){
         echo 'Test Case '. ($i + 1) .' : <input type="text" name="testcase[' . $i .']" value="'. $testcases[$i] . '">';
