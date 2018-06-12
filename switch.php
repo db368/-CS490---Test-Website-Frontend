@@ -312,32 +312,38 @@ case "req_exam":
 //add question to test bank
 case "a_testbank":
     $ate = $_POST['a_testbank'];
-    $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
     $question = $_POST['question'];
     $difficulty = $_POST['difficulty'];
     $case = $_POST['testcase'];
     $solution = $_POST['solution'];
-//foreach ($_POST['testcase'] as $keys => $values) {
-  //echo $keys .'=>'.$values.'<br/>';
-  // code...
-//
+
+
+    $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
     $getai = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'jll25' AND TABLE_NAME = 'Questions';";
     $getairesult = $conn->query($getai);
-    echo $getairesult;
-    foreach($case as $index=>$col){
-    $query = "insert into TC(TestCase, Answer) values('".$case[$index]."','".$solution[$index]."');";
-    }
 
-    $query = rtrim( $query, ',');
-    mysqli_query($conn,$query);
-     if ($conn->query($query) === TRUE) {
-        	echo "TestCase added successfully";
-    	}
-    	else {
-       		 echo "Error: " . $query . "<br>" . $conn->error;}
+    $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
+        if ($conn->query($add)=== TRUE) {
+              echo "question added successfully";
+            }
+              else {
+                echo "Error: " . $add . "<br>" . $conn->error;}
+
+
+                foreach($case as $index=>$col){
+                $query = "insert into TC(Qid, TestCase, Answer) values('$getairesult','$case[$index]','$solution[$index]'),";
+                }
+
+                $query = rtrim( $query, ',');
+                mysqli_query($conn,$query);
+                 if ($conn->query($query) === TRUE) {
+                    	echo "TestCase added successfully";
+                	}
+                	else {
+                   		 echo "Error: " . $query . $conn->error;}
 
     break;
 
@@ -406,28 +412,8 @@ case 'release':
 
 break;
 
-case "r_testbank":
-
-$qid = $_POST['id'];
-
-$conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-$deleteeq = "delete from ExQuestions where Question_id= '$qid'";
-if ($conn->query($deleteeq) === TRUE) {
-      echo "Exam questions has been deleted";
-}
-else {
-     echo "Error: " . $deleteeq . "<br>" . $conn->error;}
-
-$deleteq = "delete from Questions where Qid= '$qid'";
-     if ($conn->query($deleteq) === TRUE) {
-           echo "Questions has been deleted from the Testbank";
-     }
-     else {
-          echo "Error: " . $deleteq . "<br>" . $conn->error;}
-
-break;
 case "results":
-
+//
 
 break;
 default:
