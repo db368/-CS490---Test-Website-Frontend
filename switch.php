@@ -388,7 +388,7 @@ case "a_testbank":
     	}
     	else {
        		 echo "Error: " . $query . "<br>" . $conn->error;}
-
+*/
     break;
 
 //add question to exam
@@ -515,6 +515,7 @@ if ($Score->num_rows > 0) {
 
     echo $score_encoded;
 }
+
 
 break;
 default:
