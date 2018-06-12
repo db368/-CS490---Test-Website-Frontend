@@ -478,6 +478,43 @@ $deleteq = "delete from Questions where Qid= '$qid'";
 break;
 case "results":
 
+$eid = $_POST['eid'];
+
+$conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+
+if ($conn->connect_error) {
+    die("Connection failure" . $conn->connect_error);
+}
+
+
+$Students = "select Student_id from StudentResult where Eid = '$eid'; ";
+
+$Studentsr = $conn->query($sql);
+$json_array = array();
+if ($Studentsr->num_rows > 0) {
+    // output data of each row
+    while($row = $Studentsr->fetch_assoc()) {
+        $studentid[]=$row;
+    }
+    $student_encoded = json_encode($studentid);
+
+    echo $student_encoded;
+}
+
+$ids = join("','",$student_encoded);
+$sql = "SELECT sum(score) FROM StudentResult WHERE id IN ('$ids')";
+
+$Score = $conn->query($sql);
+$json_array = array();
+if ($Score->num_rows > 0) {
+    // output data of each row
+    while($row = $Score->fetch_assoc()) {
+        $scorenum[]=$row;
+    }
+    $score_encoded = json_encode($studentid);
+
+    echo $score_encoded;
+}
 
 break;
 default:
