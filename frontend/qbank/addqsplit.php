@@ -69,6 +69,8 @@ div.editquestions {
             array_push($tcs, $row['TestCase']);
             array_push($sols, $row['Answer']);
         }
+        //Now that we've done that, we can just pick a question out of the stack
+        $question=$question[0];
         $qtext = $question['Question'];
         $diff =  $question['Difficulty'];
         $soln = $sols;
