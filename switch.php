@@ -405,7 +405,6 @@ case "aq_exam":
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
-
     $ieq ="INSERT INTO ExQuestions (Exam_id, Question_id, Total_points)
     VALUES ('$eid','$qid','$score')
     ON DUPLICATE KEY
@@ -517,6 +516,38 @@ if ($Score->num_rows > 0) {
 
 
 break;
+
+case "s_results":
+
+$sid = $_POST['sid'];
+$eid = $_POST['eid'];
+
+$conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+if ($conn->connect_error) {
+    die("Connection failure" . $conn->connect_error);
+}
+
+$sql = "SELECT Questions.Question, ExQuestions.Total_points, StudentResult.score, StudentResult.Student_id
+from Questions, ExQuestions, StudentResult
+where Student_id = '$sid'and StudentResult.Eid ='$eid' and StudentResult.Eid = ExQuestions.Exam_id and ExQuestions.Question_id = Questions.Qid";
+
+$Score = $conn->query($sql);
+$json_array = array();
+if ($Score->num_rows > 0) {
+    // output data of each row
+    while($row = $Score->fetch_assoc()) {
+        $scorenum[]=$row;
+    }
+    $score_encoded = json_encode($studentid);
+
+    echo $score_encoded;
+}
+
+break;
+
+
+
+
 default:
     header('Location: https://web.njit.edu/~jll25/CS490/student.html');
 }
