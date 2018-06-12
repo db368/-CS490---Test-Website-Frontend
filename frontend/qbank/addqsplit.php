@@ -47,12 +47,6 @@ div.editquestions {
         $return_val=curl_exec($ch);
         curl_close($ch);
 
-        if (!$return_val) {
-              echo "No question at value: ". $_POST['id'] .'?<br>';
-            echo "And the post is set: ". isset($_POST['id']) .'?<br>';
-             exit;
-        }
-
         echo "<h1> Modify Question </h1>";
         $purpose = "e_question";
 
