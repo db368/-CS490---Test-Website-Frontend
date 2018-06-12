@@ -1,41 +1,10 @@
 <html>
-<style>
-.inline {
-    display: inline;
-}
+<head>
+    <title> Manage exams </title>
+    <link rel="stylesheet" href="../styles.css">
 
-.link-button {
-    background: none;
-    border: none;
-    color: black;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 1em;
-    font-family: serif;
-}
-
-.link-button:focus {
-    outline: none;
-}
-
-.link-button:active {
-    color: red;
-}
-
-th, td{
-    border:1px solid;
-    padding: 8px;
-    text-align: center;
-}
-
-tr:nth-child(even){
-    background-color:lightgray;
-    padding: 16px;
-}
-
-</style>
 <body>
-<h1> Manage Exams </h1>
+<header><h1> Manage Exams </h1> </header>
 <div>
 <?php
     //Obtain Exams
@@ -52,13 +21,6 @@ if ($return_val == null) {
     exit;
 }
     $exams = json_decode($return_val, true);
-
-    //Build Table
-    /* Test Code
-    $exams = array("Exam1", "Exam2", "Exam3");
-    $ids = array("39", "393", "3939");
-    $both = array_combine($ids, $exams);
-    */
 
     echo '<table width=100%>';
     echo '<tr><th> EXAMS </th> <th> REMOVE </th> </tr>';
