@@ -25,7 +25,7 @@ div.editquestions {
     <div class="editquestions">
     <?php
 
-    $debug = 0; //Use this to control hidden div
+    $debug = 0; /
     $debug = 1;
     if (!isset($_POST['id']) or $_POST['id'] == null) {
         echo "<h1> Add New Question </h1>";
@@ -52,8 +52,8 @@ div.editquestions {
             echo "And the post is set: ". isset($_POST['id']) .'?<br>';
              exit;
         }
+
         echo "<h1> Modify Question </h1>";
-        //echo $return_val;
         $purpose = "e_question";
 
         $question = json_decode($return_val, true)[0];
@@ -74,7 +74,6 @@ div.editquestions {
         echo '<br>';
     }
 
-
     //echo '<form action="../loopers/qblooper.php" method="post">';
     echo '<div class="form">';
     echo '<form action="../debug.php" method="post">';
@@ -88,7 +87,7 @@ div.editquestions {
         echo 'Question Text: ';
         echo '<input type="text" name="question" value="'. $qtext . '"><br> <br>';
 
-    for ($i = 0; $i<sizeof($testcases) || $i<4; $i++){ // Solutions aren't supported by the DB yet.
+    for ($i = 0; $i<sizeof($testcases) || $i<4; $i++){
         echo 'Test Case '. ($i + 1) .' : <input type="text" name="testcase[' . $i .']" value="'. $testcases[$i] . '">';
         echo 'Solution '. ($i + 1) .' :<input type="text" name="solution[' . $i . ']" value="'. $soln[$i] . '"><br>';
     }
@@ -99,78 +98,7 @@ div.editquestions {
     echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
     echo "</div>";
-
-
-    /*
-    //Check if the post is set
-    if (!isset($_POST['id'])) {
-        echo "No ID!??!";
-        exit;
-    }
-    else {$Eid = $_POST["id"];
-    }
-    if (isset($_POST['filter'])) {
-        $filter=$_POST['filter'];
-    }
-    else{
-        $filter='none';
-    }
-
-    //Before we even curl, lets define this filter box
-    echo '<form action="eexam.php" method="post" id="filter">';
-    echo '<input type=hidden name=id value="'.$Eid.'">';
-    echo '<input type="submit" value="Apply Filter">';
-    echo '<select name="filter">';
-    echo '<option value="none"> None </option>';
-    echo '<option value="Easy"> Easy </option>';
-    echo '<option value="Medium"> Medium </option>';
-    echo '<option value="Hard"> Hard </option>';
-    echo '</select>';
-    echo '</form>';
-
-    //Now you curl
-    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
-    $ch= curl_init();
-    curl_setopt($ch, CURLOPT_URL, $target);
-    curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-    curl_setopt($ch, CURLOPT_POSTFIELDS, array('identifier'=>'e_get_questions', 'id' => $_POST["id"]));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $return_val=curl_exec($ch);
-    curl_close($ch);
-
-    $questions = json_decode($return_val, true);
-    if ($questions == null) {
-        echo "No questions yet!";
-    }
-    else{
-        echo '<table style="width:100%">';
-        echo '<tr><th> Question </th> <th> Difficulty </th> <th> Score </th> <th> Update </th><th> Remove </th> </tr>';
-        foreach ($questions as $question){
-            //Filter Logic
-            if ($filter != 'none' and $filter != $question['Difficulty']) {
-                continue; //Break on any question that doesn't match the filter.
-            }
-            echo '<form method="post" action="../debug.php">';
-            echo '<input type="hidden" name="eid" value="'. $Eid . '">';
-
-            $qid = $question['Qid']; // This is the only variable used twice
-            echo '<tr>';
-            echo '<input type="hidden" name="qid" value="'. $cid . '">';
-            echo '<td>'. $question['Question'] . '</td>';
-            echo '<td> ' . $question['Difficulty'] . '</td>';
-            echo '<td> <input type="number" name="score" value="'. $question['Total_points'] . '"></td>';
-            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Update </button>  </td>';
-            echo '<td> <button type="submit" name ="identifier" value="req_exam"> Remove </button></td>';
-            echo '</form>';
-            echo '</tr>';
-        }
-
-        echo "</table>";
-    }
-    //TODO: Make the submit button actually float
-    */
     ?>
-    <!-- <input type="submit" name="submit" value="Submit Changes"> Maybe turn this on again later -->
 </div>
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
@@ -188,7 +116,6 @@ div.editquestions {
             $Qid=0;
         }
 
-        //Before we even curl, lets define this filter box
         echo '<form action="addqsplit.php" method="post" id="filter">';
         echo '<input type="submit" value="Apply Filter">';
         echo '<select name="tbfilter">';
@@ -215,22 +142,22 @@ div.editquestions {
         $questions = json_decode($return_val, true);
 
             echo '<table style="width:100%">';
-            // FOR RELEASE: echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
-            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> </tr>';
+            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> Delete </tr>';
         foreach ($questions as $question){
             if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
                 continue; //Break on any question that doesn't match the filter.
             }
 
             echo '<tr>';
-            echo '<form method="post" action="addqsplit.php">';
-            //echo '<form method="post" action="../debug.php">';
+            //echo '<form method="post" action="addqsplit.php">';
+            echo '<form method="post" action="../loopers/qblooper.php">';
             echo '<input type="hidden" name="id" value="'. $question['Qid'] . '">';
             echo '<input type="hidden" name="tbfilter" value="'.$tbfilter.'">';
 
             echo '<td>'. $question['Question'] . '</td>';
             echo '<td> ' . $question['Difficulty'] . '</td>';
-            echo '<td> <button type="submit" name ="identifier" value="aq_exam"> Edit</button>  </td>';
+            echo '<td> <button type="submit" name ="identifier" value="doesntmatter"> Edit</button>  </td>';
+            echo '<td> <button type="submit" name ="identifier" value="r_testbank"> Remove</button>  </td>';
             echo '</form>';
             echo '</tr>';
         }
