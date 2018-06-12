@@ -485,7 +485,7 @@ if ($conn->connect_error) {
 }
 
 
-$Students = "select Student_id from StudentResult where Eid = '$eid'; ";
+$Students = "SELECT Student_id, sum(score) FROM StudentResult WHERE Student_id IN (select Stid from Student) and Eid = '$eid'; ";
 
 $Studentsr = $conn->query($sql);
 $json_array = array();
@@ -498,22 +498,6 @@ if ($Studentsr->num_rows > 0) {
 
     echo $student_encoded;
 }
-
-$ids = join("','",$student_encoded);
-$sql = "SELECT sum(score) FROM StudentResult WHERE id IN ('$ids')";
-
-$Score = $conn->query($sql);
-$json_array = array();
-if ($Score->num_rows > 0) {
-    // output data of each row
-    while($row = $Score->fetch_assoc()) {
-        $scorenum[]=$row;
-    }
-    $score_encoded = json_encode($studentid);
-
-    echo $score_encoded;
-}
-
 
 break;
 
@@ -532,6 +516,7 @@ from Questions, ExQuestions, StudentResult
 where Student_id = '$sid'and StudentResult.Eid ='$eid' and StudentResult.Eid = ExQuestions.Exam_id and ExQuestions.Question_id = Questions.Qid";
 
 $Score = $conn->query($sql);
+
 $json_array = array();
 if ($Score->num_rows > 0) {
     // output data of each row
