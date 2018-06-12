@@ -11,7 +11,24 @@ case "a_tc": //Increment the number of test cases
     $_POST["numtc"]+=1;
     break;
 
-default: //We're editing/adding a new question. Screen it for DB access
+default: 
+    //We're editing/adding a new question. Screen it for DB access
+    $atc= array(); //Approved testcases
+    $asoln = array();
+    $stc = $_POST['testcase']; //Suspect test cases
+    $ssoln = $_POST['solution'];
+    for ($i = 0; $i<sizeof($stc) ; $i++){
+	if ($stc[$i] != null and  $ssoln[$i] != null ){
+		$atc[$i] = $stc[$i];
+		$asoln[$i] = $ssoln[$i];
+	}
+}
+	//Replace these with approved testcases/solutions
+    $_POST["testcase"] = $atc;
+    $_POST["solution"] = $asoln;
+
+
+    //Now we curl
     $target = 'https://web.njit.edu/~jll25/CS490/switch.php';
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, $target);
@@ -19,7 +36,7 @@ default: //We're editing/adding a new question. Screen it for DB access
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($_POST));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
-    $_POST=array();
+    //$_POST=array();
     break;
 
 }
