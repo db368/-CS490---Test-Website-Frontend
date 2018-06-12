@@ -107,7 +107,7 @@ th{
 </div>
     <div class="testbankquestions">
     <h1>Test Bank Questions</h1>
-        <?php
+    <?php
         if (isset($_POST['tbfilter'])) {
                 $tbfilter=$_POST['tbfilter'];
         }
@@ -139,13 +139,9 @@ th{
         curl_close($ch);
         $questions = json_decode($return_val, true);
 
-            echo '<table style="width:100%">';
-            // FOR RELEASE: echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
-            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Add to Exam </th> </tr>';
+        echo '<table style="width:100%">';
+        echo '<tr><th> Question </th> <th> Difficulty </th> <th> Add to Exam </th> </tr>';
         foreach ($questions as $question){
-            //if (in_array($qbids[$i], $examids)) {  //TODO:This question is already on the array, skip it
-            //   continue;
-            //}
             if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
                 continue; //Break on any question that doesn't match the filter.
             }
@@ -165,7 +161,7 @@ th{
             echo '</tr>';
         }
         echo "</table>"
-        ?>
+    ?>
     </div>
 </body>
 </html>
