@@ -7,6 +7,7 @@ switch($_POST['identifier']){
 	break;
 	
 	case "a_tc": //Increment the number of test cases
+		$_POST['identifier'] = $_POST['subidentifier'];
 		$_POST["numtc"]+=1;
 	break;
 		
@@ -18,9 +19,11 @@ default: //We're editing/adding a new question. Screen it for DB access
 	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($_POST));
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	$return_val=curl_exec($ch);
+	$_POST=array();
 	break;
-}
 
+}
+$_POST['id'] = (isset($_POST['qid'])) ? $_POST['qid'] : $_POST['id'];
 $target = 'https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/qbank/addqsplit.php';
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, "$target");

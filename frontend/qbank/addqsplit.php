@@ -41,8 +41,9 @@ div.editquestions {
 
 	//ternary operator
 	//$var = <conditional>                   ? <yescase>          : <nocase>;
+	$purpose = (isset($_POST['identifier']))     ? $_POST['identifier'] : "a_testbank";    
 	$qtext = (isset($_POST['question']))     ? $_POST['question'] : "";    
-	$diff = (isset($_POST['difficulty']))    ? $_POST['difficulty'] : "";    
+	$diff = (isset($_POST['difficulty']))    ? $_POST['difficulty'] : "Easy";    
 	$soln = (isset($_POST['solution']))      ? $_POST['solution'] : array("","");    
 	$testcases = (isset($_POST['testcase']) and $_POST['testcase'] != null) ? $_POST['testcase'] : array("","");    
 }
@@ -116,9 +117,9 @@ else {//It's not, create a new variable
         echo '<input type = "hidden" name="qid" value='. $_POST['id']. '>';
     }
     echo '<input type="hidden" name="numtc" value="'. $numtc .'">';
+    echo '<input type="hidden" name="subidentifier" value="'.$purpose.'">'; //We still want posts to remember what they were doing right?
     echo '<button type="submit" name="identifier" value="a_tc"> Add another Testcase </button>';
     echo '<button type="submit" name="identifier" value="'.$purpose.'"> Submit Question </button>';
-    echo '<button type="submit" class="link-button"> Submit </button>';
     echo "</form>";
     echo "</div>";
     ?>
