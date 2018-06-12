@@ -22,8 +22,9 @@
          //echo '<a class="click-me" href="exams/vexams.php">View Exams</a><br>';
          //echo '<a class="click-me" href="ui.php"> Logout </a> <br>';
          echo "<div class=form>";
-         echo '<button type="submit"> View Exams </button><br>';
-         echo '<button type="submit"> Logout </button><br>';
+         echo '<button type="submit" formaction="exams/vexams.php"> View Exams </button><br>';
+         echo '<button type="submit" formaction="results/sresults.php"> View results </button><br>';
+         echo '<button type="submit" formaction="ui.html"> Logout </button><br>';
          echo "</div>";
          echo "</div>";
     ?>
