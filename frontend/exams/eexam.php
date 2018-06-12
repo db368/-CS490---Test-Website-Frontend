@@ -9,13 +9,14 @@ div.testbankquestions {
     overflow: auto;
     width: 50%;
     background-color: orange;
+    background-color: linear-gradient(to top left, orange, white);
     height:100%;
 }
 div.examquestions {
     float: left;
     overflow: auto;
     width: 50%;
-    background-color: lightblue;
+    background-color: linear-gradient(to top right, blue, white);
     height:100%;
 }
 
