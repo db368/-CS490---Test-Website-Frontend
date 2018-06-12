@@ -2,7 +2,6 @@
 <head>
     <title> Manage exams </title>
     <link rel="stylesheet" href="../styles.css">
-
 <body>
 <header><h1> Manage Exams </h1> </header>
 <div>
@@ -17,7 +16,14 @@
     $return_val=curl_exec($ch);
     curl_close($ch);
 if ($return_val == null) {
-    echo "<h1> ERROR: NO RETURN VALUE </h1>";
+    //Cool get out of jail free card
+    echo "<h2> No exams detected? Perhaps you'd like to add one? </h2>";
+    echo '<div>
+        <form action="../loopers/aelooper.php" method="post">
+            <input type="hidden" name = "identifier" value="a_exam">
+            <input type="text" name="examname">
+            <input type="submit" value="Add Exam">
+        </form>';
     exit;
 }
     $exams = json_decode($return_val, true);
