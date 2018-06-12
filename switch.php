@@ -312,58 +312,32 @@ case "req_exam":
 //add question to test bank
 case "a_testbank":
     $ate = $_POST['a_testbank'];
+    $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
     $question = $_POST['question'];
     $difficulty = $_POST['difficulty'];
     $case = $_POST['testcase'];
     $solution = $_POST['solution'];
+//foreach ($_POST['testcase'] as $keys => $values) {
+  //echo $keys .'=>'.$values.'<br/>';
+  // code...
+//
 
-
-    $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-
-$getai = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'jll25' AND TABLE_NAME = 'Questions';";
-$getairesult = $conn->query($getai);
-
-
-
-$query = 'insert into TC (Qid,TC,Answer) values';
-
-foreach( $_POST['testcase'] as $index => $col ){
-    $query .= "('".$getai."' '".$case[$index]."', '".$solution[$index]."'),";
-}
-$query = rtrim( $query, ',');
-mysqli_query($conn,$query);
- if ($conn->query($query) === TRUE) {
-    	echo "TestCase added successfully";
-	}
-	else {
-   		 echo "Error: " . $query . "<br>" . $conn->error;}
-
-    $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
-
-    /*$addresult = $conn->query($add);
-
-    echo "<pre>";
-    print_r($case);
-    echo "</pre>";
-
-
-    $sql = array();
-		/*
-    foreach( $testcases as $row ) {
-        $sql[] = '("'.mysql_real_escape_string($row['testcases']).'", '.mysql_real_escape_string($row['solution']).')';
+    $getai = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'jll25' AND TABLE_NAME = 'Questions';";
+    $getairesult = $conn->query($getai);
+    echo $getairesult;
+    foreach($case as $index=>$col){
+    $query = "insert into TC(TestCase, Answer) values('".$case[$index]."','".$solution[$index]."');";
     }
-    mysql_query('INSERT INTO TC (TestCase, Answer) VALUES '.implode(',', $sql));*/
 
-		 for($i=0; $i<sizeof($case);$i++){
-			 $testcaseresult = "Insert into TC(Eid,TestCase,Answer) values '$getairesult','$case[$i]','$solution[$i]';";
-			 $testcaseresultq= $conn->query($testcaseresult);
-			 if(!$testcaseresultq){echo "error";}
-
-		 }
-
-
+    $query = rtrim( $query, ',');
+    mysqli_query($conn,$query);
+     if ($conn->query($query) === TRUE) {
+        	echo "TestCase added successfully";
+    	}
+    	else {
+       		 echo "Error: " . $query . "<br>" . $conn->error;}
 
     break;
 
@@ -432,8 +406,28 @@ case 'release':
 
 break;
 
+case "r_testbank":
+
+$qid = $_POST['id'];
+
+$conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+$deleteeq = "delete from ExQuestions where Question_id= '$qid'";
+if ($conn->query($deleteeq) === TRUE) {
+      echo "Exam questions has been deleted";
+}
+else {
+     echo "Error: " . $deleteeq . "<br>" . $conn->error;}
+
+$deleteq = "delete from Questions where Qid= '$qid'";
+     if ($conn->query($deleteq) === TRUE) {
+           echo "Questions has been deleted from the Testbank";
+     }
+     else {
+          echo "Error: " . $deleteq . "<br>" . $conn->error;}
+
+break;
 case "results":
-//
+
 
 break;
 default:
