@@ -36,7 +36,7 @@ default:
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($_POST));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
-    //$_POST=array();
+    $_POST=array('output'=> $return_val);
     break;
 
 }
