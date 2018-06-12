@@ -24,7 +24,6 @@
 </style>
 
 <head>
-    <link rel="stylesheet" href="../styles.css">
 
     <title> Qbank </title>
 </head>
@@ -57,7 +56,7 @@
             }
             $questions = json_decode($return_val, true);
 
-	    //Begin Printing Table
+            //Begin Printing Table
             foreach ($questions as $incoming){
                 $qid = "error"; $qtext = "error"; $qdiff = "error";
                 if (isset($incoming['Qid'])) { $qid = $incoming['Qid'];
@@ -74,7 +73,7 @@
                 //echo '<td> <button type= "submit" name="identifier" value="qb_removequestion" onclick=\'this.form.action="../loopers/qblooper.php";\'/> Remove </button></td>';
                 echo '<td> <button type= "submit" name="identifier" value="r_testbank" onclick=\'this.form.action="../debug.php";\'/> Remove </button></td>';
                 echo "</tr>";
-		echo "</form>";
+                echo "</form>";
             }
         ?>
         </table>

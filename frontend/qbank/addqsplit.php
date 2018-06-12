@@ -47,14 +47,14 @@ div.editquestions {
         $return_val=curl_exec($ch);
         curl_close($ch);
 
-	  if (!$return_val){
-         echo "No question at value: ". $_POST['id'] .'?<br>';
-		 echo "And the post is set: ". isset($_POST['id']) .'?<br>';
-		      exit;
-	   }
+        if (!$return_val) {
+              echo "No question at value: ". $_POST['id'] .'?<br>';
+            echo "And the post is set: ". isset($_POST['id']) .'?<br>';
+             exit;
+        }
         echo "<h1> Modify Question </h1>";
         //echo $return_val;
-	 $purpose = "e_question";
+        $purpose = "e_question";
 
         $question = json_decode($return_val, true)[0];
         $qtext = $question['Question'];
@@ -63,11 +63,11 @@ div.editquestions {
         $testcases = $question['TestCase'];
 
     }
-    if ($debug){
-	echo "<h3> POST INPUT </h3>";
+    if ($debug) {
+        echo "<h3> POST INPUT </h3>";
         echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>";
-	print_r($_POST);
-	echo "</div>";
+        print_r($_POST);
+        echo "</div>";
         echo '<br>';
         echo "<h3> JSON OUTPUT </h3>";
         echo "<div style='background-color:#EEEEEE;box-shadow: 0px 0px 0px;max-width:95%;margin:auto;'>".$return_val."</div>";
@@ -96,8 +96,8 @@ div.editquestions {
         echo '<input type = "hidden" name="qid" value='. $_POST['id']. '>';
     }
     echo '<input type="hidden" name="identifier" value="'. $purpose .'">';
-        echo '<button type="submit" class="link-button"> Submit </button>';
-        echo "</form>";
+    echo '<button type="submit" class="link-button"> Submit </button>';
+    echo "</form>";
     echo "</div>";
 
 
@@ -178,9 +178,9 @@ div.editquestions {
         if (isset($_POST['tbfilter']) and $_POST['tbfilter'] != null) {
                 $tbfilter=$_POST['tbfilter'];
         }
-	else{
+        else{
                 $tbfilter="none";
-	}
+        }
         if (isset($_POST['id'])) {
                 $Qid=$_POST['id'];
         }
@@ -208,7 +208,7 @@ div.editquestions {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
         curl_close($ch);
-        if ($return_val == null){
+        if ($return_val == null) {
             echo "<h2> No questions are available at this time!</h2>";
             exit;
         }
@@ -218,8 +218,7 @@ div.editquestions {
             // FOR RELEASE: echo '<tr><th> Question </th> <th> Difficulty </th> <th> Testcases </th> <th> Add to Exam </th> </tr>';
             echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> </tr>';
         foreach ($questions as $question){
-            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty'])
-             {
+            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
                 continue; //Break on any question that doesn't match the filter.
             }
 

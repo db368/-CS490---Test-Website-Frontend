@@ -45,18 +45,18 @@ $usedids = array(); //Make a little sub array to handle duplicates
 //echo "<h1> DUMPING ULTIMATE ARRAY </h1> <br>";
 
 foreach ($eqarray as $eq){
-	$eqtext = $eq['Question'];
-	$eqdiff = $eq['Difficulty'];
-	foreach($qbarray as $qb){
-		$qbtext = $qb['Question'];
-		$qbid = $qb['Qid'];
-		if ($qbtext == $eqtext and !in_array($qbid, $usedids)){ //Compare Question Text
-			array_push($usedids, $qb['Qid']);
-			//$eq['id'] = $qb['Qid'];
-			//array_push($uqarray, $eq);
-			break;
-		}
-	}
+    $eqtext = $eq['Question'];
+    $eqdiff = $eq['Difficulty'];
+    foreach($qbarray as $qb){
+        $qbtext = $qb['Question'];
+        $qbid = $qb['Qid'];
+        if ($qbtext == $eqtext and !in_array($qbid, $usedids)) { //Compare Question Text
+            array_push($usedids, $qb['Qid']);
+            //$eq['id'] = $qb['Qid'];
+            //array_push($uqarray, $eq);
+            break;
+        }
+    }
 }
 
 //echo var_dump($uqarray);

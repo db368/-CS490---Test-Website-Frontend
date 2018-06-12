@@ -62,7 +62,7 @@ if ($return_val == null) {
 
     echo '<table width=100%>';
     echo '<tr><th> EXAMS </th> <th> REMOVE </th> </tr>';
-    foreach ($exams as $exam){
+foreach ($exams as $exam){
     // Could probably wrap this up in a function eventually
     $exid = "error"; $exname = "error";
     if (isset($exam['Eid'])) { $exid = $exam['Eid'];

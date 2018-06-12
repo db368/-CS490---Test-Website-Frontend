@@ -73,7 +73,7 @@ th{
     curl_close($ch);
     echo $return_val;
     $questions = json_decode($return_val, true);
-if ($questions == null) {
+    if ($questions == null) {
         echo "No questions yet!";
     }
     else{
