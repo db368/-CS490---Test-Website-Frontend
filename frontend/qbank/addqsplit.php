@@ -138,11 +138,15 @@ div.editquestions {
             echo '<table style="width:100%">';
             echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> <th> Delete</th< </tr>';
         foreach ($questions as $question){
-            if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
+       // Check to see if this question matches the filter     
+	if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
                 continue; //Break on any question that doesn't match the filter.
             }
 
-            echo '<tr>';
+	// Check to see if this question is the one we're currently modifying
+	if ($question['Qid'] == $Qid){echo '<tr style="background-color:cyan;">';}	
+	else{ echo '<tr>';}
+
             //echo '<form method="post" action="addqsplit.php">';
             echo '<form method="post" action="../loopers/qblooper.php">';
             echo '<input type="hidden" name="id" value="'. $question['Qid'] . '">';
