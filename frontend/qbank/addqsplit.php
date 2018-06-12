@@ -25,12 +25,12 @@ div.editquestions {
     <div class="editquestions">
     <?php
 
-    $debug = 0; /
+    $debug = 0;
     $debug = 1;
     if (!isset($_POST['id']) or $_POST['id'] == null) {
         echo "<h1> Add New Question </h1>";
-        $purpose = "a_testbank";
-
+        
+	$purpose = "a_testbank";
         $qtext = "";
         $diff =  "Easy";
         $soln = array("", "", "", "");
@@ -142,7 +142,7 @@ div.editquestions {
         $questions = json_decode($return_val, true);
 
             echo '<table style="width:100%">';
-            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> Delete </tr>';
+            echo '<tr><th> Question </th> <th> Difficulty </th> <th> Edit </th> <th> Delete</th< </tr>';
         foreach ($questions as $question){
             if ($tbfilter != 'none' and $tbfilter != $question['Difficulty']) {
                 continue; //Break on any question that doesn't match the filter.
