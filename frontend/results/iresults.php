@@ -42,9 +42,9 @@ tr:nth-child(even){
 
 </head>
 <body>
-    <h1> Results By Exam </h1>
-    <p> Click on an exam to get a student by student breakdown, or click on the release button to release an exam to the students </p>
-
+    <header> <h1> Results By Exam </h1> </header>
+    <p> Click on an exam to get a student by student breakdown, or click on the release button to release an exam to the students. </p>
+    <div class=login>
     <?php
         //First, we get a list of exams
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
