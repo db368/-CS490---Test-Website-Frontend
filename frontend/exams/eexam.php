@@ -8,16 +8,22 @@ div.testbankquestions {
     float: right;
     overflow: auto;
     width: 50%;
-    background-color: orange;
-    background-color: linear-gradient(to top left, orange, white);
+    background: linear-gradient(to top left, rgba(0,0,0,0), var(--color-secondary-1-1));
     height:100%;
+    border: 5px ridge white;
+    padding-top:10px;
+
 }
 div.examquestions {
+    background: linear-gradient(to top right, rgba(0,0,0,0), var(--color-primary-0));
     float: left;
     overflow: auto;
     width: 50%;
-    background-color: linear-gradient(to top right, blue, white);
     height:100%;
+    border: 5px ridge white;
+    text-decoration-style:double;
+    padding-top:10px;
+
 }
 
 
@@ -25,12 +31,13 @@ div.examquestions {
 </style>
 </head>
 <body>
-    <div class="examquestions">
-    <h1> Exam Questions   </h1>
+    <header> <h1> Edit Exam</h1> </header>
     <?php
+
+    echo '<div class="examquestions">';
+    echo '<div class="cool"> Exam Questions   </div>';
     if (!isset($_POST['id'])) {
         echo "No ID!??!";
-        exit;
     }
     else {$Eid = $_POST["id"];
     }
@@ -97,8 +104,8 @@ div.examquestions {
     <!--<input type="submit" name="submit" value="Submit Changes"> Maybe turn this on again later-->
 </div>
     <div class="testbankquestions">
-    <h1>Test Bank Questions</h1>
     <?php
+    echo "<div class='cool'>Test Bank Questions</div>";
     if (isset($_POST['tbfilter'])) {
             $tbfilter=$_POST['tbfilter'];
     }
