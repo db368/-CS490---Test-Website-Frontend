@@ -388,6 +388,7 @@ case "a_testbank":
     	}
     	else {
        		 echo "Error: " . $query . "<br>" . $conn->error;}
+*/
 
     break;
 
@@ -403,10 +404,7 @@ case "aq_exam":
 
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
-    //add if exists to put number in
-    /*$add ="INSERT INTO ExQuestions(Exam_id, Question_id, Total_points) VALUES ('$eid','$qid','$score');";
-    $addresult = $conn->query($add);*/
-/*
+
 
     $ieq ="INSERT INTO ExQuestions (Exam_id, Question_id, Total_points)
     VALUES ('$eid','$qid','$score')
@@ -470,6 +468,7 @@ else {
 
 $deleteq = "delete from Questions where Qid= '$qid'";
      if ($conn->query($deleteq) === TRUE) {
+
            echo "Questions has been deleted from the Testbank";
      }
      else {
@@ -477,6 +476,44 @@ $deleteq = "delete from Questions where Qid= '$qid'";
 
 break;
 case "results":
+
+$eid = $_POST['eid'];
+
+$conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+
+if ($conn->connect_error) {
+    die("Connection failure" . $conn->connect_error);
+}
+
+
+$Students = "select Student_id from StudentResult where Eid = '$eid'; ";
+
+$Studentsr = $conn->query($sql);
+$json_array = array();
+if ($Studentsr->num_rows > 0) {
+    // output data of each row
+    while($row = $Studentsr->fetch_assoc()) {
+        $studentid[]=$row;
+    }
+    $student_encoded = json_encode($studentid);
+
+    echo $student_encoded;
+}
+
+$ids = join("','",$student_encoded);
+$sql = "SELECT sum(score) FROM StudentResult WHERE id IN ('$ids')";
+
+$Score = $conn->query($sql);
+$json_array = array();
+if ($Score->num_rows > 0) {
+    // output data of each row
+    while($row = $Score->fetch_assoc()) {
+        $scorenum[]=$row;
+    }
+    $score_encoded = json_encode($studentid);
+
+    echo $score_encoded;
+}
 
 
 break;
