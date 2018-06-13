@@ -135,21 +135,20 @@ echo $insertquery;
 
 if($conn->query($insertquery)){
   echo "answer inserted";
-}*/
-for ($i=0; $i <4; $i++) {
+}*/for ($i=0; $i <sizeof($_POST['questions']); $i++) {
 
 
   $question_id = $qid[$i];
   $answer = $answers[$i];
-  $insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$qid[$i]', '$answers');";
-  echo $insertquery;
+  $insertquery = "insert into StudentResult(Student_id, Eid, Qid,Answer) values ('$sid','$eid', '$qid[$i]', '$answers[$i]');";
 
-  if($conn->query($insertquery)){
-    echo "answer inserted";
 
-}
-
-}
+  if ($conn->query($insertquery) === TRUE) {
+           echo "Answers added successfully";
+       }
+       else {
+            echo "Error: " . $insertquery . $conn->error;}
+          }
 
 
     break;
@@ -372,41 +371,6 @@ case "a_testbank":
             echo "Error: " . $query . $conn->error;}
           }
 
-                /*foreach($case as $index=>$col){
-                $query = "insert into TC( TestCase, Answer) values('$case[$index]','$solution[$index]'),";
-
-
-                $query = rtrim( $query, ',');
-
-                 if ($conn->query($query) === TRUE) {
-                    	echo "TestCase added successfully";
-                	}
-                	else {
-                   		 echo "Error: " . $query . $conn->error;}
-                     }
-
-      /*for ($i=0; $i < sizeof($case) ; $i++) {
-        $testcaseresult = "Insert into TC(Eid,TestCase,Answer) values '$getairesult','$case[$i]','$solution[$i]';";
- 			  $testcaseresultq= $conn->query($testcaseresult);
- 			  if(!$testcaseresultq){echo "error";}
-
-      }
-
-
-
-    /*
-    foreach($case as $index=>$col){
-    $query = "insert into TC(TestCase, Answer) values('".$case[$index]."','".$solution[$index]."');";
-    }
-
-    $query = rtrim( $query, ',');
-    mysqli_query($conn,$query);
-     if ($conn->query($query) === TRUE) {
-        	echo "TestCase added successfully";
-    	}
-    	else {
-       		 echo "Error: " . $query . "<br>" . $conn->error;}
-*/
     break;
 
 //add question to exam
