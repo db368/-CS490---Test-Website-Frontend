@@ -111,32 +111,45 @@ case "a_exam":
 
 
 //inserting to answer from students
-case "answers":
+case "answer":
 
-    $aqe= $_POST['answers'];
-    $conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+$conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
-    $sid = $_POST['sid'];
-    $eid = $_POST['exid'];
-    $qid = $_POST['questions'];
-    $answers = $_POST['answer'];
+$sid = $_POST['sid'];
+$eid = $_POST['exid'];
+$qid = $_POST['questions'];
+$answers = $_POST['answer'];
 
-    for ($i=0; $i <$_POST['questions']; $i++) {
-        $question_id = $qid[$i];
-        $answer = mysql_real_escape_string($answers[$i]);
-        $insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$question_id', '$answer');";
-        echo $insertquery;
+var_dump($answers);
+var_dump($qid);
 
-    if($conn->query($insertquery)){
+if(!is_array($qid)){echo "no array";}
+else{var_dump($qid);}
+
+$question_id = $qid[1];
+
+$answer = $answers[1];
+/*
+$insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$question_id','$answer');";
+echo $insertquery;
+
+if($conn->query($insertquery)){
+  echo "answer inserted";
+}*/
+for ($i=0; $i <4; $i++) {
+
+
+  $question_id = $qid[$i];
+  $answer = $answers[$i];
+  $insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$qid[$i]', '$answers');";
+  echo $insertquery;
+
+  if($conn->query($insertquery)){
     echo "answer inserted";
-    continue;
-                  }
 
-    else{
-    echo "Error: " . $insertquery . "<br>" . $conn->error;
-              }
-  }
+}
 
+}
 
 
     break;
@@ -237,12 +250,7 @@ case "e_question":
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
-    /*
-    if (isset($_POST['score'])){
-    $update = "UPDATE ExQuestions SET Total_Points= '$score' WHERE Question_id = '$qid'";
-    }
 
-    */
 
     $updatq = "UPDATE Questions SET Question = '$question' where Qid ='$qid'";
     $updateq = $conn->query($updatq);
@@ -250,8 +258,9 @@ case "e_question":
     $updatescore = "UPDATE ExQuestions SET Total_points = '$score' where Question_id ='$qid'";
     $updatescore = $conn->query($updatescore);
 
-    for ($i=0; $i <sizeof($testcase) ; $i++) {
+    for ($i=0; $i <sizeof($case) ; $i++) {
       // code...
+      $answer = mysql_real_escape_string($answer);
 
     $query = "Update TC set TestCase ='$testcase[$i]', Answer ='$answer[$i] where Qid ='$qid'";
     if ($conn->query($query) === TRUE) {
@@ -270,6 +279,35 @@ case "e_question":
 
 
 
+/*
+    $updatetc =  "UPDATE TC SET TestCase = '$testcases' where Question_id ='$qid'";
+    $updateq = $conn->query($updatq);
+
+    $updatetc =  "UPDATE TC SET TestCase = '$answer' where Question_id ='$qid'";
+    $updateq = $conn->query($updatq);
+
+    /*
+    $update = "UPDATE Questions SET Question='$question','Difficulty'='$difficulty' WHERE Qid = '$qid'";
+    $addresult = $conn->query($update);
+    if($addresult)
+    {
+    if(!isset($_POST['testcases'])){ return 1;}
+    else {
+    if(!isset($_POST['solutions'])){return 1;}
+    else{
+    $update2 = "UPDATE 'TC' SET TestCase= '$testcases', Answer ='$answer' WHERE Qid = '$qid'";
+    $updateresult =  $conn->query($update2);
+    if($updateresult)
+    {return 1;}
+    else{ $update2 = "UPDATE 'TC' SET 'Case'='$testcases'WHERE Qid = '$qid'";
+    $updateresult =  $conn->query($update2);
+    if($updateresult)
+    {return 1;}
+    else{return 0;}
+    }
+    }
+    }
+    }*/
     break;
 
 //delete
@@ -334,7 +372,41 @@ case "a_testbank":
             echo "Error: " . $query . $conn->error;}
           }
 
+                /*foreach($case as $index=>$col){
+                $query = "insert into TC( TestCase, Answer) values('$case[$index]','$solution[$index]'),";
 
+
+                $query = rtrim( $query, ',');
+
+                 if ($conn->query($query) === TRUE) {
+                    	echo "TestCase added successfully";
+                	}
+                	else {
+                   		 echo "Error: " . $query . $conn->error;}
+                     }
+
+      /*for ($i=0; $i < sizeof($case) ; $i++) {
+        $testcaseresult = "Insert into TC(Eid,TestCase,Answer) values '$getairesult','$case[$i]','$solution[$i]';";
+ 			  $testcaseresultq= $conn->query($testcaseresult);
+ 			  if(!$testcaseresultq){echo "error";}
+
+      }
+
+
+
+    /*
+    foreach($case as $index=>$col){
+    $query = "insert into TC(TestCase, Answer) values('".$case[$index]."','".$solution[$index]."');";
+    }
+
+    $query = rtrim( $query, ',');
+    mysqli_query($conn,$query);
+     if ($conn->query($query) === TRUE) {
+        	echo "TestCase added successfully";
+    	}
+    	else {
+       		 echo "Error: " . $query . "<br>" . $conn->error;}
+*/
     break;
 
 //add question to exam
@@ -349,6 +421,10 @@ case "aq_exam":
 
     $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
+    //add if exists to put number in
+  //  $add ="INSERT INTO ExQuestions(Exam_id, Question_id, Total_points) VALUES ('$eid','$qid','$score');";
+    //ddresult = $conn->query($add);
+
 
     $ieq ="INSERT INTO ExQuestions (Exam_id, Question_id, Total_points)
     VALUES ('$eid','$qid','$score')
@@ -361,7 +437,7 @@ case "aq_exam":
     	else {
        		 echo "Error: " . $ieq . "<br>" . $conn->error;
     	}
-*/
+
     break;
 
 //remove an exam
@@ -387,7 +463,7 @@ case 'r_exam':
 case 'release':
 	$eid = $_POST['eid'];
 	$conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-	$release = "update Exams set Release_Ready ='Yes' where eid ='$eid'";
+	$release = "update Exams set Release_Ready ='1' where eid ='$eid'";
 
 	if ($conn->query($release) === TRUE) {
 	    	echo "Exam is ready to be released";
@@ -403,15 +479,6 @@ case "r_testbank":
 $qid = $_POST['id'];
 
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
-
-$deletesr = "delete from StudentResult where Qid= '$qid'";
-if ($conn->query($deletesr) === TRUE) {
-      echo "StudentResult  QUESTION has been deleted";
-}
-else {
-     echo "Error: " . $deletesr . "<br>" . $conn->error;}
-
-
 $deleteeq = "delete from ExQuestions where Question_id= '$qid'";
 if ($conn->query($deleteeq) === TRUE) {
       echo "Exam questions has been deleted";
@@ -421,15 +488,14 @@ else {
 
 $deleteq = "delete from Questions where Qid= '$qid'";
      if ($conn->query($deleteq) === TRUE) {
-
            echo "Questions has been deleted from the Testbank";
      }
      else {
           echo "Error: " . $deleteq . "<br>" . $conn->error;}
 
 break;
-case "results":
 
+case "results":
 $eid = $_POST['eid'];
 
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
@@ -438,8 +504,7 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-
-$Students = "SELECT Student_id, sum(score) FROM StudentResult WHERE Student_id IN (select Stid from Student) and Eid = '$eid'; ";
+$Students = "SELECT Student_id, sum(score) FROM StudentResult WHERE Student_id IN (select Stid from Student) and StudentResult.Eid = '$eid';";
 
 $Studentsr = $conn->query($Students);
 $json_array = array();
@@ -452,6 +517,7 @@ if ($Studentsr->num_rows > 0) {
 
     echo $student_encoded;
 }
+
 
 break;
 
@@ -470,7 +536,6 @@ from Questions, ExQuestions, StudentResult
 where Student_id = '$sid'and StudentResult.Eid ='$eid' and StudentResult.Eid = ExQuestions.Exam_id and ExQuestions.Question_id = Questions.Qid";
 
 $Score = $conn->query($sql);
-
 $json_array = array();
 if ($Score->num_rows > 0) {
     // output data of each row
@@ -483,8 +548,6 @@ if ($Score->num_rows > 0) {
 }
 
 break;
-
-
 
 
 default:
