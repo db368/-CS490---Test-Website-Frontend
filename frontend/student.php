@@ -7,17 +7,22 @@
 
 <header> <h1> Welcome </h1> </header>
 <body>
-     <div class="debug">
-    <h3> POST ARRAY</h3>
+
     <?php
-         var_dump($_POST);
-         $username = (isset($_POST['username'])) ? $_POST['username'] : "Oh no";
-         $sid = (isset($_POST['sid'])) ? $_POST['sid'] : 39;
-    echo "</div>";
-         echo '<div class="login">';
+
+    $debug = 0;
+    if ($debug)
+    {
+     echo '<div class="debug">';
+     echo "<h3> POST ARRAY</h3>";
+     var_dump($_POST);
+
+     echo "</div>";
+     }
+         $username = (isset($_POST['username'])) ? $_POST['username'] : "Test User";
+         $sid = (isset($_POST['sid'])) ? $_POST['sid'] : 39;echo '<div class="login">';
          echo "<h1> Welcome ".$username."!</h1>";
-         echo "<h1> ID ".$sid."!</h1>";
-         echo "options";
+         //echo "<h1> ID ".$sid."!</h1>";
          echo "<form method=post action=debug.php>";
          echo '<input type="hidden" name="username" value="'.$username.'"><br>';
          echo '<input type="hidden" name="sid" value="'.$sid.'"><br>';
