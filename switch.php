@@ -112,7 +112,7 @@ case "a_exam":
 
 //inserting to answer from students
 case "answers":
-    
+
     $aqe= $_POST['answers'];
     $conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
@@ -250,10 +250,10 @@ case "e_question":
     $updatescore = "UPDATE ExQuestions SET Total_points = '$score' where Question_id ='$qid'";
     $updatescore = $conn->query($updatescore);
 
-    for ($i=0; $i <sizeof($case) ; $i++) {
+    for ($i=0; $i <sizeof($testcase) ; $i++) {
       // code...
 
-    $query = "Update TC set TestCase ='$case[$i]', Answer ='$solution[$i] where Qid ='$qid'";
+    $query = "Update TC set TestCase ='$testcase[$i]', Answer ='$answer[$i] where Qid ='$qid'";
     if ($conn->query($query) === TRUE) {
          echo "TestCase and Solution added successfully";
      }
@@ -270,35 +270,6 @@ case "e_question":
 
 
 
-/*
-    $updatetc =  "UPDATE TC SET TestCase = '$testcases' where Question_id ='$qid'";
-    $updateq = $conn->query($updatq);
-
-    $updatetc =  "UPDATE TC SET TestCase = '$answer' where Question_id ='$qid'";
-    $updateq = $conn->query($updatq);
-
-    /*
-    $update = "UPDATE Questions SET Question='$question','Difficulty'='$difficulty' WHERE Qid = '$qid'";
-    $addresult = $conn->query($update);
-    if($addresult)
-    {
-    if(!isset($_POST['testcases'])){ return 1;}
-    else {
-    if(!isset($_POST['solutions'])){return 1;}
-    else{
-    $update2 = "UPDATE 'TC' SET TestCase= '$testcases', Answer ='$answer' WHERE Qid = '$qid'";
-    $updateresult =  $conn->query($update2);
-    if($updateresult)
-    {return 1;}
-    else{ $update2 = "UPDATE 'TC' SET 'Case'='$testcases'WHERE Qid = '$qid'";
-    $updateresult =  $conn->query($update2);
-    if($updateresult)
-    {return 1;}
-    else{return 0;}
-    }
-    }
-    }
-    }*/
     break;
 
 //delete
@@ -432,6 +403,15 @@ case "r_testbank":
 $qid = $_POST['id'];
 
 $conn =  new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+
+$deletesr = "delete from StudentResult where Qid= '$qid'";
+if ($conn->query($deletesr) === TRUE) {
+      echo "StudentResult  QUESTION has been deleted";
+}
+else {
+     echo "Error: " . $deletesr . "<br>" . $conn->error;}
+
+
 $deleteeq = "delete from ExQuestions where Question_id= '$qid'";
 if ($conn->query($deleteeq) === TRUE) {
       echo "Exam questions has been deleted";
