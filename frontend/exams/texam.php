@@ -67,6 +67,7 @@
     if ($number != 1) {
         echo '<button type=submit name=currentquestion value='.($number-1).'> Previous Question </button>';
     }
+    echo '<button type=submit name=identifier value=answer formaction="examlandingpage.php"> Submit answer </button>';
         echo "</form>";
     // Submit button stuff
      echo '<form method="post" action="examlandingpage.php">';

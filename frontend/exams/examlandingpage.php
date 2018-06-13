@@ -30,13 +30,13 @@
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, $target);
     curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($_POST));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
     if ($return_val != null) {
-    echo $return_val;
-}
+    	echo $return_val;
+    }
 
 ?>
     <h2> The exam is now finished </h2>
