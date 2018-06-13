@@ -14,9 +14,9 @@
     <p> Click on an exam to recieve your grade and a detailed breakdown. </p>
     <div class=login>
     <?php
-    $debug = 1;
+    $debug  = 0;
         //First, we get a list of exams
-        
+
 	$sid = $_POST['sid'];
 	$target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();

@@ -8,7 +8,7 @@
 
 <body>
 <?php
-	$debug = 1;
+	$debug  = 1;
 	echo "<div class='login'>";
  	if ($debug) {
         echo "<h1> POST INPUT </h1>";
@@ -22,11 +22,8 @@
         echo '<br>';
         echo "<h2> JSON OUTPUT </h2>";
         echo "<div class='debug'>";
-        if ($return_val != null) {
-            echo $return_val;
-        }
 	echo "</div>";
-}	
+}
     $exid=($_POST['exid']);
     //Send answers to the server
     $target = 'https://web.njit.edu/~jll25/CS490/switch.php';
@@ -37,6 +34,10 @@
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
+    if ($return_val != null) {
+    echo $return_val;
+}
+
 ?>
     <h2> The exam is now finished </h2>
     <a href="vexams.php">  Click here to return to the exam dialog </a>
