@@ -124,7 +124,7 @@ case "answers":
 
     for ($i=0; $i <$_POST['questions']; $i++) {
         $question_id = $qid[$i];
-        $answer = $answers[$i];
+        $answer = mysql_real_escape_string($answers[$i]);
         $insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$question_id', '$answer');";
         echo $insertquery;
 
