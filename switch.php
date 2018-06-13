@@ -112,8 +112,7 @@ case "a_exam":
 
 //inserting to answer from students
 case "answers":
-    $aqe= $_POST['answers'];
-    $conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+    
     $aqe= $_POST['answers'];
     $conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
@@ -364,41 +363,6 @@ case "a_testbank":
             echo "Error: " . $query . $conn->error;}
           }
 
-                /*foreach($case as $index=>$col){
-                $query = "insert into TC( TestCase, Answer) values('$case[$index]','$solution[$index]'),";
-
-
-                $query = rtrim( $query, ',');
-
-                 if ($conn->query($query) === TRUE) {
-                    	echo "TestCase added successfully";
-                	}
-                	else {
-                   		 echo "Error: " . $query . $conn->error;}
-                     }
-
-      /*for ($i=0; $i < sizeof($case) ; $i++) {
-        $testcaseresult = "Insert into TC(Eid,TestCase,Answer) values '$getairesult','$case[$i]','$solution[$i]';";
- 			  $testcaseresultq= $conn->query($testcaseresult);
- 			  if(!$testcaseresultq){echo "error";}
-
-      }
-
-
-
-    /*
-    foreach($case as $index=>$col){
-    $query = "insert into TC(TestCase, Answer) values('".$case[$index]."','".$solution[$index]."');";
-    }
-
-    $query = rtrim( $query, ',');
-    mysqli_query($conn,$query);
-     if ($conn->query($query) === TRUE) {
-        	echo "TestCase added successfully";
-    	}
-    	else {
-       		 echo "Error: " . $query . "<br>" . $conn->error;}
-*/
 
     break;
 
