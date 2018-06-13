@@ -33,6 +33,7 @@ default:
 	break;
 }
 //Now we curl the page based on the user's role
+$_POST['sid']=$_POST['Student'];
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, "$target");
 curl_setopt($ch, CURLOPT_POST, 1);
