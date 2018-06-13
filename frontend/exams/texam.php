@@ -77,6 +77,7 @@
         $i=$i+1;
     }
     echo '<input type=hidden name=exid value="'.$exid.'">';
+    echo '<input type=hidden name=sid value="'.$_POST['sid'].'">';
     echo '<button type=submit name=identifier value=answer> Submit answer </button>';
     echo '</form>';
     echo "</div>";

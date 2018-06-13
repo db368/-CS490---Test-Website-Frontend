@@ -55,7 +55,7 @@ if ($return_val == null) {
 $exams = json_decode($return_val, true);
 
 
-
+$sid = $_POST['sid'];
 echo "<h1> View Exams </h1>";
 echo "<p> Click on an exam to take it! </p>";
 //Build Table
@@ -84,6 +84,7 @@ foreach ($exams as $exam){
     }
 
     echo '<tr>';
+    echo '<input type=hidden name=sid value='.$sid.'">';
     echo '<td> <button type="submit" class="link-button" name="id" value="' . $exid .'">'. $exname . '</button> </td>';
     echo '</tr>';
 }

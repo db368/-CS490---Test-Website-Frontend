@@ -3,38 +3,6 @@
 .inline {
     display: inline;
 }
-
-.link-button {
-    background: none;
-    border: none;
-    color: black;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 1em;
-    font-family: serif;
-}
-
-.link-button:focus {
-    outline: none;
-}
-
-.link-button:active {
-    color: red;
-}
-
-th, td{
-    border:1px solid;
-    padding: 8px;
-    text-align: center;
-}
-th{
-    background-color: gray;
-}
-
-tr:nth-child(even){
-    background-color:lightgray;
-    padding: 16px;
-}
 </style>
 <head>
     <title> EXAM Results </title>
@@ -48,7 +16,9 @@ tr:nth-child(even){
     <?php
     $debug = 1;
         //First, we get a list of exams
-        $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+        
+	$sid = $_POST['sid'];
+	$target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();
         curl_setopt($ch, CURLOPT_URL, "$target");
         curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
@@ -90,14 +60,14 @@ tr:nth-child(even){
         }
         if (isset($exam['Name'])) { $exname = $exam['Name'];
         }
-        if (!$exam['Release_ready']) { //THis exam isn't released, skip it
+        if ($exam['Release_ready']) { //THis exam isn't released, skip it
             continue;
         }
         //echo '<form method="post" action="../debug.php">';
         echo '<form method="post" action="isresults.php">';
         echo '<input type="hidden" name="eid" value="'.$exid.'">';
+        echo '<input type="hidden" name="sid" value="'.$sid.'">';
         echo '<td> <button type="submit" class="link-button" name="identifier" value="results"> '.$exname.' </button> </td>';
-        echo '<td> <button type="submit" name=identifier value="release"> RELEASE  </button> </td>';
         echo "</form></tr>";
     }
     echo "</table>";

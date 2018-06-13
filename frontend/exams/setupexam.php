@@ -65,7 +65,7 @@ $alarray = array();
 $alarray['exid'] = $_POST["id"];
 $alarray['questions']=$usedids;
 $alarray['currentquestion']='1';
-
+$alarray['sid'] = $_POST['sid'];
 
 $target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/exams/texam.php";
 //$target = "http://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debug.php";
