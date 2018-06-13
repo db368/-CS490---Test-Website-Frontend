@@ -487,7 +487,7 @@ if ($conn->connect_error) {
 
 $Students = "SELECT Student_id, sum(score) FROM StudentResult WHERE Student_id IN (select Stid from Student) and Eid = '$eid'; ";
 
-$Studentsr = $conn->query($sql);
+$Studentsr = $conn->query($Students);
 $json_array = array();
 if ($Studentsr->num_rows > 0) {
     // output data of each row
