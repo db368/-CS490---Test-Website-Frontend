@@ -49,7 +49,7 @@ div.examquestions {
     }
 
     //Before we even curl, lets define this filter box
-    echo '<form action="eexam.php" method="post" id="filter">';
+    echo '<form action="https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/exams/eexam.php" method="post" id="filter">';
     echo '<input type=hidden name=id value="'.$Eid.'">';
     echo '<input type="submit" value="Apply Filter">';
     echo '<select name="filter">';
@@ -114,7 +114,7 @@ div.examquestions {
     }
 
         //Before we even curl, lets define this filter box
-        echo '<form action="eexam.php" method="post" id="filter">';
+        echo '<form action="https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/exams/eexam.php" method="post" id="filter">';
         echo '<input type=hidden name=id value="'.$Eid.'">';
         echo '<input type="submit" value="Apply Filter">';
         echo '<select name="tbfilter">';
