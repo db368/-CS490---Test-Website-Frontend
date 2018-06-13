@@ -46,6 +46,7 @@ tr:nth-child(even){
     <p> Click on an exam to recieve your grade and a detailed breakdown. </p>
     <div class=login>
     <?php
+    $debug = 1;
         //First, we get a list of exams
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();
@@ -59,7 +60,27 @@ tr:nth-child(even){
         exit;
     }
     $exams = json_decode($return_val, true);
-
+    if ($debug) {
+        echo "<h2> POST INPUT </h2>";
+        echo "<div class='debug'>";
+        if ($_POST != null) {
+            print_r($_POST);
+        }
+        else{ echo "No Post!";
+        }
+        echo "</div>";
+        echo '<br>';
+        echo "<h2> JSON OUTPUT </h2>";
+        echo "<div class='debug'>";
+        if ($return_val != null) {
+            echo $return_val;
+        }
+        else{
+            echo "No return value!";
+        }
+        echo "</div>";
+        echo '<br>';
+    }
     //var_dump($exams);
     echo "<table>";
     echo "<tr> <th> EXAM </th> </tr>"; //Only need to do a single form I think
@@ -69,10 +90,9 @@ tr:nth-child(even){
         }
         if (isset($exam['Name'])) { $exname = $exam['Name'];
         }
-        if (!$exam['Release_ready']){ //THis exam isn't released, skip it
+        if (!$exam['Release_ready']) { //THis exam isn't released, skip it
             continue;
         }
-        echo "<tr>";
         //echo '<form method="post" action="../debug.php">';
         echo '<form method="post" action="isresults.php">';
         echo '<input type="hidden" name="eid" value="'.$exid.'">';
