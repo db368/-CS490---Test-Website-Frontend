@@ -68,8 +68,8 @@
     }
         echo "</form>";
     // Submit button stuff
-        //echo '<form method="post" action="examlandingpage.php">';
-    echo '<form method="post" action="../debug.php">';
+     echo '<form method="post" action="examlandingpage.php">';
+    //echo '<form method="post" action="../debug.php">';
     $i=0;
     foreach($questions as $q){
         echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
