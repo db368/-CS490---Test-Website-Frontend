@@ -84,7 +84,7 @@ foreach ($exams as $exam){
     }
 
     echo '<tr>';
-    echo '<input type=hidden name=sid value='.$sid.'">';
+    echo '<input type=hidden name=sid value="'.$sid.'">';
     echo '<td> <button type="submit" class="link-button" name="id" value="' . $exid .'">'. $exname . '</button> </td>';
     echo '</tr>';
 }
@@ -95,12 +95,6 @@ echo '</table>';
 
 </div>
 <div>
-    <h2> Add new exam </h2>
-    <form action="https://web.njit.edu/~jll25/CS490/switch.php" method="post">
-        <input type="hidden" name = "identifier" value="a_exam">
-        <input type="text" name="examname">
-        <input type="submit" value="Add Exam">
-    </form>
-</div>
+   </div>
 </body>
 </html>

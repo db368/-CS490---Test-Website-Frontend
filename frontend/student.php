@@ -16,6 +16,7 @@
     echo "</div>";
          echo '<div class="login">';
          echo "<h1> Welcome ".$username."!</h1>";
+         echo "<h1> ID ".$sid."!</h1>";
          echo "options";
          echo "<form method=post action=debug.php>";
          echo '<input type="hidden" name="username" value="'.$username.'"><br>';

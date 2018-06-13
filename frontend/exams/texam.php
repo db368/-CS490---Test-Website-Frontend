@@ -60,6 +60,7 @@
 
         echo '<input type=textbox name=answer['.$number.'] value='. $answer[$number] .'><br>';
         echo '<input type=hidden name=exid value="'.$exid.'">';
+    	echo '<input type=hidden name=sid value="'.$_POST['sid'].'">';
     if ($number < count($questions)-1) {
         echo '<button type=submit name=currentquestion value='.($number+1).'> Next Question </button>';
     }
