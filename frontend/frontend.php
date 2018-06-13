@@ -15,16 +15,16 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $return_val=curl_exec($ch);
 curl_close($ch);
 $jason = json_decode($return_val, true);
-if ($jason == null){
-	$goodstring = str_replace($_POST["username"], "", $return_val);
-	$goodjson = json_decode($goodstring, true)[0];
-//	var_dump($goodjson);
-	$role=$goodjson['Role'];
-	$sid=$goodjson['Student'];
+if ($jason == null) {
+    $goodstring = str_replace($_POST["username"], "", $return_val);
+    $goodjson = json_decode($goodstring, true)[0];
+    //    var_dump($goodjson);
+    $role=$goodjson['Role'];
+    $sid=$goodjson['Student'];
 }
 else{
-	$role = $jason['Role'];
-	$sid=$jason['Student'];
+    $role = $jason['Role'];
+    $sid=$jason['Student'];
 }
 
 //echo "Role = ". $role;
@@ -36,16 +36,16 @@ else{
 
 //This is going to be a curl instead of headers
 switch ($role){
-	case "Student":
-	case "student":
-		 $target="https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/student.php";
-        break;
+case "Student":
+case "student":
+    $target="https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/student.php";
+    break;
 case "Instructor":
     $target = 'https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/instructor.php';
-	break;
+    break;
 default:
     $target='https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/ui.html';
-	break;
+    break;
 }
 //Now we curl the page based on the user's role
 
