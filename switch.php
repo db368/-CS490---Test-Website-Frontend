@@ -114,20 +114,30 @@ case "a_exam":
 case "answers":
     $aqe= $_POST['answers'];
     $conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+    $aqe= $_POST['answers'];
+    $conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
-$sid = $_POST['sid'];
-$eid = $_POST['eid'];
-$qid = $_POST['qid'];
-$score = $_POST['score'];
+    $sid = $_POST['sid'];
+    $eid = $_POST['exid'];
+    $qid = $_POST['questions'];
+    $answers = $_POST['answer'];
 
-$adde = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$qid', '$score');";
+    for ($i=0; $i <$_POST['questions']; $i++) {
+        $question_id = $qid[$i];
+        $answer = $answers[$i];
+        $insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$question_id', '$answer');";
+        echo $insertquery;
 
+    if($conn->query($insertquery)){
+    echo "answer inserted";
+    continue;
+                  }
 
-if ($conn->query($adde) === TRUE) {
-    echo "Answers added successfully";
-} else {
-    echo "Error: " . $adde . "<br>" . $conn->error;
-}
+    else{
+    echo "Error: " . $insertquery . "<br>" . $conn->error;
+              }
+  }
+
 
 
     break;

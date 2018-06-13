@@ -11,7 +11,7 @@ if(!isset($_POST['username']))die('Error: No Username');
 if(!isset($_POST['password']))die('Error: No password!');
 
 $user = $_POST['username'];
-echo $user;
+
 $pw = $_POST['password'];
 
 
