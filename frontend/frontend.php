@@ -14,9 +14,24 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('username' => $_POST
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $return_val=curl_exec($ch);
 curl_close($ch);
+$jason = json_decode($return_val, true);
+if ($jason == null){
+	$goodstring = str_replace($_POST["username"], "", $return_val);
+	$goodjson = json_decode($goodstring, true)[0];
+//	var_dump($goodjson);
+	$role=$goodjson['Role'];
+	$sid=$goodjson['Student'];
+}
+else{
+	$role = $jason['Role'];
+	$sid=$jason['Student'];
+}
 
-$jason = json_decode($return_val, true)[0];
-$role = $jason['Role'];
+//echo "Role = ". $role;
+//echo "sid = ". $sid;
+//var_dump($jason);
+//echo $role;
+
 //PHASE 2: REDIRECTION
 
 //This is going to be a curl instead of headers
@@ -33,7 +48,8 @@ default:
 	break;
 }
 //Now we curl the page based on the user's role
-$_POST['sid']=$_POST['Student'];
+
+$_POST["sid"] = $sid;
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, "$target");
 curl_setopt($ch, CURLOPT_POST, 1);
