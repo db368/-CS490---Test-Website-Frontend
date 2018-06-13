@@ -14,11 +14,10 @@
         echo "<h3> POST ARRAY</h3>";
         var_dump($_POST);
     }
-         $username = (isset($_POST['username'])) ? $_POST['username'] : "Oh no";
+         $username = (isset($_POST['username'])) ? $_POST['username'] : "Test User";
     echo "</div>";
          echo '<div class="login">';
          echo "<h1> Welcome ".$username."!</h1>";
-         echo "options";
          echo "<form method=post action=debug.php>";
          echo '<input type="hidden" name="username" value="'.$username.'"><br>';
 

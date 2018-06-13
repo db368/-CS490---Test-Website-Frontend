@@ -8,7 +8,7 @@
 
 <body>
 <?php
-	$debug = 1;
+	$debug  = 0;
 	echo "<div class='login'>";
  	if ($debug) {
         echo "<h1> POST INPUT </h1>";

@@ -6,7 +6,7 @@
 <body>
 
 <?php
-    $debug = 1;
+    $debug  = 0;
 
     $questions = $_POST['questions'];
     $number = $_POST['currentquestion'];
