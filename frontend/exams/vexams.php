@@ -1,44 +1,12 @@
 <html>
-<style>
-.inline {
-    display: inline;
-}
+<head>
+        <title> View Exams </title>
+        <link rel="stylesheet" href="../styles.css">
 
-.link-button {
-    background: none;
-    border: none;
-    color: black;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 1em;
-    font-family: serif;
-}
-
-.link-button:focus {
-    outline: none;
-}
-
-.link-button:active {
-    color: red;
-}
-
-th, td{
-    border:1px solid;
-    padding: 8px;
-    text-align: center;
-}
-th{
-    background-color: gray;
-}
-
-tr:nth-child(even){
-    background-color:lightgray;
-    padding: 16px;
-}
-
-</style>
+</head>
 <body>
-<div>
+<header> <h1> Available Exams </h1> </header>
+<div class="login">
 <?php
     //Obtain Exams
 $target = "https://web.njit.edu/~jll25/CS490/switch.php";
@@ -56,7 +24,6 @@ $exams = json_decode($return_val, true);
 
 
 $sid = $_POST['sid'];
-echo "<h1> View Exams </h1>";
 echo "<p> Click on an exam to take it! </p>";
 //Build Table
 /* Test Code
