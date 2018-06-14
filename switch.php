@@ -462,12 +462,16 @@ break;
 case "results":
 $eid = $_POST['eid'];
 
+$dump = var_dump($_POST);
+//dumps post into a text file 
+echo file_get_contents("var.txt", $dump);
+
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
-
+//going to try a new code to see if it's picking up
 $Students = "SELECT Student_id, sum(score) FROM StudentResult WHERE Student_id IN (select Stid from Student) and StudentResult.Eid = '$eid';";
 
 $Studentsr = $conn->query($Students);
