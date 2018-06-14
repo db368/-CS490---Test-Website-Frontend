@@ -14,7 +14,8 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('username' => $_POST
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $return_val=curl_exec($ch);
 curl_close($ch);
-$jason = json_decode($return_val, true);
+$jason = json_decode($return_val, true)[0];
+//var_dump($jason);
 if ($jason == null) {
     $goodstring = str_replace($_POST["username"], "", $return_val);
     $goodjson = json_decode($goodstring, true)[0];
@@ -30,7 +31,7 @@ else{
 //echo "Role = ". $role;
 //echo "sid = ". $sid;
 //var_dump($jason);
-//echo $role;
+//echo $jason['Role'];
 
 //PHASE 2: REDIRECTION
 

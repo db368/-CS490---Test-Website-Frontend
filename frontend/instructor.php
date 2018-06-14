@@ -25,8 +25,8 @@
          //echo '<a class="click-me" href="ui.php"> Logout </a> <br>';
          echo "<div class=form>";
          echo '<button type="submit" formaction="exams/mexam.php"> Manage Exams </button><br>';
-         echo '<button type="submit" formaction="results/iresults.php"> Manage Question Bank </button><br>';
          echo '<button type="submit" formaction="results/iresults.php"> View/Release Results </button><br>';
+         echo '<button type="submit" formaction="qbank/addqsplit.php"> Manage Questionbank </button><br>';
          echo '<button type="submit" formaction="ui.html"> Logout </button><br>';
          echo "</div>";
          echo "</div>";
