@@ -14,7 +14,7 @@
     <p> Click on an exam to recieve your grade and a detailed breakdown. </p>
     <div class=login>
     <?php
-    $debug  = 0;
+    $debug = 1;
         //First, we get a list of exams
 
 	$sid = $_POST['sid'];

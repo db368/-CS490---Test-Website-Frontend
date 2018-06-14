@@ -29,7 +29,7 @@
 </head>
 <body>
     <?php
-    $debug  = 0;
+    $debug = 1;
     echo "<div>";
     echo "<h1> RESULTS FOR ".$_POST['exname']."</h1>";
         //First, we get a list of exams

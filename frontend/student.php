@@ -10,7 +10,7 @@
 
     <?php
 
-    $debug = 0;
+    $debug = 1;
     if ($debug)
     {
      echo '<div class="debug">';
