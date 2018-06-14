@@ -474,6 +474,7 @@ if ($conn->connect_error) {
 //going to try a new code to see if it's picking up
 $Students = "$Students = "SELECT Student_id, sum(score) FROM StudentResult WHERE Student_id IN (select Stid from Student) and StudentResult.Eid = '$eid';";
 
+
 $Studentsr = $conn->query($Students);
 $json_array = array();
 if ($Studentsr->num_rows > 0) {
@@ -499,9 +500,8 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$sql = "SELECT Questions.Question, ExQuestions.Total_points, StudentResult.score, StudentResult.Student_id
-from Questions, ExQuestions, StudentResult
-where Student_id = '$sid'and StudentResult.Eid ='$eid' and StudentResult.Eid = ExQuestions.Exam_id and ExQuestions.Question_id = Questions.Qid";
+$sql = "select distinct Questions.Question, StudentResult.score, ExQuestions.Total_points from StudentResult inner join Questions on Questions.Qid = StudentResult.Qid inner join ExQuestions on StudentResult.Eid = ExQuestions.Exam_id where StudentResult.Student_id = '$sid' and StudentResult.Eid = '$eid' group by Questions.Question";
+
 
 $Score = $conn->query($sql);
 $json_array = array();
