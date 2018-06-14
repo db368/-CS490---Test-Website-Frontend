@@ -46,6 +46,9 @@ tr:nth-child(even){
     <p> Click on an exam to get a student by student breakdown, or click on the release button to release an exam to the students. </p>
     <div class=login>
     <?php
+
+        $debug = 1;
+
         //First, we get a list of exams
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();
@@ -58,6 +61,16 @@ tr:nth-child(even){
         echo "<h3> ERROR: EXAM LIST COULD NOT BE RETRIEVED </h3>";
         exit;
     }
+    if ($debug)
+    {
+         echo '<div class="debug">';
+         echo "<h3> POST ARRAY</h3>";
+         var_dump($_POST);
+
+         echo "<h3> RETURNED JSON</h3>";
+         echo $return_val;
+         echo "</div>";
+     }
     $exams = json_decode($return_val, true);
 
     //var_dump($exams);
