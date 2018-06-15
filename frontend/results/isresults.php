@@ -63,25 +63,26 @@
         echo "</div>";
         echo '<br>';
     }
+    //Check to see if we're actually getting variables here.
     if ($return_val == null) {
         echo "<h2> ERROR: EXAM LIST COULD NOT BE RETRIEVED </h2>";
         exit;
     }
-
-    echo "<table>";
-    echo "<tr> <th> STUDENT </th> <th> AVERAGE </th> </tr>"; //Only need to do a single form I think
+    ?>
+    <table>
+    <tr> <th> STUDENT </th> <th> AVERAGE </th> </tr>
+    <?php
     foreach($results as $student){
         echo "<tr>";
-        $sid = ((isset($student['sid']))) ? $student['sid'] : "39";
+        $sid = ((isset($student['Student_id']))) ? $student['Student_id'] : "39";
         $score = ((isset($student['sum(score)']))) ? $student['sum(score)'] : "39";
-        //echo '<form method="post" action="../debug.php">';
-        echo '<form method="post" action="isresults.php">';
+        echo '<form method="post" action="../debug.php">';
+        //echo '<form method="post" action="isdresults.php">'; //Details page
         echo '<input type="hidden" name="sid" value="'.$sid.'">';
-        echo '<td> <button type="submit" class="link-button" name="eid" value="'.$exid.'"> '.$sid.' </button> </td>';
+        echo '<td> <button type="submit" class="link-button" name="sid" value="'.$sid.'"> '.$sid.' </button> </td>';
         echo "</form></tr>";
     }
     echo "</table>";
-
     ?>
 
 </body>
