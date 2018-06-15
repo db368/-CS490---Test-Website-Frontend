@@ -21,6 +21,14 @@
 .link-button:active {
     color: red;
 }
+good{
+    text-ccolor:rgb(0,255,0);
+}
+bad{
+    color:rgb(255,0,0);
+    text-decoration:line-through;
+}
+
 </style>
 <head>
     <title> Results </title>
@@ -106,9 +114,15 @@
                 'Answer' => $answer,
                 'testcase' => $tests,
                 'solution' => $sols,
-                'output' => $outputs
+                'output' => $outputs,
+                'qid' => rand(1,100)
             );
             array_push($results, $result);
+        }
+       //Just for fun, lets do a little student simulator
+        $int = rand(0,6); // a value for every type of letter grade A B C D E F
+        foreach($results as $result){
+            if (rand(0,7) > $int) $result['solution'] = $result['output'];
         }
     }
 
@@ -123,6 +137,7 @@
     foreach($results as $question){
         // First lets get our variables sorted out
         $maxscore = ((isset($question['maxscore']))) ? $question['maxscore'] : "39";
+        $qid = ((isset($question['qid']))) ? $question['qid'] : "??";
         $score = ((isset($question['score']))) ? $question['score'] : "39";
         $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
         $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
@@ -134,7 +149,7 @@
         $tcnum = sizeof($testcases);
 
         //Okily Dokily, now lets figure out this logic
-        echo "<tr><form>"; // Each row is going to be its own form
+        echo "<tr>"; // Each row is going to be its own form?? hmmmm
         echo '<td> '.$qtext.' </td>';
         echo '<td> '.$answer.'</td>';
 
@@ -151,8 +166,12 @@
         echo '</table>'; //Actually that wasn't that bad... he says unaware of the behemoth he has released
 
         // SCORE and EDIT DIALOG
-        echo '<td> SCORE: '.$score."/".$maxscore."<br>";
-        echo 'Edit <input type=number max='.$maxscore.' min=0> Comment <textarea> </textarea>';
+        echo '<form method="post" action="../debug.php">'; //Actually the form doesn't need to be used until here.
+        echo '<td> <h3> SCORE: '.$score."/".$maxscore."</h3><br>";
+        echo '<input type=hidden name="qid" value="'.$qid.'">';
+        echo 'Edit <input type=number max='.$maxscore.' value='.$score.' min=0 name="newscore"><br>';
+        echo ' Comment <textarea name="comment"> </textarea><br>';
+        echo '<button type=submit> Submit Changes </button>';
         echo '</td>';
         echo "</form></tr>";
     }
