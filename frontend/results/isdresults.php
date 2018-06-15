@@ -74,7 +74,7 @@
             //Check to see if we're actually getting variables here.
             if ($return_val == null) {
                 echo "<h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>";
-                $testdata = random_int(10, 50); //We didn't? Whatever, then make testdata.
+                $testdata = rand(10, 50); //We didn't? Whatever, then make testdata.
             }
         }
     }
@@ -83,19 +83,19 @@
         $results = array();
         for ($i=0; $i<$testdata; $i++){
             //Generate some nonsense
-            $max = random_int(5, 39);
-            $score = random_int(0, $max);
-            $text=random_int(100000, 99999999);
-            $answer = random_int(100000, 99999999);
+            $max = rand(5, 39);
+            $score = rand(0, $max);
+            $text=rand(100000, 99999999);
+            $answer = rand(100000, 99999999);
 
             $tests = array();
             $outputs = array();
             $sols = array();
-            $tcr = random_int(1, 5);
+            $tcr = rand(1, 5);
             for ($k=0; $k<$tcr; $k++){
-                array_push($tests, "( ". random_int(100000, 99999999) ."," . random_int(100000, 99999999) . "," . random_int(100000, 99999999) .")");
-                array_push($sols, random_int(1, 10));
-                array_push($outputs, random_int(1, 10));
+                array_push($tests, "( ". rand(100000, 99999999) ."," . rand(100000, 99999999) . "," . rand(100000, 99999999) .")");
+                array_push($sols, rand(1, 10));
+                array_push($outputs, rand(1, 10));
 
             }
 
