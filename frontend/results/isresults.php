@@ -72,11 +72,8 @@
     echo "<tr> <th> STUDENT </th> <th> AVERAGE </th> </tr>"; //Only need to do a single form I think
     foreach($results as $student){
         echo "<tr>";
-        $exid = "error"; $exname = "error";
-        if (isset($student['sid'])) { $sid = $exam['sid'];
-        }
-        if (isset($student['average'])) { $average = $exam['average'];
-        }
+        $sid = ((isset($student['sid']))) ? $student['sid'] : "39";
+        $score = ((isset($student['sum(score)']))) ? $student['sum(score)'] : "39";
         //echo '<form method="post" action="../debug.php">';
         echo '<form method="post" action="isresults.php">';
         echo '<input type="hidden" name="sid" value="'.$sid.'">';
