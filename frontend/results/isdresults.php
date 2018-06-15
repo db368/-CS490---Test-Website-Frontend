@@ -34,50 +34,85 @@
 
     <?php
     $debug = 1; // Enables the debug boxes
-    $livedata = 0; //Enables the use of live data
+    $testdata = 0; //Enables the use of live data
 
     $eid = ((isset($_POST['eid']))) ? $_POST['eid'] : 39;
     $sid = ((isset($_POST['sid']))) ? $_POST['sid'] : 39;
 
+    if (!$testdata) {
+        $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+        $ch= curl_init();
+        curl_setopt($ch, CURLOPT_URL, "$target");
+        curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'s_results', 'eid'=> $eid, 'sid' => $sid)));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $return_val=curl_exec($ch);
 
-    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
-    $ch= curl_init();
-    curl_setopt($ch, CURLOPT_URL, "$target");
-    curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'s_results', 'eid'=> $eid, 'sid' => $sid)));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $return_val=curl_exec($ch);
+        $results = json_decode($return_val, true);
 
-    $results = json_decode($return_val, true);
-
-    if ($debug) {
-        echo "<h2> POST INPUT </h2>";
-        echo "<div class='debug'>";
-        if ($_POST != null) {
-            print_r($_POST);
-            echo "as well as the identifier s_results";
+        if ($debug) {
+            echo "<h2> POST INPUT </h2>";
+            echo "<div class='debug'>";
+            if ($_POST != null) {
+                print_r($_POST);
+                echo "as well as the identifier s_results";
+            }
+            else{ echo "No Post!";
+            }
+            echo "</div>";
+            echo '<br>';
+            echo "<h2> JSON OUTPUT </h2>";
+            echo "<div class='debug'>";
+            if ($return_val != null) {
+                echo $return_val;
+            }
+            else{
+                echo "No return value!";
+            }
+            echo "</div>";
+            echo '<br>';
+            //Check to see if we're actually getting variables here.
+            if ($return_val == null) {
+                echo "<h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>";
+                $testdata = random_int(10, 50); //We didn't? Whatever, then make testdata.
+            }
         }
-        else{ echo "No Post!";
-        }
-        echo "</div>";
-        echo '<br>';
-        echo "<h2> JSON OUTPUT </h2>";
-        echo "<div class='debug'>";
-        if ($return_val != null) {
-            echo $return_val;
-        }
-        else{
-            echo "No return value!";
-        }
-        echo "</div>";
-        echo '<br>';
     }
 
-    //Check to see if we're actually getting variables here.
-    if ($return_val == null) {
-        echo "<h2> ERROR: ANSWERS COULD NOT BE RETRIEVED </h2>";
-        exit;
+    if ($testdata) { //Generate our own joke data
+        $results = array();
+        for ($i=0; $i<$testdata; $i++){
+            //Generate some nonsense
+            $max = random_int(5, 39);
+            $score = random_int(0, $max);
+            $text=random_bytes(random_int(20, 100));
+            $answer = random_bytes(random_int(50, 100));
+
+            $tests = array();
+            $outputs = array();
+            $sols = array();
+            $tcr = random_int(1, 5);
+            for ($k=0; $k<$tcr; $k++){
+                array_push($tests, "( ". random_bytes(random_int(1, 5)) ."," . random_bytes(random_int(1, 5)). "," . random_bytes(random_int(1, 5)) . ")");
+                array_push($sols, random_int(1, 10));
+                array_push($outputs, random_int(1, 10));
+
+            }
+
+            $result = array(
+                'maxscore' => $max,
+                'score' => $score,
+                'Question' => $question,
+                'Answer' => $answer,
+                'testcase' => $tests,
+                'solution' => $sols,
+                'output' => $outputs
+            );
+            array_push($results, $result);
+        }
     }
+
+
     ?>
 
     <table>
