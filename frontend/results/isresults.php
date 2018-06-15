@@ -28,11 +28,11 @@
 
 </head>
 <body>
+
+    <header> <h1> Header for <?php echo $_POST['exname'];  ?> </h1></header>
     <?php
     $debug = 1;
-    echo "<div>";
-    echo "<h1> RESULTS FOR ".$_POST['exname']."</h1>";
-        //First, we get a list of exams
+    echo "<div class=login>";
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();
         curl_setopt($ch, CURLOPT_URL, "$target");
