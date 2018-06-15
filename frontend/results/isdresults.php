@@ -47,6 +47,8 @@ bad{
     $eid = ((isset($_POST['eid']))) ? $_POST['eid'] : 39;
     $sid = ((isset($_POST['sid']))) ? $_POST['sid'] : 39;
 
+    $_POST['identifier'] = 's_results';
+
     if (!$testdata) {
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();

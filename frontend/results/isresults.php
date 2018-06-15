@@ -36,6 +36,7 @@
     $debug = 1;
     $eid = ((isset($_POST['eid']))) ? $_POST['eid'] : 39;
 
+    $_POST['identifier'] = 'results';
     $target = "https://web.njit.edu/~jll25/CS490/switch.php";
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, "$target");
