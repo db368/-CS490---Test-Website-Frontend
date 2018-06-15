@@ -85,15 +85,15 @@
             //Generate some nonsense
             $max = random_int(5, 39);
             $score = random_int(0, $max);
-            $text=random_bytes(random_int(20, 100));
-            $answer = random_bytes(random_int(50, 100));
+            $text=bin2hex(random_bytes(random_int(20, 100)));
+            $answer = bin2hex(random_bytes(random_int(50, 100)));
 
             $tests = array();
             $outputs = array();
             $sols = array();
             $tcr = random_int(1, 5);
             for ($k=0; $k<$tcr; $k++){
-                array_push($tests, "( ". random_bytes(random_int(1, 5)) ."," . random_bytes(random_int(1, 5)). "," . random_bytes(random_int(1, 5)) . ")");
+                array_push($tests, "( ". bin2hex(random_bytes(random_int(1, 5))) ."," . bin2hex(random_bytes(random_int(1, 5))). "," . bin2hex(random_bytes(random_int(1, 5))) . ")");
                 array_push($sols, random_int(1, 10));
                 array_push($outputs, random_int(1, 10));
 
@@ -116,6 +116,7 @@
     ?>
 
     <table>
+
     <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Comment </th> </tr>
 
     <?php
