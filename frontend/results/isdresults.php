@@ -30,7 +30,7 @@
 <body>
 
     <header> <h1> Results for Student <?php echo isset($_POST['eid']) ? $_POST['eid'] : "Test User?";?> </h1></header>
-    <div class=login>
+    <div>
 
     <?php
     $debug = 1; // Enables the debug boxes
@@ -102,7 +102,7 @@
             $result = array(
                 'maxscore' => $max,
                 'score' => $score,
-                'Question' => $question,
+                'Question' => $text,
                 'Answer' => $answer,
                 'testcase' => $tests,
                 'solution' => $sols,
