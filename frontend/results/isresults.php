@@ -83,8 +83,8 @@
         echo "<tr>";
         $sid = ((isset($student['Student_id']))) ? $student['Student_id'] : "39";
         $score = ((isset($student['sum(score)']))) ? $student['sum(score)'] : "39";
-        echo '<form method="post" action="../debug.php">';
-        //echo '<form method="post" action="isdresults.php">'; //Details page
+        //echo '<form method="post" action="../debug.php">';
+        echo '<form method="post" action="isdresults.php">'; //Details page
         echo '<input type="hidden" name="sid" value="'.$sid.'">';
         echo '<input type="hidden" name="exid" value="'.$eid.'">';
         echo '<td> <button type="submit" class="link-button" name="sid" value="'.$sid.'"> '.$sid.' </button> </td>';
