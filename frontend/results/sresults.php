@@ -17,8 +17,8 @@
     $debug = 1;
         //First, we get a list of exams
 
-	$sid = $_POST['sid'];
-	$target = "https://web.njit.edu/~jll25/CS490/switch.php";
+    $sid = $_POST['sid'];
+    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
         $ch= curl_init();
         curl_setopt($ch, CURLOPT_URL, "$target");
         curl_setopt($ch, CURLOPT_POST, 1); // Set it to post

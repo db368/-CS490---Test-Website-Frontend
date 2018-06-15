@@ -61,8 +61,7 @@ tr:nth-child(even){
         echo "<h3> ERROR: EXAM LIST COULD NOT BE RETRIEVED </h3>";
         exit;
     }
-    if ($debug)
-    {
+    if ($debug) {
          echo '<div class="debug">';
          echo "<h3> POST ARRAY</h3>";
          var_dump($_POST);
@@ -70,7 +69,7 @@ tr:nth-child(even){
          echo "<h3> RETURNED JSON</h3>";
          echo $return_val;
          echo "</div>";
-     }
+    }
     $exams = json_decode($return_val, true);
 
     //var_dump($exams);
