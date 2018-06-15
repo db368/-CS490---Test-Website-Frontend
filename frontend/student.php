@@ -11,14 +11,13 @@
     <?php
 
     $debug = 1;
-    if ($debug)
-    {
-     echo '<div class="debug">';
-     echo "<h3> POST ARRAY</h3>";
-     var_dump($_POST);
+    if ($debug) {
+        echo '<div class="debug">';
+        echo "<h3> POST ARRAY</h3>";
+        var_dump($_POST);
 
-     echo "</div>";
-     }
+        echo "</div>";
+    }
          $username = (isset($_POST['username'])) ? $_POST['username'] : "Test User";
          $sid = (isset($_POST['sid'])) ? $_POST['sid'] : 39;echo '<div class="login">';
          echo "<h1> Welcome ".$username."!</h1>";

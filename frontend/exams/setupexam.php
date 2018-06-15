@@ -63,7 +63,7 @@ foreach ($eqarray as $eq){
 
 foreach ($eqarray as $eq)
 {
-	array_push($usedids, $eq['Qid']);
+    array_push($usedids, $eq['Qid']);
 }
 
 var_dump($usedids);

@@ -83,15 +83,13 @@ div.cool {
     font-weight: bold;
     font-variant: small-caps;
     font-size: 24px;
-    max-width:50%;
-    text-align:center;
-    background:transparent;
+    max-width: 50%;
+    text-align: center;
+    background: transparent;
     box-shadow: 2px 1px 1px black;
     text-shadow: 2px 1px 1px black;
-
-
-
 }
+
 h1 {
     text-align: center;
     font-style: bold;

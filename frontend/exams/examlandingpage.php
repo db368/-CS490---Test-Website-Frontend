@@ -2,29 +2,29 @@
 
 <head>
     <title> Exam Submitted</title>
-	<link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles.css">
 
 </title>
 
 <body>
 <?php
-	$debug = 1;
-	echo "<div class='login'>";
- 	if ($debug) {
-        echo "<h1> POST INPUT </h1>";
-        echo "<div class='debug'>";
-        if ($_POST != null) {
-            print_r($_POST);
-        }
-        else{ echo "No Post!";
-        }
+    $debug = 1;
+    echo "<div class='login'>";
+if ($debug) {
+      echo "<h1> POST INPUT </h1>";
+      echo "<div class='debug'>";
+    if ($_POST != null) {
+        print_r($_POST);
+    }
+    else{ echo "No Post!";
+    }
         echo "</div>";
         echo '<br>';
         echo "<h2> JSON OUTPUT </h2>";
         echo "<div class='debug'>";
-	echo "</div>";
+        echo "</div>";
 
-	
+
 }
     $exid=($_POST['exid']);
     //Send answers to the server
@@ -37,13 +37,13 @@
     $return_val=curl_exec($ch);
     curl_close($ch);
     //if ($return_val != null) {
-   // 	echo $return_val;
+   //     echo $return_val;
     //}
 
 ?>
     <h2> The exam is now finished </h2>
     <a href="vexams.php">  Click here to return to the exam dialog </a>
-	</div>
+    </div>
 </body>
 
 </html>
