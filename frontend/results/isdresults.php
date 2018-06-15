@@ -29,7 +29,7 @@
 </head>
 <body>
 
-    <header> <h1> Results for Student <?php echo $_POST['eid'];  ?> </h1></header>
+    <header> <h1> Results for Student <?php echo isset($_POST['eid']) ? $_POST['eid'] : "Test User?";?> </h1></header>
     <div class=login>
 
     <?php
@@ -44,7 +44,7 @@
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, "$target");
     curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'results', 'eid'=> $eid, 'sid' => $sid)));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'s_results', 'eid'=> $eid, 'sid' => $sid)));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
 
@@ -55,6 +55,7 @@
         echo "<div class='debug'>";
         if ($_POST != null) {
             print_r($_POST);
+            echo "as well as the identifier s_results";
         }
         else{ echo "No Post!";
         }
@@ -83,16 +84,40 @@
     <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Comment </th> </tr>
 
     <?php
-    foreach($results as $student){
-        echo "<tr>";
-        $sid = ((isset($student['Student_id']))) ? $student['Student_id'] : "39";
-        $score = ((isset($student['sum(score)']))) ? $student['sum(score)'] : "39";
-        //echo '<form method="post" action="../debug.php">';
-        echo '<form method="post" action="isdresults.php">'; //Details page
-        echo '<input type="hidden" name="sid" value="'.$sid.'">';
-        echo '<input type="hidden" name="exid" value="'.$eid.'">';
-        echo '<td> <button type="submit" class="link-button" name="sid" value="'.$sid.'"> '.$sid.' </button> </td>';
-        echo '<td>'. $score . '</td>';
+    foreach($results as $question){
+        // First lets get our variables sorted out
+        $maxscore = ((isset($question['maxscore']))) ? $question['maxscore'] : "39";
+        $score = ((isset($question['score']))) ? $question['score'] : "39";
+        $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
+        $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
+
+        $testcases = ((isset($question['testcase']))) ? $question['testcase'] : array("I didn't", "read this", "correctly");
+        $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
+        $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
+
+        $tcnum = sizeof($testcases);
+
+        //Okily Dokily, now lets figure out this logic
+        echo "<tr><form>"; // Each row is going to be its own form
+        echo '<td> '.$qtext.' </td>';
+        echo '<td> '.$answer.'</td>';
+
+        //TESTCASE: This is where it gets good
+        echo '<td><table>'; //Scared yet?
+        echo '<tr> <th> TESTCASE </th> <th> RESULT </th> <th> SOLUTION </th> </tr>';
+        for ($i=0; $i<$tcnum; $i++){
+            echo '<tr>';
+            echo '<td> Testcase '. $i .': '. $testcases[$i] .'</td>';
+            echo '<td>' . $output[$i] . '</td>';
+            echo '<td>'. $solutions[$i] . '</td>';
+            echo '</tr>';
+        }
+        echo '</table>'; //Actually that wasn't that bad... he says unaware of the behemoth he has released
+
+        // SCORE and EDIT DIALOG
+        echo '<td> SCORE: '.$score."/".$maxscore."<br>";
+        echo 'Edit <input type=number max='.$maxscore.' min=0> Comment <textarea> </textarea>';
+        echo '</td>';
         echo "</form></tr>";
     }
     ?>
