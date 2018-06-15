@@ -157,7 +157,7 @@ bad{
 
         //TESTCASE: This is where it gets good
         echo '<td><table>'; //Scared yet?
-        echo '<tr> <th> TESTCASE </th> <th> RESULT </th> <th> SOLUTION </th> </tr>';
+        echo '<tr> <th class="small"> TESTCASE </th> <th class="small"> RESULT </th> <th class="small"> SOLUTION </th> </tr>';
         for ($i=0; $i<$tcnum; $i++){
             echo '<tr>';
             echo '<td> Testcase '. $i .': '. $testcases[$i] .'</td>';
