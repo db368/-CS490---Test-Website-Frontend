@@ -60,33 +60,21 @@ bad{
 
         $results = json_decode($return_val, true);
 
-        if ($debug) {
-            echo "<h2> POST INPUT </h2>";
-            echo "<div class='debug'>";
-            if ($_POST != null) {
-                print_r($_POST);
-                echo "as well as the identifier s_results";
-            }
-            else{ echo "No Post!";
-            }
-            echo "</div>";
-            echo '<br>';
-            echo "<h2> JSON OUTPUT </h2>";
-            echo "<div class='debug'>";
-            if ($return_val != null) {
-                echo $return_val;
-            }
-            else{
-                echo "No return value!";
-            }
-            echo "</div>";
-            echo '<br>';
-            //Check to see if we're actually getting variables here.
-            if ($return_val == null) {
-                echo "<h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>";
-                $testdata = rand(10, 50); //We didn't? Whatever, then make testdata.
-            }
-        }
+        ?>
+        <?php if ($debug) : ?>
+            <h2> POST INPUT </h2>
+            <div class='debug'>
+                <?php echo ($_POST != null) ? print_r($_POST) : "No Post!"; ?>
+            </div>
+            <h2> JSON OUTPUT </h2>
+            <div class='debug'>
+                <?php echo ($return_val == null) ? "No Return Value!" : $return_val  ?>
+            </div><br>
+            <?php if ($return_val == null) : ?>
+                 <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
+                <?php $testdata = rand(10, 50);
+            endif;
+        endif;
     }
 
     if ($testdata) { //Generate our own joke data
@@ -117,67 +105,81 @@ bad{
                 'testcase' => $tests,
                 'solution' => $sols,
                 'output' => $outputs,
-                'qid' => rand(1,100)
+                'qid' => rand(1, 100)
             );
             array_push($results, $result);
         }
-       //Just for fun, lets do a little student simulator
-        $int = rand(0,6); // a value for every type of letter grade A B C D E F
+        //Just for fun, lets do a little student simulator
+        $int = rand(0, 6); // a value for every type of letter grade A B C D E F
         foreach($results as $result){
-            if (rand(0,7) > $int) $result['solution'] = $result['output'];
+            if (rand(0, 7) > $int) { $result['solution'] = $result['output'];
+            }
         }
     }
-
-
     ?>
 
     <table>
+        <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Comment </th> </tr>
+        <?php
+        foreach($results as $question){
+            // First lets get our variables sorted out
+            $maxscore = ((isset($question['maxscore']))) ? $question['maxscore'] : "39";
+            $qid = ((isset($question['qid']))) ? $question['qid'] : "??";
+            $score = ((isset($question['score']))) ? $question['score'] : "39";
+            $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
+            $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
 
-    <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Comment </th> </tr>
+            $testcases = ((isset($question['testcase']))) ? $question['testcase'] : array("I didn't", "read this", "correctly");
+            $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
+            $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
 
-    <?php
-    foreach($results as $question){
-        // First lets get our variables sorted out
-        $maxscore = ((isset($question['maxscore']))) ? $question['maxscore'] : "39";
-        $qid = ((isset($question['qid']))) ? $question['qid'] : "??";
-        $score = ((isset($question['score']))) ? $question['score'] : "39";
-        $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
-        $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
+            $tcnum = sizeof($testcases);
+            ?>
+            <tr>
+                <td>
+                    <?php echo $qtext; ?> </td>
+                <td>
+                    <?php echo $answer; ?> </td>
 
-        $testcases = ((isset($question['testcase']))) ? $question['testcase'] : array("I didn't", "read this", "correctly");
-        $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
-        $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
-
-        $tcnum = sizeof($testcases);
-
-        //Okily Dokily, now lets figure out this logic
-        echo "<tr>"; // Each row is going to be its own form?? hmmmm
-        echo '<td> '.$qtext.' </td>';
-        echo '<td> '.$answer.'</td>';
-
-        //TESTCASE: This is where it gets good
-        echo '<td><table>'; //Scared yet?
-        echo '<tr> <th class="small"> TESTCASE </th> <th class="small"> RESULT </th> <th class="small"> SOLUTION </th> </tr>';
-        for ($i=0; $i<$tcnum; $i++){
-            echo '<tr>';
-            echo '<td> Testcase '. $i .': '. $testcases[$i] .'</td>';
-            echo '<td>' . $output[$i] . '</td>';
-            echo '<td>'. $solutions[$i] . '</td>';
-            echo '</tr>';
+                <td>
+                    <table>
+                        <tr>
+                            <th class="small"> TESTCASE </th>
+                            <th class="small"> RESULT </th>
+                            <th class="small"> SOLUTION </th>
+                        </tr>
+                        <?php for ($i=0; $i<$tcnum; $i++): ?>
+                        <tr>
+                            <td>
+                                Testcase
+                                <?php echo $i; ?> :
+                                <?php echo $testcases[$i]; ?>
+                            </td>
+                            <td>
+                                <?php echo $output[$i]; ?>
+                            </td>
+                            <td>
+                                <?php echo $solutions[$i]; ?>
+                            </td>
+                        </tr>
+                        <?php endfor ?>
+                    </table>
+                    <form method="post" action="../debug.php">
+                        <td>
+                            <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
+<<<<<<< HEAD
+                            <input type=hidden name=qid value=<?php echo $qid; ?>
+                            Edit <input type=number max=<?php echo $maxscore; ?>
+=======
+                            <input type=hidden name=qid value=<?php echo $qid; ?> Edit <input type=number max=< ?php echo $maxscore; ?> value=
+>>>>>>> 3ce0c54c20fb06ba47c689d54168089944a0e99b
+                            <?php echo $score ?> min=0 name=newscore> <br> Comment <textarea name="comment"> </textarea><br>
+                            <button type=submit> Submit Changes </button>
+                        </td>
+                    </form>
+            </tr>            <?php
         }
-        echo '</table>'; //Actually that wasn't that bad... he says unaware of the behemoth he has released
-
-        // SCORE and EDIT DIALOG
-        echo '<form method="post" action="../debug.php">'; //Actually the form doesn't need to be used until here.
-        echo '<td> <h3> SCORE: '.$score."/".$maxscore."</h3><br>";
-        echo '<input type=hidden name="qid" value="'.$qid.'">';
-        echo 'Edit <input type=number max='.$maxscore.' value='.$score.' min=0 name="newscore"><br>';
-        echo ' Comment <textarea name="comment"> </textarea><br>';
-        echo '<button type=submit> Submit Changes </button>';
-        echo '</td>';
-        echo "</form></tr>";
-    }
-    ?>
-</table>
+        ?>
+    </table>
 </body>
 </html>
