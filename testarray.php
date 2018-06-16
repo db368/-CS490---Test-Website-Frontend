@@ -8,7 +8,8 @@
         Hello man, we're doing some stuff.
         <?php
             $testarray = array("Answer1", "Answer2", "Answer3", "Answer4");
-            $containerarray = array($testarray);
+            $betweenarray = array($testarray, array("THis", "Is", "an", "Extra", "Array"));
+	    $containerarray = array($betweenarray, $testarray);
             $target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debuglocal.php";
             $ch=curl_init();
             curl_setopt($ch, CURLOPT_URL, $target);

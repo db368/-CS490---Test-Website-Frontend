@@ -9,11 +9,14 @@
 <body>
 <?php
     $debug = 1;
+
     echo "<div class='login'>";
     $exid=($_POST['exid']);
     $_POST['answer'] = $_POST['answers'];
     //Send answers to the server
-    $target = 'https://web.njit.edu/~jll25/CS490/switch.php';
+    //$target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debuglocal.php";
+    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+	    
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, $target);
     curl_setopt($ch, CURLOPT_POST, 1); // Set it to post

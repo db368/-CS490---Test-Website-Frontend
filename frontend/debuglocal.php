@@ -10,13 +10,36 @@
 //$target = "https://http://web.njit.edu/~jll25/CS490/switch.php";
 //$target = "http://web.njit.edu/~db368/CS490/debug.php";
 
-echo "<h3> Post Variables </h3>";
-var_dump($arr);
-$arr = $_POST[0];
-while (isarray($arr)){
-    var_dump($arr);
-    echo "<br>";
-    $arr=$arr[0];
+echo "Message Recieved";
+$sid = $_POST['sid'];
+$eid = $_POST['exid'];
+$qid = $_POST['questions'];
+$answers = $_POST['answer'];
+
+for ($i=0; $i <sizeof($_POST['questions']); $i++) {
+	$question_id = $qid[$i];
+	$answer = $answers[$i];
+
+	$insertquery = "INSERT INTO StudentResult(Student_id, Eid, Qid,Answer)
+			    VALUES ('$sid','$eid', '$qid[$i]', '$answers[$i]');";
+	echo '<br>';
+	echo $insertquery;
+}
+echo "-------LIVE CODE ------";
+$sid = $_POST['sid'];
+$eid = $_POST['exid'];
+$qid = $_POST['questions'];
+$answers = $_POST['answer'];
+
+$question_id = $qid[1];
+$answer = $answers[1];
+
+for ($i=0; $i <sizeof($_POST['questions']); $i++) {
+  $question_id = $qid[$i];
+  $answer = $answers[$i];
+  $insertquery = "insert into StudentResult(Student_id, Eid, Qid,Answer) values ('$sid','$eid', '$qid[$i]', '$answers[$i]');";
+
+echo $insertquery;
 }
 ?>
 </body>
