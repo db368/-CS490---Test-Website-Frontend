@@ -59,9 +59,31 @@ bad{
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'s_results', 'eid'=> $eid, 'sid' => $sid)));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
-
         $results = json_decode($return_val, true);
+        curl_close($ch);
 
+        //We need to get the comments as well
+        $commentarray = array(); // This will store all returned jsons from the comment seraches
+        foreach ($results as $result){
+            $ch2 = curl_init();
+            $ch2= curl_init();
+            curl_setopt($ch2, CURLOPT_URL, "$target");
+            curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
+            curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment', 'questionid'=> $result['qid'], 'sid' => $sid, 'exid' => $exid)));
+            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+            $return_val=curl_exec($ch2);
+            curl_close($ch2);
+
+            $commentarray[$result['qid']] = $return_val;//Store this comment in the array for debug purposes
+
+            if ($return_val == null) {
+                continue;
+            } else{
+                $comment = json_decode($return_val, true);
+                $result['comment'] = $comment['comment'];
+                $result['newgrade'] = $comment['newgrade'];
+            }
+        }
         ?>
         <?php if ($debug) : ?>
             <h2> POST INPUT </h2>
@@ -69,13 +91,19 @@ bad{
                 <?php echo ($_POST != null) ? print_r($_POST) : "No Post!"; ?>
             </div>
             <h2> JSON OUTPUT </h2>
+            <h3> Getting Questions </h3>
             <div class='debug'>
                 <?php echo ($return_val == null) ? "No Return Value!" : $return_val  ?>
             </div><br>
-            <?php if ($return_val == null) : ?>
-                 <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
-                <?php $testdata = rand(10, 50);
-            endif;
+            <h3> GETTING COMMENTS </h3>
+            <div class='debug'>
+                <?php print_r($commentarray); ?>
+            </div>
+        <?php endif ?>
+
+        <?php if ($return_val == null) : ?>
+             <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
+            <?php $testdata = rand(10, 50);
         endif;
     }
 
@@ -169,7 +197,7 @@ bad{
                     </table>
                     <td>
                         <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
-                        Comment: <p> <?= $comment ?> </p> <br>
+                        Comment: <p> <?php echo $comment; ?> </p> <br>
                     </td>
             </tr><?php
         }
