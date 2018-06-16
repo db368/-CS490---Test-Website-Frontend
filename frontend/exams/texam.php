@@ -7,19 +7,13 @@
 
 <?php
     $debug = 1;
-
-    $questions = $_POST['questions'];
-    $number = $_POST['currentquestion'];
-    $exid = $_POST['exid'];
-
-if (isset($_POST['answers'])) {
-    $answer = $_POST['answers'];
-}
-else {
-    $answer = array();
-}
-    echo "<header><h1> EXAM </h1> </header>";
+    $questions = (isset($_POST['questions'])) ? $_POST['questions'] : die("No questions") ;
+    $number = (isset($_POST['currentquestion'])) ? $_POST['currentquestion'] : die("No current quesiton number") ;
+    $exid = (isset($_POST['exid'])) ? $_POST['exid'] : die("No Exid") ;
+    $answers = (isset($_POST['answers'])) ? $_POST['answers'] : array(); // If this isn't set, it's likely the firs time this is called so create an answers array
     $qid = $questions[$number];
+
+    echo "<header><h1> EXAM </h1> </header>";
 if($debug) {
     echo "<div class=debug>";
     echo "<h1> Incoming POST </h1>";
