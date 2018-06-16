@@ -167,8 +167,12 @@ bad{
                     <form method="post" action="../debug.php">
                         <td>
                             <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
+<<<<<<< HEAD
                             <input type=hidden name=qid value=<?php echo $qid; ?>
                             Edit <input type=number max=<?php echo $maxscore; ?>
+=======
+                            <input type=hidden name=qid value=<?php echo $qid; ?> Edit <input type=number max=< ?php echo $maxscore; ?> value=
+>>>>>>> 3ce0c54c20fb06ba47c689d54168089944a0e99b
                             <?php echo $score ?> min=0 name=newscore> <br> Comment <textarea name="comment"> </textarea><br>
                             <button type=submit> Submit Changes </button>
                         </td>
