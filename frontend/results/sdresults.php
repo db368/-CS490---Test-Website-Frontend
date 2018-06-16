@@ -103,12 +103,15 @@ bad{
 
         <?php if ($return_val == null) : ?>
              <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
-            <?php $testdata = rand(10, 50);
+            <?php $testdata = rand(10, 20);
         endif;
     }
 
     if ($testdata) { //Generate our own joke data
         $results = array();
+        //Student simulator values
+        $int = rand(0,15); // a value for every type of letter grade A B C D E F
+        $strictness = rand(0,15); // a value for every type of letter grade A B C D E F
         for ($i=0; $i<$testdata; $i++){
             //Generate some nonsense
             $max = rand(5, 39);
@@ -126,6 +129,29 @@ bad{
                 array_push($outputs, rand(1, 10));
 
             }
+            $comment = null;
+            $newscore = null;
+            //Student Simulator Code
+            if (rand(0, 20) <= $int + rand(0, 20)) { //Roll to get the right answer
+                for($j=0; $j<$tcr; $j++) {
+                    $sol[$j] = $outputs[$j];
+                }
+                $score = $max;
+            }
+            // Modification check
+            if (rand(0, 20) <= $strictness + rand(0, 20)) {
+                //Check succeeded roll for positive or negative modification
+                if (rand(0, 7) <= $int) { //Positive
+                    if ($score != $max) {
+                        $comment = "Auto grader must be bugged, have a few points";
+                        $newgrade = $score + rand(1, $max - $score);
+                    }
+                    elseif ($score > 0) { //Negative
+                        $comment = "This is incorrect, autograder missed it.";
+                        $newgrade = $score - rand(3, $score);
+                    }
+                }
+            }
 
             $result = array(
                 'maxscore' => $max,
@@ -135,32 +161,12 @@ bad{
                 'testcase' => $tests,
                 'solution' => $sols,
                 'output' => $outputs,
-                'qid' => rand(1, 100)
+                'qid' => rand(1, 100),
+                'comment' => $comment,
+                'newgrade' => $newgrade
+
             );
             array_push($results, $result);
-        }
-        //Just for fun, lets do a little student/teacher simulator
-        $int = 7; // a value for every type of letter grade A B C D E F
-        $strictness = 7; // a value for every type of letter grade A B C D E F
-        foreach($results as $result){
-            if (rand(0, 7) <= $int) {
-                $result['solution'] = $result['output'];
-                $result['score'] = $result['maxscore'];
-            }
-            // Modification check
-            if (rand(0, 7) <= $strictness) {
-                //Check succeeded roll for positive or negative modification
-                if (rand(0, 7) <= $int) { //Positive
-                    if ($result['score'] != $result['maxscore']) {
-                        $result['comment'] = "Auto grader must be bugged, have a few points";
-                        $result['newscore'] = $result['score'] + rand(1, $result['maxscore'] - $result['score']);
-                    }
-                    elseif ($result['score'] > 0) { //Negative
-                        $result['comment'] = "This is incorrect, autograder missed it.";
-                        $result['newscore'] = $result['score'] + rand(1, $result['score']);
-                    }
-                }
-            }
         }
     }
     ?>
