@@ -55,7 +55,7 @@
             <?php $i=$i+1;  //So here's how this is going to go. The displayed number is going to be one greater than the actual index
             }?>
 
-            <textarea name=answer[<?php echo $number ?>] value= <?php echo $answer[$number]?></textarea><br>
+            <textarea name=answer[<?php echo $number ?>] value= <?php echo $answer[$number]?>></textarea><br>
             <input type=hidden name=exid value=<?php echo $exid ?>>
             <input type=hidden name=sid value=<?php echo $sid ?>>
 
