@@ -55,16 +55,16 @@
             <?php $i=$i+1;  //So here's how this is going to go. The displayed number is going to be one greater than the actual index
             }?>
 
-            <input type=textbox name=answer[<?php echo $number ?>] value= <?php echo $answer[$number]?>><br>
+            <textarea name=answer[<?php echo $number ?>] value= <?php echo $answer[$number]?></textarea><br>
             <input type=hidden name=exid value=<?php echo $exid ?>>
             <input type=hidden name=sid value=<?php echo $sid ?>>
 
-            <?php if($number < count($questions)-1) : ?>
-                <button type=submit name=currentquestion value=<?php echo $number+1?>> Next Question </button>
-            <?php endif ?>
             <?php if ($number != 0) : ?>
                 <button type=submit name=currentquestion value=<?php echo ($number-1) ?>> Previous Question </button>
             <?php endif;?>
+            <?php if($number < count($questions)-1) : ?>
+                <button type=submit name=currentquestion value=<?php echo $number+1?>> Next Question </button>
+            <?php endif ?>
 
             <br> <button type=submit name=identifier value=answer formaction="examlandingpage.php"> Submit Answers </button>
         </form>
