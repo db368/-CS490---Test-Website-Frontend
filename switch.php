@@ -542,7 +542,7 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$sql = "select distinct Questions.Question, StudentResult.score, ExQuestions.Total_points from StudentResult inner join Questions on Questions.Qid = StudentResult.Qid inner join ExQuestions on StudentResult.Eid = ExQuestions.Exam_id where StudentResult.Student_id = '$sid' and StudentResult.Eid = '$eid' group by Questions.Question";
+$sql = "select distinct Questions.Question, Questions.Qid, StudentResult.score, ExQuestions.Total_points from StudentResult inner join Questions on Questions.Qid = StudentResult.Qid inner join ExQuestions on StudentResult.Eid = ExQuestions.Exam_id where StudentResult.Student_id = '$sid' and StudentResult.Eid = '$eid' group by Questions.Question";
 
 $Score = $conn->query($sql);
 $json_array = array();
