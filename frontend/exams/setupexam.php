@@ -25,41 +25,10 @@ $qb_return=curl_exec($ch3);
 curl_close($ch3);
 
 
-$uqarray = array(); //Final destination for question ids
-$eqarray = json_decode($return_val, true); //Question Bank Array
-$qbarray = json_decode($qb_return, true); //Exam Questions
-/*
-echo "<h1> DUMPING QUESTION BANK </h1> <br>";
-echo var_dump($qbarray). '<br>';
-echo "<h1> DUMPING EXAM QUESTIONS </h1> <br>";
-echo var_dump($eqarray). '<br>';
-*/
-$usedids = array(); //Make a little sub array to handle duplicates
-
-/*
-//God Tier Hacks Incoming
-//So e_get_questions doesn't return id. That's really bad.
-//We can get around that though by comparing the question text and difficulty with questions
-//in the question bank
-//echo "Sorting...<br>";
-//echo "<h1> DUMPING ULTIMATE ARRAY </h1> <br>";
-
-foreach ($eqarray as $eq){
-    $eqtext = $eq['Question'];
-    $eqdiff = $eq['Difficulty'];
-    foreach($qbarray as $qb){
-        $qbtext = $qb['Question'];
-        $qbid = $qb['Qid'];
-        if ($qbtext == $eqtext and !in_array($qbid, $usedids)) { //Compare Question Text
-            array_push($usedids, $qb['Qid']);
-            //$eq['id'] = $qb['Qid'];
-            //array_push($uqarray, $eq);
-            break;
-        }
-    }
-}
-*/
-//echo var_dump($uqarray);
+$uqarray = array();                         //Final destination for question ids
+$eqarray = json_decode($return_val, true);  //Question Bank Array
+$qbarray = json_decode($qb_return, true);   //Exam Questions
+$usedids = array();                         //Make a little sub array to handle duplicates
 
 foreach ($eqarray as $eq)
 {
