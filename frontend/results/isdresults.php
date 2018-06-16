@@ -65,7 +65,6 @@ bad{
             echo "<div class='debug'>";
             if ($_POST != null) {
                 print_r($_POST);
-                echo "as well as the identifier s_results";
             }
             else{ echo "No Post!";
             }
