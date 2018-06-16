@@ -163,7 +163,8 @@ bad{
             $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
             $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
 
-            $comment = "Good work sport!";
+            $comment = ((isset($question['comment']))) ? $question['comment'] : "None";
+            $newgrade = ((isset($question['newgrade']))) ? $question['newgrade'] : $score; // If this isn't set, then the question's score is unmodified
             $tcnum = sizeof($testcases);
             ?>
             <tr>
@@ -196,8 +197,10 @@ bad{
                         <?php endfor ?>
                     </table>
                     <td>
-                        <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
-                        Comment: <p> <?php echo $comment; ?> </p> <br>
+                        <h3> SCORE: <?php echo $newgrade; ?> / <?php echo $maxscore; ?> </h3><br>
+                        <?php if ($comment != "None") : ?>
+                            Comment: <p> <?php echo $comment; ?> </p> <br>
+                        <?php endif ?>
                     </td>
             </tr><?php
         }
