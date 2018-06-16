@@ -11,6 +11,7 @@
     $debug = 1;
     echo "<div class='login'>";
     $exid=($_POST['exid']);
+    $_POST['answer'] = $_POST['answers'];
     //Send answers to the server
     $target = 'https://web.njit.edu/~jll25/CS490/switch.php';
     $ch= curl_init();
