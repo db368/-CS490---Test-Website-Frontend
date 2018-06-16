@@ -66,7 +66,7 @@
                 <button type=submit name=currentquestion value=<?php echo ($number-1) ?>> Previous Question </button>
             <?php endif;?>
 
-            <button type=submit name=identifier value=answer formaction="examlandingpage.php"> Submit Snswers </button>
+            <br> <button type=submit name=identifier value=answer formaction="examlandingpage.php"> Submit Answers </button>
         </form>
     </div>
 </body>
