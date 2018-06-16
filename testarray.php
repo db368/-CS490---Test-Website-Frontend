@@ -9,7 +9,7 @@
         <?php
             $testarray = array("Answer1", "Answer2", "Answer3", "Answer4");
             $containerarray = array($testarray);
-            $target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend";
+            $target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debuglocal.php";
             $ch=curl_init();
             curl_setopt($ch, CURLOPT_URL, $target);
             curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
