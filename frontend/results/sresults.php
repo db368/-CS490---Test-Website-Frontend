@@ -64,7 +64,7 @@
             continue;
         }
         //echo '<form method="post" action="../debug.php">';
-        echo '<form method="post" action="isresults.php">';
+        echo '<form method="post" action="sdresults.php">';
         echo '<input type="hidden" name="eid" value="'.$exid.'">';
         echo '<input type="hidden" name="sid" value="'.$sid.'">';
         echo '<td> <button type="submit" class="link-button" name="identifier" value="results"> '.$exname.' </button> </td>';
