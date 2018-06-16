@@ -26,36 +26,37 @@
         </div>
     <?php
     endif;
-          //CURL to get the actual useful question information;
-        $target = "https://web.njit.edu/~jll25/CS490/switch.php";
-        $ch= curl_init();
-        curl_setopt($ch, CURLOPT_URL, $target);
-        curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question', 'questionid' => $qid)));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $return_val=curl_exec($ch);
-        curl_close($ch);
 
-        $question=json_decode($return_val, true)[0];
-        $qtext = $question["Question"];
+    //CURL to get the actual useful question information;
+    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+    $ch= curl_init();
+    curl_setopt($ch, CURLOPT_URL, $target);
+    curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'qb_get_question', 'questionid' => $qid)));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $return_val=curl_exec($ch);
+    curl_close($ch);
 
-        //Start actually printing the file
-        echo "<div class=login>";
-        echo "<h1> QUESTION ".$number.": </h1>";
-        echo "<p>" . $qtext . "</p><br>";
+    $question=json_decode($return_val, true)[0];
+    $qtext = $question["Question"];
+    ?>
 
-        //Now we get to do the fun work of posting it again
-        echo '<form method="post" action="texam.php">';
+    <div class=login>
+        <h1> QUESTION <?= $number ?> : </h1>
+        <p> <?= $qtext ?> </p><br>
+
+        <form method="post" action="texam.php">';
+        <?php //Setup this loop
         $i=0;
-foreach($questions as $q){
-    echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
-    echo '<input type=hidden name=answer['.$i.'] value="'.$answer[$i].'">';
-    $i=$i+1;
-}
+        foreach($questions as $q){ ?>
+            <input type=hidden name=questions[<?= $i ?>] value=<?= $questions[$i] ?>>
+            <input type=hidden name=answers[<?= $i ?>] value=<?= $answers[$i] ?>>
+        <?php $i=$i+1;
+    }?>
 
-            echo '<input type=textbox name=answer['.$number.'] value='. $answer[$number] .'><br>';
-            echo '<input type=hidden name=exid value="'.$exid.'">';
-            echo '<input type=hidden name=sid value="'.$_POST['sid'].'">';
+                echo '<input type=textbox name=answer['.$number.'] value='. $answer[$number] .'><br>';
+                echo '<input type=hidden name=exid value="'.$exid.'">';
+                echo '<input type=hidden name=sid value="'.$_POST['sid'].'">';
 if ($number < count($questions)-1) {
     echo '<button type=submit name=currentquestion value='.($number+1).'> Next Question </button>';
 }
