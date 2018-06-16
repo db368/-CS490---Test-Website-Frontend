@@ -41,6 +41,8 @@ bad{
     <div>
 
     <?php
+
+    //For the student file, most of this will be the same, but we will remove the comment section  for a non-interactive verison.
     $debug = 1; // Enables the debug boxes
     $testdata = 0; //Enables the use of live data
 
@@ -133,6 +135,7 @@ bad{
             $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
             $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
 
+            $comment = "Good work sport!";
             $tcnum = sizeof($testcases);
             ?>
             <tr>
@@ -152,7 +155,7 @@ bad{
                         <tr>
                             <td>
                                 Testcase
-                                <?php echo $i; ?> :
+                                <?php echo $i. " "; ?> :
                                 <?php echo $testcases[$i]; ?>
                             </td>
                             <td>
@@ -164,17 +167,11 @@ bad{
                         </tr>
                         <?php endfor ?>
                     </table>
-                    <form method="post" action="../debug.php">
-                        <td>
-                            <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
-                            <input type=hidden name=qid value=<?php echo $qid; ?>
-                            Edit <input type=number max=<?php echo $maxscore; ?>
-                            <input type=hidden name=qid value=<?php echo $qid; ?> Edit <input type=number max=< ?php echo $maxscore; ?> value=
-                            <?php echo $score ?> min=0 name=newscore> <br> Comment <textarea name="comment"> </textarea><br>
-                            <button type=submit> Submit Changes </button>
-                        </td>
-                    </form>
-            </tr>            <?php
+                    <td>
+                        <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
+                        Comment: <p> <?= $comment ?> </p> <br>
+                    </td>
+            </tr><?php
         }
         ?>
     </table>
