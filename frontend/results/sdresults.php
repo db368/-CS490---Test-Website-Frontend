@@ -139,10 +139,27 @@ bad{
             );
             array_push($results, $result);
         }
-        //Just for fun, lets do a little student simulator
-        $int = rand(0, 6); // a value for every type of letter grade A B C D E F
+        //Just for fun, lets do a little student/teacher simulator
+        $int = 7; // a value for every type of letter grade A B C D E F
+        $strictness = 7; // a value for every type of letter grade A B C D E F
         foreach($results as $result){
-            if (rand(0, 7) > $int) { $result['solution'] = $result['output'];
+            if (rand(0, 7) <= $int) {
+                $result['solution'] = $result['output'];
+                $result['score'] = $result['maxscore'];
+            }
+            // Modification check
+            if (rand(0, 7) <= $strictness) {
+                //Check succeeded roll for positive or negative modification
+                if (rand(0, 7) <= $int) { //Positive
+                    if ($result['score'] != $result['maxscore']) {
+                        $result['comment'] = "Auto grader must be bugged, have a few points";
+                        $result['newscore'] = $result['score'] + rand(1, $result['maxscore'] - $result['score']);
+                    }
+                    elseif ($result['score'] > 0) { //Negative
+                        $result['comment'] = "This is incorrect, autograder missed it.";
+                        $result['newscore'] = $result['score'] + rand(1, $result['score']);
+                    }
+                }
             }
         }
     }
