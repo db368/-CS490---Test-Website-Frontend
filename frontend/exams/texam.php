@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<?php //Initial Variable Definition
+    <?php //Initial Variable Definition
     $debug = 1;
     $questions = (isset($_POST['questions'])) ? $_POST['questions'] : die("No questions");
     $number = (isset($_POST['currentquestion'])) ? $_POST['currentquestion'] : die("No current quesiton number");
@@ -46,7 +46,7 @@
         <h1> QUESTION <?php echo $number ?> : </h1>
         <p> <?php echo $qtext ?> </p><br>
 
-        <form method="post" action="texam.php">';
+        <form method="post" action="texam.php">
             <?php //Setup this loop
             $i=0;
             foreach($questions as $q){ ?>
@@ -55,11 +55,12 @@
             <?php $i=$i+1;
             }?>
 
-            <input type=textbox name=answer[<?php echo $number ?>] value= <?php echo $answer[$number]?>><br>';
+            <input type=textbox name=answer[<?php echo $number ?>] value= <?php echo $answer[$number]?>><br>
             <input type=hidden name=exid value=<?php echo $exid ?>>
             <input type=hidden name=sid value=<?php echo $sid ?>>
+
             <?php if($number < count($questions)-1) : ?>
-                <button type=submit name=currentquestion value=<?php echo $number+1?>> Next Question </button>';
+                <button type=submit name=currentquestion value=<?php echo $number+1?>> Next Question </button>
             <?php endif ?>
             <?php if ($number != 1) : ?>
                 <button type=submit name=currentquestion value=<?php echo ($number-1) ?> Previous Question </button>
@@ -67,8 +68,5 @@
 
             <button type=submit name=identifier value=answer formaction="examlandingpage.php"> Submit Snswers </button>
         </form>
-    }
-    ?>
-
-
+    </div>
 </body>
