@@ -11,18 +11,13 @@
 //$target = "http://web.njit.edu/~db368/CS490/debug.php";
 
 echo "<h3> Post Variables </h3>";
-if ((isset($_POST))) {
-        echo "NO POST DUDE";
-}
 var_dump($arr);
-/*
 $arr = $_POST[0];
 while (isarray($arr)){
     var_dump($arr);
     echo "<br>";
     $arr=$arr[0];
 }
-*/
 ?>
 </body>
 </html>
