@@ -11,6 +11,7 @@
     $number = (isset($_POST['currentquestion'])) ? $_POST['currentquestion'] : die("No current quesiton number");
     $exid = (isset($_POST['exid'])) ? $_POST['exid'] : die("No Exid");
     $answers = (isset($_POST['answers'])) ? $_POST['answers'] : array(); // If this isn't set, it's likely the firs time this is called so create an answers array
+    $sid = (isset($_POST['sid'])) ? $_POST['sid'] : die("No Student ID!");
     $qid = $questions[$number];
     ?>
 
@@ -42,29 +43,30 @@
     ?>
 
     <div class=login>
-        <h1> QUESTION <?= $number ?> : </h1>
-        <p> <?= $qtext ?> </p><br>
+        <h1> QUESTION <?php echo $number ?> : </h1>
+        <p> <?php echo $qtext ?> </p><br>
 
         <form method="post" action="texam.php">';
-        <?php //Setup this loop
-        $i=0;
-        foreach($questions as $q){ ?>
-            <input type=hidden name=questions[<?= $i ?>] value=<?= $questions[$i] ?>>
-            <input type=hidden name=answers[<?= $i ?>] value=<?= $answers[$i] ?>>
-        <?php $i=$i+1;
-    }?>
+            <?php //Setup this loop
+            $i=0;
+            foreach($questions as $q){ ?>
+                <input type=hidden name=questions[<?php echo $i ?>] value=<?php echo $questions[$i] ?>>
+                <input type=hidden name=answers[<?php echo $i ?>] value=<?php echo $answers[$i] ?>>
+            <?php $i=$i+1;
+            }?>
 
-                echo '<input type=textbox name=answer['.$number.'] value='. $answer[$number] .'><br>';
-                echo '<input type=hidden name=exid value="'.$exid.'">';
-                echo '<input type=hidden name=sid value="'.$_POST['sid'].'">';
-if ($number < count($questions)-1) {
-    echo '<button type=submit name=currentquestion value='.($number+1).'> Next Question </button>';
-}
-if ($number != 1) {
-    echo '<button type=submit name=currentquestion value='.($number-1).'> Previous Question </button>';
-}
-        echo '<button type=submit name=identifier value=answer formaction="examlandingpage.php"> Submit answer </button>';
-            echo "</form>";
+            <input type=textbox name=answer[<?php echo $number ?>] value= <?php echo $answer[$number]?>><br>';
+            <input type=hidden name=exid value=<?php echo $exid ?>>
+            <input type=hidden name=sid value=<?php echo $sid ?>>
+            <?php if($number < count($questions)-1) : ?>
+                <button type=submit name=currentquestion value=<?php echo $number+1?>> Next Question </button>';
+            <?php endif ?>
+            <?php if ($number != 1) : ?>
+                <button type=submit name=currentquestion value=<?php echo ($number-1) ?> Previous Question </button>
+            <?php endif;?>
+
+            <button type=submit name=identifier value=answer formaction="examlandingpage.php"> Submit Snswers </button>
+        </form>
         // Submit button stuff
          echo '<form method="post" action="examlandingpage.php">';
         //echo '<form method="post" action="../debug.php">';
