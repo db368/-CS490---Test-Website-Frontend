@@ -20,11 +20,7 @@
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
-    //if ($return_val != null) {
-   //     echo $return_val;
-    //}
-
-if ($debug) {
+    if ($debug) {
       echo "<h1> POST INPUT </h1>";
       echo "<div class='debug'>";
     if ($_POST != null) {
@@ -36,6 +32,7 @@ if ($debug) {
         echo '<br>';
         echo "<h2> JSON OUTPUT </h2>";
         echo "<div class='debug'>";
+        echo $return_val;
         echo "</div>";
 }
 
