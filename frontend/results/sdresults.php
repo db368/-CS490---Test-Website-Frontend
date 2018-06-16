@@ -37,7 +37,7 @@ bad{
 </head>
 <body>
 
-    <header> <h1> Results for Student <?php echo isset($_POST['eid']) ? $_POST['eid'] : "Test User?";?> </h1></header>
+    <header> <h1> Results for Student <?php echo isset($_POST['sid']) ? $_POST['sid'] : "Test User?";?> </h1></header>
     <div>
 
     <?php

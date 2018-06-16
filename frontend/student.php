@@ -19,7 +19,10 @@
         echo "</div>";
     }
          $username = (isset($_POST['username'])) ? $_POST['username'] : "Test User";
-         $sid = (isset($_POST['sid'])) ? $_POST['sid'] : 39;echo '<div class="login">';
+
+         $sid = (isset($_POST['sid'])) ? $_POST['sid'] : 39;
+         echo '<div class="login">';
+
          echo "<h1> Welcome ".$username."!</h1>";
          //echo "<h1> ID ".$sid."!</h1>";
          echo "<form method=post action=debug.php>";
