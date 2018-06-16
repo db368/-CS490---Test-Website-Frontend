@@ -41,6 +41,8 @@ bad{
     <div>
 
     <?php
+
+    //For the student file, most of this will be the same, but we will remove the comment section  for a non-interactive verison.
     $debug = 1; // Enables the debug boxes
     $testdata = 0; //Enables the use of live data
 
@@ -57,9 +59,31 @@ bad{
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'s_results', 'eid'=> $eid, 'sid' => $sid)));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $return_val=curl_exec($ch);
-
         $results = json_decode($return_val, true);
+        curl_close($ch);
 
+        //We need to get the comments as well
+        $commentarray = array(); // This will store all returned jsons from the comment seraches
+        foreach ($results as $result){
+            $ch2 = curl_init();
+            $ch2= curl_init();
+            curl_setopt($ch2, CURLOPT_URL, "$target");
+            curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
+            curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment', 'questionid'=> $result['qid'], 'sid' => $sid, 'exid' => $exid)));
+            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+            $return_val=curl_exec($ch2);
+            curl_close($ch2);
+
+            $commentarray[$result['qid']] = $return_val;//Store this comment in the array for debug purposes
+
+            if ($return_val == null) {
+                continue;
+            } else{
+                $comment = json_decode($return_val, true);
+                $result['comment'] = $comment['comment'];
+                $result['newgrade'] = $comment['newgrade'];
+            }
+        }
         ?>
         <?php if ($debug) : ?>
             <h2> POST INPUT </h2>
@@ -67,18 +91,27 @@ bad{
                 <?php echo ($_POST != null) ? print_r($_POST) : "No Post!"; ?>
             </div>
             <h2> JSON OUTPUT </h2>
+            <h3> Getting Questions </h3>
             <div class='debug'>
                 <?php echo ($return_val == null) ? "No Return Value!" : $return_val  ?>
             </div><br>
-            <?php if ($return_val == null) : ?>
-                 <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
-                <?php $testdata = rand(10, 50);
-            endif;
+            <h3> GETTING COMMENTS </h3>
+            <div class='debug'>
+                <?php print_r($commentarray); ?>
+            </div>
+        <?php endif ?>
+
+        <?php if ($return_val == null) : ?>
+             <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
+            <?php $testdata = rand(10, 20);
         endif;
     }
 
     if ($testdata) { //Generate our own joke data
         $results = array();
+        //Student simulator values
+        $int = rand(0,15); // a value for every type of letter grade A B C D E F
+        $strictness = rand(0,15); // a value for every type of letter grade A B C D E F
         for ($i=0; $i<$testdata; $i++){
             //Generate some nonsense
             $max = rand(5, 39);
@@ -96,6 +129,29 @@ bad{
                 array_push($outputs, rand(1, 10));
 
             }
+            $comment = null;
+            $newscore = null;
+            //Student Simulator Code
+            if (rand(0, 20) <= $int + rand(0, 20)) { //Roll to get the right answer
+                for($j=0; $j<$tcr; $j++) {
+                    $sol[$j] = $outputs[$j];
+                }
+                $score = $max;
+            }
+            // Modification check
+            if (rand(0, 20) <= $strictness + rand(0, 20)) {
+                //Check succeeded roll for positive or negative modification
+                if (rand(0, 7) <= $int) { //Positive
+                    if ($score != $max) {
+                        $comment = "Auto grader must be bugged, have a few points";
+                        $newgrade = $score + rand(1, $max - $score);
+                    }
+                    elseif ($score > 0) { //Negative
+                        $comment = "This is incorrect, autograder missed it.";
+                        $newgrade = $score - rand(3, $score);
+                    }
+                }
+            }
 
             $result = array(
                 'maxscore' => $max,
@@ -105,15 +161,12 @@ bad{
                 'testcase' => $tests,
                 'solution' => $sols,
                 'output' => $outputs,
-                'qid' => rand(1, 100)
+                'qid' => rand(1, 100),
+                'comment' => $comment,
+                'newgrade' => $newgrade
+
             );
             array_push($results, $result);
-        }
-        //Just for fun, lets do a little student simulator
-        $int = rand(0, 6); // a value for every type of letter grade A B C D E F
-        foreach($results as $result){
-            if (rand(0, 7) > $int) { $result['solution'] = $result['output'];
-            }
         }
     }
     ?>
@@ -133,6 +186,8 @@ bad{
             $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
             $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
 
+            $comment = ((isset($question['comment']))) ? $question['comment'] : "None";
+            $newgrade = ((isset($question['newgrade']))) ? $question['newgrade'] : $score; // If this isn't set, then the question's score is unmodified
             $tcnum = sizeof($testcases);
             ?>
             <tr>
@@ -152,7 +207,7 @@ bad{
                         <tr>
                             <td>
                                 Testcase
-                                <?php echo $i; ?> :
+                                <?php echo $i. " "; ?> :
                                 <?php echo $testcases[$i]; ?>
                             </td>
                             <td>
@@ -164,16 +219,13 @@ bad{
                         </tr>
                         <?php endfor ?>
                     </table>
-                    <form method="post" action="../debug.php">
-                        <td>
-                            <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
-                            <input type=hidden name=qid value=<?php echo $qid; ?>
-                            Edit <input type=number max=<?php echo $maxscore; ?>
-                            <?php echo $score ?> min=0 name=newscore> <br> Comment <textarea name="comment"> </textarea><br>
-                            <button type=submit> Submit Changes </button>
-                        </td>
-                    </form>
-            </tr>            <?php
+                    <td>
+                        <h3> SCORE: <?php echo $newgrade; ?> / <?php echo $maxscore; ?> </h3><br>
+                        <?php if ($comment != "None") : ?>
+                            Comment: <p> <?php echo $comment; ?> </p> <br>
+                        <?php endif ?>
+                    </td>
+            </tr><?php
         }
         ?>
     </table>
