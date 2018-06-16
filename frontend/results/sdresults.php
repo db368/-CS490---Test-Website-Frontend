@@ -60,32 +60,21 @@ bad{
 
         $results = json_decode($return_val, true);
 
-        if ($debug) {
-            echo "<h2> POST INPUT </h2>";
-            echo "<div class='debug'>";
-            if ($_POST != null) {
-                print_r($_POST);
-            }
-            else{ echo "No Post!";
-            }
-            echo "</div>";
-            echo '<br>';
-            echo "<h2> JSON OUTPUT </h2>";
-            echo "<div class='debug'>";
-            if ($return_val != null) {
-                echo $return_val;
-            }
-            else{
-                echo "No return value!";
-            }
-            echo "</div>";
-            echo '<br>';
-            //Check to see if we're actually getting variables here.
-            if ($return_val == null) {
-                echo "<h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>";
-                $testdata = rand(10, 50); //We didn't? Whatever, then make testdata.
-            }
-        }
+        ?>
+        <?php if ($debug) : ?>
+            <h2> POST INPUT </h2>
+            <div class='debug'>
+                <?php echo ($_POST != null) ? print_r($_POST) : "No Post!"; ?>
+            </div>
+            <h2> JSON OUTPUT </h2>
+            <div class='debug'>
+                <?php echo ($return_val == null) ? "No Return Value!" : $return_val  ?>
+            </div><br>
+            <?php if ($return_val == null) : ?>
+                 <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
+                <?php $testdata = rand(10, 50);
+            endif;
+        endif;
     }
 
     if ($testdata) { //Generate our own joke data
@@ -178,6 +167,8 @@ bad{
                     <form method="post" action="../debug.php">
                         <td>
                             <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
+                            <input type=hidden name=qid value=<?php echo $qid; ?>
+                            Edit <input type=number max=<?php echo $maxscore; ?>
                             <input type=hidden name=qid value=<?php echo $qid; ?> Edit <input type=number max=< ?php echo $maxscore; ?> value=
                             <?php echo $score ?> min=0 name=newscore> <br> Comment <textarea name="comment"> </textarea><br>
                             <button type=submit> Submit Changes </button>
