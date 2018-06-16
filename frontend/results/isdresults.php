@@ -168,8 +168,8 @@ bad{
                         <td>
                             <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
                             <input type=hidden name=qid value=<?php echo $qid; ?>
-                            Edit <input type=number max=<?php echo $maxscore; ?> value=$newscore>
-                            Comment<br> <textarea name="comment"> </textarea><br>
+                           Edit <input type=number max=<?php echo $maxscore; ?>
+                            <?php echo $score ?> min=0 name=newscore> <br> Comment <textarea name="comment"> </textarea><br>
                             <button type=submit> Submit Changes </button>
                         </td>
                     </form>
