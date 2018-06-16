@@ -67,20 +67,7 @@
 
             <button type=submit name=identifier value=answer formaction="examlandingpage.php"> Submit Snswers </button>
         </form>
-        // Submit button stuff
-         echo '<form method="post" action="examlandingpage.php">';
-        //echo '<form method="post" action="../debug.php">';
-        $i=0;
-foreach($questions as $q){
-    echo '<input type=hidden name=questions['.$i.'] value="'.$questions[$i].'">';
-    echo '<input type=hidden name=answer['.$i.'] value="'.$answer[$i].'">';
-    $i=$i+1;
-}
-        echo '<input type=hidden name=exid value="'.$exid.'">';
-        echo '<input type=hidden name=sid value="'.$_POST['sid'].'">';
-        echo '<button type=submit name=identifier value=answer> Submit answer </button>';
-        echo '</form>';
-        echo "</div>";
+    }
     ?>
 
 
