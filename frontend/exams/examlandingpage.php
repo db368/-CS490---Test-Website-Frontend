@@ -10,23 +10,8 @@
 <?php
     $debug = 1;
     echo "<div class='login'>";
-if ($debug) {
-      echo "<h1> POST INPUT </h1>";
-      echo "<div class='debug'>";
-    if ($_POST != null) {
-        print_r($_POST);
-    }
-    else{ echo "No Post!";
-    }
-        echo "</div>";
-        echo '<br>';
-        echo "<h2> JSON OUTPUT </h2>";
-        echo "<div class='debug'>";
-        echo "</div>";
-
-
-}
     $exid=($_POST['exid']);
+    $_POST['answer'] = $_POST['answers'];
     //Send answers to the server
     $target = 'https://web.njit.edu/~jll25/CS490/switch.php';
     $ch= curl_init();
@@ -36,9 +21,21 @@ if ($debug) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $return_val=curl_exec($ch);
     curl_close($ch);
-    //if ($return_val != null) {
-   //     echo $return_val;
-    //}
+if ($debug) {
+    echo "<h1> POST INPUT </h1>";
+    echo "<div class='debug'>";
+    if ($_POST != null) {
+        print_r($_POST);
+    }
+    else{ echo "No Post!";
+    }
+    echo "</div>";
+    echo '<br>';
+    echo "<h2> JSON OUTPUT </h2>";
+    echo "<div class='debug'>";
+    echo $return_val;
+    echo "</div>";
+}
 
 ?>
     <h2> The exam is now finished </h2>
