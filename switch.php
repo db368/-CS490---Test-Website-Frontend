@@ -526,6 +526,10 @@ case "results":
 $eid = $_POST['eid'];
 
 
+
+
+
+
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 if ($conn->connect_error) {
@@ -559,7 +563,7 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$sql = "select distinct Questions.Question, Questions.Qid, StudentResults.score, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResult.Eid = ExQuestions.Exam_id where StudentResult.Student_id = '$sid' and StudentResult.Eid = '$eid' group by Questions.Question";
+$sql = "select distinct Questions.Question, Questions.Qid, StudentResults.score, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id where StudentResults.Student_id = '$sid' and StudentResults.Eid = '$eid' group by Questions.Question";
 
 $Score = $conn->query($sql);
 $json_array = array();
@@ -589,7 +593,7 @@ $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 for ($i=0; $i <sizeof($comment) ; $i++) {
   $comment = $mysqli->real_escape_string($comment);
-  $sql = "update StudentResult set Score = '$newgrade[$i]', Result = '$comment[$i]' where Eid = '$eid' and Qid = '$qid' and Student_id = '$sid'";
+  $sql = "update StudentResults set Score = '$newgrade[$i]', Result = '$comment[$i]' where Eid = '$eid' and Qid = '$qid' and Student_id = '$sid'";
   if ($conn->query($comment) === TRUE) {
         echo "Student score has been updated";
   }
@@ -619,7 +623,7 @@ $sid = $_POST['sid'];
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
-$sql = "select Result, Score from StudentResult where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
+$sql = "select Result, Score from StudentResults where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
 
 
 $comment  = $conn->query($sql);
