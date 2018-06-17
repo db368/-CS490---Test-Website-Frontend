@@ -572,7 +572,7 @@ if ($Score->num_rows > 0) {
     while($row = $Score->fetch_assoc()) {
         $scorenum[]=$row;
     }
-    $score_encoded = json_encode($studentid);
+    $score_encoded = json_encode($scorenum);
 
     echo $score_encoded;
 }
@@ -586,8 +586,6 @@ $newgrade = $_POST['newgrade'];
 $eid = $_POST['exid'];
 $qid = $_POST['qid'];
 $sid = $_POST['sid'];
-
-echo var_dump($_POST);
 
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
