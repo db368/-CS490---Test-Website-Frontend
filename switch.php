@@ -564,8 +564,7 @@ if ($conn->connect_error) {
 }
 
 
-$sql = "select distinct Questions.Question, Questions.Qid, StudentResults.score, TC.TestCase, TC.Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid where StudentResults.Student_id = '$sid' and StudentResults.Eid = '$eid' group by Questions.Question";
-
+$sql = "select distinct Questions.Question, Questions.Qid, StudentResults.Answer, StudentResults.Score, TC.TestCase, TC.Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid where StudentResults.Student_id = '$sid' and StudentResults.Eid = '$eid' group by Questions.Question";
 
 
 $Difficulty_result = $conn->query($sql);
