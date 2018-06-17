@@ -126,9 +126,47 @@ var_dump($qid);
 if(!is_array($qid)){echo "no array";}
 else{var_dump($qid);}
 
-$question_id = $qid[1];
 
-$answer = $answers[1];
+for ($i=0; $i <sizeof($_POST['questions']) ; $i++) {
+  $question_id = $qid[$i];
+  $answer = $answers[$i];
+  $answer = mysqli_real_escape_string($conn, $answer);
+
+  $insertquery = "Insert into StudentResults(Student_id, Eid, Qid, Answer) values ('$sid', '$eid', '$qid[$i]', '$answer');";
+  //echo '<br>';
+  //echo $insertquery;
+  if ($conn->query($insertquery) === TRUE) {
+       echo "Student's answer added successfully";
+   }
+   else {
+        echo "Error: " . $insertquery . "<br>" . $conn->error;}
+
+/*
+$select = "Select Answer from StudentResults where Eid = '$eid' and Qid = '$qid[$i]' and Student_id = '$sid';";
+if ($conn->query($select) === TRUE) {
+     echo "Here is the student's answer";
+ }
+ else {
+      echo "Error: " . $select . "<br>" . $conn->error;}
+
+
+$selects = $conn-
+
+echo '<br>';
+echo $select;
+*/
+
+
+}
+
+
+
+
+
+
+//$question_id = $qid[1];
+
+//$answer = $answers[1];
 /*
 $insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$question_id','$answer');";
 echo $insertquery;
@@ -136,23 +174,6 @@ echo $insertquery;
 if($conn->query($insertquery)){
   echo "answer inserted";
 }*/
-for ($i=0; $i <sizeof($_POST['questions']); $i++) {
-
-
-  $question_id = $qid[$i];
-  $answer = $answers[$i];
-  $insertquery = "insert into StudentResult(Student_id, Eid, Qid,Answer) values ('$sid','$eid', '$qid[$i]', '$answers[$i]');";
-
-
-  if ($conn->query($insertquery) === TRUE) {
-           echo "Answers added successfully";
-       }
-       else {
-            echo "Error: " . $insertquery . $conn->error;}
-          }
-
-
-
 
 
     break;
