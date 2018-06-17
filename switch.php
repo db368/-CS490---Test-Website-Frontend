@@ -526,17 +526,13 @@ case "results":
 $eid = $_POST['eid'];
 
 
-echo file_put_contents("afs/jll25/public_html/CS490/test.txt", $eid);
-
-
-
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$Students = "select Student_id, sum(score) from StudentResult where Student_id in (select Stid from Student) and StudentResult.Eid ='$eid' group by Student_id;";
+$Students = "select Student_id, sum(score) from StudentResults where Student_id in (select Stid from Student) and StudentResult.Eid ='$eid' group by Student_id;";
 
 $Studentsr = $conn->query($Students);
 $json_array = array();
@@ -563,7 +559,7 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$sql = "select distinct Questions.Question, Questions.Qid, StudentResult.score, ExQuestions.Total_points from StudentResult inner join Questions on Questions.Qid = StudentResult.Qid inner join ExQuestions on StudentResult.Eid = ExQuestions.Exam_id where StudentResult.Student_id = '$sid' and StudentResult.Eid = '$eid' group by Questions.Question";
+$sql = "select distinct Questions.Question, Questions.Qid, StudentResults.score, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResult.Eid = ExQuestions.Exam_id where StudentResult.Student_id = '$sid' and StudentResult.Eid = '$eid' group by Questions.Question";
 
 $Score = $conn->query($sql);
 $json_array = array();
