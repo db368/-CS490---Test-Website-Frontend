@@ -577,9 +577,7 @@ if ($Difficulty_result->num_rows > 0) {
     echo $difficulty_encoded;
 
 }
-else{
-  echo "No rows";
-}
+
 
 break;
 
