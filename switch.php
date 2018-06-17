@@ -532,7 +532,7 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$Students = "select Student_id, sum(score) from StudentResults where Student_id in (select Stid from Student) and StudentResult.Eid ='$eid' group by Student_id;";
+$Students = "select Student_id, sum(score) from StudentResults where Student_id in (select Stid from Student) and StudentResults.Eid ='$eid' group by Student_id;";
 
 $Studentsr = $conn->query($Students);
 $json_array = array();
