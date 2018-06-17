@@ -565,16 +565,20 @@ if ($conn->connect_error) {
 
 $sql = "select distinct Questions.Question, Questions.Qid, StudentResults.score, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id where StudentResults.Student_id = '$sid' and StudentResults.Eid = '$eid' group by Questions.Question";
 
-$Score = $conn->query($sql);
+$Difficulty_result = $conn->query($sql);
 $json_array = array();
-if ($Score->num_rows > 0) {
+if ($Difficulty_result->num_rows > 0) {
     // output data of each row
-    while($row = $Score->fetch_assoc()) {
-        $scorenum[]=$row;
+    while($row = $Difficulty_result->fetch_assoc()) {
+        $difficulty_array[]=$row;
     }
-    $score_encoded = json_encode($scorenum);
+    $difficulty_encoded = json_encode($difficulty_array);
 
-    echo $score_encoded;
+    echo $difficulty_encoded;
+
+}
+else{
+  echo "No rows";
 }
 
 break;
