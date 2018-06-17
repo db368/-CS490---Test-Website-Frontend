@@ -23,7 +23,7 @@ if ($return_val == null) {
 $exams = json_decode($return_val, true);
 
 
-$sid = $_POST['sid'];
+$sid = (isset($_POST['sid'])) ? $_POST['sid'] : exit("No Student ID!") ;
 echo "<p> Click on an exam to take it! </p>";
 //Build Table
 /* Test Code
