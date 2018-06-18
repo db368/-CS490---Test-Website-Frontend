@@ -123,13 +123,13 @@ bad{
         <?php
         foreach($results as $question){
             // First lets get our variables sorted out
-            $maxscore = ((isset($question['maxscore']))) ? $question['maxscore'] : "39";
-            $qid = ((isset($question['qid']))) ? $question['qid'] : "??";
+            $maxscore = ((isset($question['Total_points']))) ? $question['Total_points'] : "39";
+            $qid = ((isset($question['Qid']))) ? $question['Qid'] : "??";
             $score = ((isset($question['score']))) ? $question['score'] : "39";
             $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
             $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
 
-            $testcases = ((isset($question['testcase']))) ? $question['testcase'] : array("I didn't", "read this", "correctly");
+            $testcases = ((isset($question['TestCase']))) ? $question['TestCase'] : array("I didn't", "read this", "correctly");
             $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
             $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
 

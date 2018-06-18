@@ -87,7 +87,7 @@
         //echo '<form method="post" action="../debug.php">';
         echo '<form method="post" action="isdresults.php">'; //Details page
         echo '<input type="hidden" name="sid" value="'.$sid.'">';
-        echo '<input type="hidden" name="exid" value="'.$eid.'">';
+        echo '<input type="hidden" name="eid" value="'.$eid.'">';
         echo '<td> <button type="submit" class="link-button" name="sid" value="'.$sid.'"> '.$sid.' </button> </td>';
         echo '<td>'. $score . '</td>';
         echo "</form></tr>";
