@@ -113,7 +113,7 @@ case "a_exam":
 //inserting to answer from students
 case "answer":
 
-$conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+$conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 $sid = $_POST['sid'];
 $eid = $_POST['exid'];
@@ -139,42 +139,90 @@ for ($i=0; $i <sizeof($_POST['questions']) ; $i++) {
        echo "Student's answer added successfully";
    }
    else {
-        echo "Error: " . $insertquery . "<br>" . $conn->error;}
-
-/*
-$select = "Select Answer from StudentResults where Eid = '$eid' and Qid = '$qid[$i]' and Student_id = '$sid';";
-if ($conn->query($select) === TRUE) {
-     echo "Here is the student's answer";
- }
- else {
-      echo "Error: " . $select . "<br>" . $conn->error;}
+        echo "Error: " . $insertquery . "<br>" . $conn->error;
+      }
 
 
-$selects = $conn-
-
-echo '<br>';
-echo $select;
-*/
-
-
+if(empty($answer)){
+  $zero = "Update StudentResults set Score = 0, Results = 'There is no answer. No points' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+  if ($conn->query($zero) === TRUE) {
+       echo "Score added successfully";
+   }
+   else {
+        echo "Error: " . $zero. "<br>" . $conn->error;
+      }
 }
 
 
+  $answer = stripslashes($answer);
+  $son = file_put_contents("jream.py",$answer);
+
+  $ret_val = exec('python jream.py 2>&1', $son);
+  echo $ret_val;
+  $ret2 = strstr($ret_val, ':', true);
+
+  if($ret2 == "NameError"){
+    $ret_val = mysqli_real_escape_string($conn, $ret_val);
+    $zero = "Update StudentResults set Score = 0, Results = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+    if ($conn->query($zero) === TRUE) {
+         echo "Score added successfully";
+     }
+     else {
+          echo "Error: " . $zero. "<br>" . $conn->error;
+        }
+  }
+
+
+  else if($ret2 == "SyntaxError"){
+      $ret_val = mysqli_real_escape_string($conn, $ret_val);
+      $zero = "Update StudentResults set Score = 0, Results = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+      if ($conn->query($zero) === TRUE) {
+           echo "Score added successfully";
+       }
+       else {
+            echo "Error: " . $zero. "<br>" . $conn->error;
+          }
+    }
+
+    else{
+      $score = "Update StudentResults set Score = (select Total_points from ExQuestions where Exam_id ='$eid' and Question_id = '$qid[$i]'), Results = 'Passed Preliminary and was able to run. Need Test Cases to test it more.' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+      if ($conn->query($score) === TRUE) {
+           echo "Score added successfully";
+       }
+       else {
+            echo "Error: " . $zero. "<br>" . $conn->error;
+          }
+    }
+  $testc = "Select TestCase where Qid = '$qid'";
+
+  for ($i=0; $i <sizeof($tc) ; $i++) {
+    $tc = $testc[$i];
+
+    $myfile = file_put_contents('var.txt', $tc, FILE_APPEND);
+
+    // code...
+  }
 
 
 
 
-//$question_id = $qid[1];
 
-//$answer = $answers[1];
-/*
-$insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$question_id','$answer');";
-echo $insertquery;
 
-if($conn->query($insertquery)){
-  echo "answer inserted";
-}*/
+//echo $ret_val;
+//$val = file_put_contents("var.txt", $ret_val);
+/*$error = substr($ret_val, 0, strpos($ret_val, ':'));
 
+if($error == "NameError:"){
+  $zero = "Update StudentResults set Score = 0, Results = 'There is something not defined. No points' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+  if ($conn->query($zero) === TRUE) {
+       echo "Score added successfully";
+   }
+   else {
+        echo "Error: " . $zero. "<br>" . $conn->error;
+      }
+}
+*/
+}
 
     break;
 
@@ -563,9 +611,7 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-
 $sql = "select Questions.Question, Questions.Qid, StudentResults.score, StudentResults.Answer as Student_Answer, TC.TestCase, TC.Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid where StudentResults.Student_id = '$sid' and StudentResults.Eid = '$eid' group by Questions.Question";
-
 
 $Difficulty_result = $conn->query($sql);
 $json_array = array();
@@ -579,7 +625,6 @@ if ($Difficulty_result->num_rows > 0) {
     echo $difficulty_encoded;
 
 }
-
 
 
 break;
