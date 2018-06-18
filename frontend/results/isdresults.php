@@ -59,7 +59,7 @@ bad{
         $return_val=curl_exec($ch);
 
         $results = json_decode($return_val, true);
-
+        curl_close($ch);
         ?>
         <?php if ($debug) : ?>
             <h2> POST INPUT </h2>
@@ -75,6 +75,27 @@ bad{
                 <?php $testdata = rand(10, 50);
             endif;
         endif;
+
+
+//Bless this mess
+for ($i = 0; $i<sizeof($results); $i++) {
+    $questionid = $results[$i]['Qid'];
+    $ch= curl_init();
+    curl_setopt($ch, CURLOPT_URL, "$target");
+    curl_setopt($ch, CURLOPT_POST, 1); 
+    curl_setopt(
+        $ch, CURLOPT_POSTFIELDS, http_build_query(
+            array('identifier'=>'g_comment', 'exid'=> $eid,'sid' => $sid, 'questionid'=> $questionid)
+        )
+    );
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $return_val=curl_exec($ch);
+    $returnjson=json_decode($return_val, true);
+    curl_close($ch);
+
+    //Add it to the result's array
+    $results[$i]['comment'] =  $returnjson['Results'];
+}
     }
 
     if ($testdata) { //Generate our own joke data
@@ -129,6 +150,7 @@ bad{
             $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
             $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
 
+            $comment = ((isset($question['comment']))) ? $quesiton['comment'] : "";
             $testcases = ((isset($question['TestCase']))) ? $question['TestCase'] : array("I didn't", "read this", "correctly");
             $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
             $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
@@ -169,11 +191,11 @@ bad{
                             <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
                             <input type=hidden name=qid value=<?php echo $qid; ?>>
                             <input type=hidden name=identifier value="c_comment">
-                            <input type=hidden name=exid value= <?=$eid ?>>
-                            <input type=hidden name=sid value=<?= $sid ?>>
+                            <input type=hidden name=exid value= <?php echo $eid ?>>
+                            <input type=hidden name=sid value=<?php echo $sid ?>>
 
                             Edit <input type=number max=<?php echo $maxscore; ?> value=<?php echo $score ?> min=0 name=newgrade> <br>
-                            Comment <textarea name="comment"> </textarea><br>
+                            Comment <textarea name="comment"><?php echo $comment ?></textarea><br>
                             <button type=submit> Submit Changes </button>
                         </td>
                     </form>
