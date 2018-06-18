@@ -94,7 +94,7 @@ for ($i = 0; $i<sizeof($results); $i++) {
     curl_close($ch);
 
     //Add it to the result's array
-    $results[$i]['comment'] =  $returnjson;
+    $results[$i]['comment'] =  $return_val;
 }
     }
 
