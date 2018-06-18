@@ -82,7 +82,7 @@ for ($i = 0; $i<sizeof($results); $i++) {
     $questionid = $results[$i]['Qid'];
     $ch= curl_init();
     curl_setopt($ch, CURLOPT_URL, "$target");
-    curl_setopt($ch, CURLOPT_POST, 1); 
+    curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt(
         $ch, CURLOPT_POSTFIELDS, http_build_query(
             array('identifier'=>'g_comment', 'exid'=> $eid,'sid' => $sid, 'questionid'=> $questionid)
@@ -94,7 +94,7 @@ for ($i = 0; $i<sizeof($results); $i++) {
     curl_close($ch);
 
     //Add it to the result's array
-    $results[$i]['comment'] =  $returnjson['Results'];
+    $results[$i]['comment'] =  $returnjson;
 }
     }
 
