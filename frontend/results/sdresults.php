@@ -64,7 +64,7 @@ bad{
 
         //We need to get the comments as well
         $commentarray = array(); // This will store all returned jsons from the comment seraches
-        foreach ($results as $result){
+        for($i=0; $i < sizeof($results); $i++){
             $ch2 = curl_init();
             $ch2= curl_init();
             curl_setopt($ch2, CURLOPT_URL, "$target");
@@ -74,15 +74,10 @@ bad{
             $return_val=curl_exec($ch2);
             curl_close($ch2);
 
-            $commentarray[$result['qid']] = $return_val;//Store this comment in the array for debug purposes
 
-            if ($return_val == null) {
-                continue;
-            } else{
-                $comment = json_decode($return_val, true);
-                $result['comment'] = $comment['comment'];
-                $result['newgrade'] = $comment['newgrade'];
-            }
+            $comment = json_decode($return_val, true);
+            $results[$i]['comment'] = $comment['comment'];
+            $results[$i] = $comment['newgrade'];
         }
         ?>
         <?php if ($debug) : ?>
@@ -110,8 +105,8 @@ bad{
     if ($testdata) { //Generate our own joke data
         $results = array();
         //Student simulator values
-        $int = rand(0,15); // a value for every type of letter grade A B C D E F
-        $strictness = rand(0,15); // a value for every type of letter grade A B C D E F
+        $int = rand(0, 15); // a value for every type of letter grade A B C D E F
+        $strictness = rand(0, 15); // a value for every type of letter grade A B C D E F
         for ($i=0; $i<$testdata; $i++){
             //Generate some nonsense
             $max = rand(5, 39);
