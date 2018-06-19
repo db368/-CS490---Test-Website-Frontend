@@ -113,7 +113,8 @@ bad{
                                                                         'exid' => $eid)));
             curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
             $return_val2=curl_exec($ch2);
-            echo $return_val2;
+            curl_close($ch2);
+            var_dump($return_val2);
 
             $comment = json_decode($return_val2, true);
             $results[$i]['comment'] = $comment['Comments'];
