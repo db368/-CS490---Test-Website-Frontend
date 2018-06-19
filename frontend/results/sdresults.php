@@ -97,7 +97,6 @@ bad{
         $results=$ULTIMATE;
         $commentarray = array(); // This will store all returned jsons from the comment seraches
         for($i=0; $i < sizeof($results); $i++){
-            $ch2 = curl_init();
             $ch2= curl_init();
             curl_setopt($ch2, CURLOPT_URL, "$target");
             curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
