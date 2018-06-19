@@ -112,7 +112,7 @@ foreach($results as $result){
 }
 
 //Now we pretend nothing happened
-var_dump($ULTIMATE);
+var_dump($unique_qids);
 $results=$ULTIMATE;
 
 //Bless this mess
