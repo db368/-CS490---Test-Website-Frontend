@@ -92,6 +92,7 @@ foreach($results as $result){
     //It's not in the database, we must make it
     if (!array_key_exists($inc_qid, $unique_qids)) {
         $inc_result = $result; //Clone this
+        array_push($unique_qids, $inc_qid);
         //Save these as new arrays
         $inc_result['TestCase'] = array($inc_testcase);
         $inc_result['Answer'] = array($inc_answer);
