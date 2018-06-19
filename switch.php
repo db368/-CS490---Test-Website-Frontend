@@ -113,7 +113,7 @@ case "a_exam":
 //inserting to answer from students
 case "answer":
 
-$conn = new mysqli("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
+$conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 $sid = $_POST['sid'];
 $eid = $_POST['exid'];
@@ -126,33 +126,186 @@ var_dump($qid);
 if(!is_array($qid)){echo "no array";}
 else{var_dump($qid);}
 
-$question_id = $qid[1];
 
-$answer = $answers[1];
-/*
-$insertquery = "insert into StudentResult(Student_id,Eid, Qid,Answer) values ('$sid','$eid', '$question_id','$answer');";
-echo $insertquery;
-
-if($conn->query($insertquery)){
-  echo "answer inserted";
-}*/
-for ($i=0; $i <sizeof($_POST['questions']); $i++) {
-
-
+for ($i=0; $i <sizeof($_POST['questions']) ; $i++) {
   $question_id = $qid[$i];
   $answer = $answers[$i];
-  $insertquery = "insert into StudentResult(Student_id, Eid, Qid,Answer) values ('$sid','$eid', '$qid[$i]', '$answers[$i]');";
+  $answer = mysqli_real_escape_string($conn, $answer);
 
-
+  $insertquery = "Insert into StudentResults(Student_id, Eid, Qid, Answer) values ('$sid', '$eid', '$qid[$i]', '$answer')
+  ON DUPLICATE KEY
+  UPDATE Answer = '$answer';";
+  //echo '<br>';
+  //echo $insertquery;
   if ($conn->query($insertquery) === TRUE) {
-           echo "Answers added successfully";
+       echo "Student's answer added successfully";
+   }
+   else {
+        echo "Error: " . $insertquery . "<br>" . $conn->error;
+      }
+
+
+if(empty($answer)){
+  $zero = "Update StudentResults set Score = 0, Auto_Grader = 'There is no answer. No points' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+  if ($conn->query($zero) === TRUE) {
+       echo "Score added successfully";
+   }
+   else {
+        echo "Error: " . $zero. "<br>" . $conn->error;
+      }
+}
+
+
+  $answer = stripslashes($answer);
+  $son = file_put_contents("jream.py",$answer);
+
+  $ret_val = exec('python jream.py 2>&1', $son);
+  //echo $ret_val;
+  $ret2 = strstr($ret_val, ':', true);
+
+  if($ret2 == "NameError"){
+    $ret_val = mysqli_real_escape_string($conn, $ret_val);
+    $zero = "Update StudentResults set Score = 0, Auto_Grader = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+    if ($conn->query($zero) === TRUE) {
+         echo "Score added successfully";
+     }
+     else {
+          echo "Error: " . $zero. "<br>" . $conn->error;
+        }
+  }
+
+
+  else if($ret2 == "SyntaxError"){
+      $ret_val = mysqli_real_escape_string($conn, $ret_val);
+      $zero = "Update StudentResults set Score = 0, Auto_Grader = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+      if ($conn->query($zero) === TRUE) {
+           echo "Score added successfully";
        }
        else {
-            echo "Error: " . $insertquery . $conn->error;}
+            echo "Error: " . $zero. "<br>" . $conn->error;
           }
+    }
+
+    else{
+
+          $select = "select TestCase, Answer from TC where Qid = '$qid[$i]'";
+          //echo $select;
+          $selects = $conn->query($select);
+
+          if ($selects->num_rows > 0) {
+              while($row = $selects->fetch_assoc()) {
+                 $rows[]=$row;
+
+              }
+            }
+
+              foreach($rows as $row){
+                $testingcases = $row['TestCase'];
+                $tcanswers = $row['Answer'];
+
+
+                $maxpoint = "select Total_points from ExQuestions where Question_id = '$qid[$i]' and Exam_id='$eid';";
+                //echo $maxpoint;
+                $selects = $conn->query($maxpoint);
+
+                if ($selects->num_rows > 0) {
+                    while($row = $selects->fetch_assoc()) {
+                       $rows[]=$row;
+
+                    }
+                  }
+                  else{echo "no records";}
+
+                    foreach($rows as $row){
+                      $total = $row['Total_points'];
+                          }
+                  $tcpoint = "Select COUNT(TestCase) as TCount from TC where Qid = 'qid[$i];'";
+                  $result = mysqli_query($conn,$tcpoint);
+                  $values = mysqli_fetch_assoc($result);
+                  $numtc = $values['TCount'];
+
+                  echo $numtc;
+
+
+                $maxtestcase = $total/$numtc;
+                //echo $maxtestcase;
+
+                $count = "SELECT COUNT(TestCase)
+                      FROM TC
+                      WHERE Qid = '$qid[$i]'; ";
+
+
+                $inserttestcases = "insert into TTC(Qid, TC, Student_Answer, TC_Answer, Max_Points) values ('qid[$i]', '$testingcases', '$answer','$tcanswers', '$maxtestcase');";
+                //echo $inserttestcases;
+                if ($conn->query($inserttestcases) === TRUE) {
+                     echo "TestCase added successfully";
+//                     $updatemaxscore = "insert into TTC(Max_Points)values('select Totalpoints div ')"
+                 }
+                 else {
+                      echo "Error: " . $inserttestcases. "<br>" . $conn->error;
+                    }
+
+
+                $my_file = 'jream.py';
+                $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
+                fwrite($handle, $testingcases);
+
+                  $ret_val2 = exec('python jream.py 2>&1', $handle);
+                  echo $ret_val2;
+
+                  $ret3 = strstr($ret_val2, ':', true);
+
+                  if($ret3 == "NameError"){
+                    $ret_val = mysqli_real_escape_string($conn, $ret_val);
+                    $zero = "Update StudentResults set Score = 0, Auto_Grader = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+                    if ($conn->query($zero) === TRUE) {
+            //             echo "Score added successfully";
+                     }
+                     else {
+                          echo "Error: " . $zero. "<br>" . $conn->error;
+                        }
+                  }
+
+
+                  else if($ret3 == "SyntaxError"){
+                      $ret_val = mysqli_real_escape_string($conn, $ret_val);
+                      $zero = "Update StudentResults set Score = 0, Auto_Grader = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+                      if ($conn->query($zero) === TRUE) {
+              //             echo "Score added successfully";
+                       }
+                       else {
+                            echo "Error: " . $zero. "<br>" . $conn->error;
+                          }
+                    }
+
+                    else{
+                          $ret_val2 = mysqli_real_escape_string($conn, $ret_val2);
+                          $score = "Update StudentResults set Score = (select Total_points from ExQuestions where Exam_id ='$eid' and Question_id = '$qid[$i]'), Results = 'Passed Preliminary and was able to run. Need Test Cases to test it more.' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+                          if ($conn->query($score) === TRUE) {
+                               //echo "Score added successfully";
+                           }
+                           else {
+                                echo "Error: " . $zero. "<br>" . $conn->error;
+                              }
+
+                    }
 
 
 
+                //echo $testingcases . '<br/>';
+          }
+      /*$score = "Update StudentResults set Score = (select Total_points from ExQuestions where Exam_id ='$eid' and Question_id = '$qid[$i]'), Results = 'Passed Preliminary and was able to run. Need Test Cases to test it more.' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+      if ($conn->query($score) === TRUE) {
+           //echo "Score added successfully";
+       }
+       else {
+            echo "Error: " . $zero. "<br>" . $conn->error;
+          }
+          */
+    }
+
+
+  }
 
 
     break;
@@ -505,7 +658,7 @@ case "results":
 $eid = $_POST['eid'];
 
 
-echo file_put_contents("afs/jll25/public_html/CS490/test.txt", $eid);
+
 
 
 
@@ -515,7 +668,7 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$Students = "select Student_id, sum(score) from StudentResult where Student_id in (select Stid from Student) and StudentResult.Eid ='$eid' group by Student_id;";
+$Students = "select Student_id, sum(score) from StudentResults where Student_id in (select Stid from Student) and StudentResults.Eid ='$eid' group by Student_id;";
 
 $Studentsr = $conn->query($Students);
 $json_array = array();
@@ -542,19 +695,21 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$sql = "select distinct Questions.Question, StudentResult.score, ExQuestions.Total_points from StudentResult inner join Questions on Questions.Qid = StudentResult.Qid inner join ExQuestions on StudentResult.Eid = ExQuestions.Exam_id where StudentResult.Student_id = '$sid' and StudentResult.Eid = '$eid' group by Questions.Question";
+$sql = "select Questions.Question, Questions.Qid, StudentResults.score, StudentResults.Answer as Student_Answer, TC.TestCase, TC.Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid where StudentResults.Student_id = '$sid' and StudentResults.Eid = '$eid' group by Questions.Question";
 
-$Score = $conn->query($sql);
+$Difficulty_result = $conn->query($sql);
 $json_array = array();
-if ($Score->num_rows > 0) {
+if ($Difficulty_result->num_rows > 0) {
     // output data of each row
-    while($row = $Score->fetch_assoc()) {
-        $scorenum[]=$row;
+    while($row = $Difficulty_result->fetch_assoc()) {
+        $difficulty_array[]=$row;
     }
-    $score_encoded = json_encode($studentid);
+    $difficulty_encoded = json_encode($difficulty_array);
 
-    echo $score_encoded;
+    echo $difficulty_encoded;
+
 }
+
 
 break;
 
@@ -566,13 +721,15 @@ $eid = $_POST['exid'];
 $qid = $_POST['qid'];
 $sid = $_POST['sid'];
 
-echo var_dump($_POST);
-
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 for ($i=0; $i <sizeof($comment) ; $i++) {
+  $comment = $comment[$i];
   $comment = $mysqli->real_escape_string($comment);
-  $sql = "update StudentResult set Score = '$newgrade[$i]', Result = '$comment[$i]' where Eid = '$eid' and Qid = '$qid' and Student_id = '$sid'";
+
+
+
+  $sql = "update StudentResults set Score = '$newgrade[$i]', Result = '$comment' where Eid = '$eid' and Qid = '$qid' and Student_id = '$sid'";
   if ($conn->query($comment) === TRUE) {
         echo "Student score has been updated";
   }
@@ -602,7 +759,7 @@ $sid = $_POST['sid'];
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
-$sql = "select Result, Score from StudentResult where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
+$sql = "select Result, Score from StudentResults where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
 
 
 $comment  = $conn->query($sql);
