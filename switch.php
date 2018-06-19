@@ -189,7 +189,7 @@ if(empty($answer)){
     else{
 
           $select = "select TestCase, Answer from TC where Qid = '$qid[$i]'";
-          echo $select;
+          //echo $select;
           $selects = $conn->query($select);
 
           if ($selects->num_rows > 0) {
@@ -203,13 +203,40 @@ if(empty($answer)){
                 $testingcases = $row['TestCase'];
                 $tcanswers = $row['Answer'];
 
+
+                $maxpoint = "select Total_points from ExQuestions where Question_id = '$qid[$i]' and Exam_id='$eid';";
+                //echo $maxpoint;
+                $selects = $conn->query($maxpoint);
+
+                if ($selects->num_rows > 0) {
+                    while($row = $selects->fetch_assoc()) {
+                       $rows[]=$row;
+
+                    }
+                  }
+                  else{echo "no records";}
+
+                    foreach($rows as $row){
+                      $total = $row['Total_points'];
+                          }
+                  $tcpoint = "Select COUNT(TestCase) as TCount from TC where Qid = 'qid[$i];'";
+                  $result = mysqli_query($conn,$tcpoint);
+                  $values = mysqli_fetch_assoc($result);
+                  $numtc = $values['TCount'];
+
+                  echo $numtc;
+
+
+                $maxtestcase = $total/$numtc;
+                //echo $maxtestcase;
+
                 $count = "SELECT COUNT(TestCase)
                       FROM TC
                       WHERE Qid = '$qid[$i]'; ";
 
 
-                $inserttestcases = "insert into TTC(Qid, TC, Student_Answer, TC_Answer) values ('qid[$i]', '$testingcases', '$answer','$tcanswers');";
-                echo $inserttestcases;
+                $inserttestcases = "insert into TTC(Qid, TC, Student_Answer, TC_Answer, Max_Points) values ('qid[$i]', '$testingcases', '$answer','$tcanswers', '$maxtestcase');";
+                //echo $inserttestcases;
                 if ($conn->query($inserttestcases) === TRUE) {
                      echo "TestCase added successfully";
 //                     $updatemaxscore = "insert into TTC(Max_Points)values('select Totalpoints div ')"
@@ -232,7 +259,7 @@ if(empty($answer)){
                     $ret_val = mysqli_real_escape_string($conn, $ret_val);
                     $zero = "Update StudentResults set Score = 0, Auto_Grader = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
                     if ($conn->query($zero) === TRUE) {
-                         echo "Score added successfully";
+            //             echo "Score added successfully";
                      }
                      else {
                           echo "Error: " . $zero. "<br>" . $conn->error;
@@ -244,7 +271,7 @@ if(empty($answer)){
                       $ret_val = mysqli_real_escape_string($conn, $ret_val);
                       $zero = "Update StudentResults set Score = 0, Auto_Grader = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
                       if ($conn->query($zero) === TRUE) {
-                           echo "Score added successfully";
+              //             echo "Score added successfully";
                        }
                        else {
                             echo "Error: " . $zero. "<br>" . $conn->error;
