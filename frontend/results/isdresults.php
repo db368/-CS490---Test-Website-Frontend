@@ -113,7 +113,7 @@ foreach($results as $result){
 
 //Now we pretend nothing happened
 var_dump($ULTIMATE);
-//$results=$ULTIMATE;
+$results=$ULTIMATE;
 
 //Bless this mess
 for ($i = 0; $i<sizeof($results); $i++) {
