@@ -762,7 +762,7 @@ $sid = $_POST['sid'];
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
-$sql = "select Result, Score from StudentResults where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
+$sql = "select Comments, Score from StudentResults where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
 
 
 $comment  = $conn->query($sql);
