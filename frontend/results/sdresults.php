@@ -71,13 +71,13 @@ bad{
             curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
             curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment', 'questionid'=> $result['qid'], 'sid' => $sid, 'exid' => $exid)));
             curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-            $return_val=curl_exec($ch2);
+            $return_val2=curl_exec($ch2);
             curl_close($ch2);
 
 
-            $comment = json_decode($return_val, true);
+            $comment = json_decode($return_val2, true);
             $results[$i]['comment'] = $comment['comment'];
-            $results[$i] = $comment['newgrade'];
+            $results[$i]['newgrade'] = $comment['newgrade'];
         }
         ?>
         <?php if ($debug) : ?>
