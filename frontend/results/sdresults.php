@@ -107,8 +107,8 @@ bad{
             echo $return_val2;
 
             $comment = json_decode($return_val2, true)[0];
-            $results[$i]['comment'] = $comment['comment'];
-            $results[$i]['newgrade'] = $comment['newgrade'];
+            $results[$i]['comment'] = $comment['Comments'];
+            $results[$i]['newgrade'] = $comment['Score'];
         }
         ?>
         <?php if ($debug) : ?>
