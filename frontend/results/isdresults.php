@@ -76,6 +76,42 @@ bad{
             endif;
         endif;
 
+//Forgive me linus but just this once I must go ALL OUT
+//Okay, so we've got all of these, and there's duplicate questions
+//I'm going to keep a list of unique Qids, and commit the first I see to the
+//ULTIMATE ARRAY
+$unique_qids = array();
+$ULTIMATE = array();
+
+foreach($results as $result){
+    // Save incoming data
+    $inc_qid = $result['qid'];
+    $inc_testcase = $result['TestCase'];
+    $inc_answer = $result['Answer'];
+
+    //It's not in the database, we must make it
+    if (!array_key_exists($inc_qid, $unique_qids)) {
+        $inc_result = $result; //Clone this
+        //Save these as new arrays
+        $inc_result['TestCase'] = array($inc_testcase);
+        $inc_result['Answer'] = array($inc_answer);
+        $ULTIMATE[sizeof($ULTIMATE)]=$inc_result; //Put it in ultimate
+        continue;
+    }
+    //It's already in the database just push it
+    else{
+        for ($i=0; $i<sizeof($ULTIMATE); $i++){
+            if ($ULTIMATE[$i]['Qid'] == $inc_qid) {
+                //It's a match! Add it!
+                array_push($ULTIMATE[$i]['TestCase'], $inc_testcase);
+                array_push($ULTIMATE[$i]['Answer'], $inc_answer);
+            }
+        }
+    }
+}
+
+//Now we pretend nothing happened
+$results=$ULTIMATE;
 
 //Bless this mess
 for ($i = 0; $i<sizeof($results); $i++) {
