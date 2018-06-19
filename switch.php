@@ -224,7 +224,7 @@ if(empty($answer)){
                   $values = mysqli_fetch_assoc($result);
                   $numtc = $values['TCount'];
 
-                  echo $numtc;
+                  //echo $numtc;
 
 
                 $maxtestcase = $total/$numtc;
@@ -235,7 +235,7 @@ if(empty($answer)){
                       WHERE Qid = '$qid[$i]'; ";
 
 
-                $inserttestcases = "insert into TTC(Qid, TC, Student_Answer, TC_Answer, Max_Points) values ('qid[$i]', '$testingcases', '$answer','$tcanswers', '$maxtestcase');";
+                $inserttestcases = "insert into TTC(Qid, Sid, Eid, TC, TC_Answer, Max_Points) values ('$qid[$i]', '$sid', '$eid', '$testingcases', '$tcanswers', '$maxtestcase');";
                 //echo $inserttestcases;
                 if ($conn->query($inserttestcases) === TRUE) {
                      echo "TestCase added successfully";
@@ -247,19 +247,20 @@ if(empty($answer)){
 
 
                 $my_file = 'jream.py';
-                $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
-                fwrite($handle, $testingcases);
+                $anstestcase = $answer . " " .$testingcases;
+                $handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file);
+                fwrite($handle, $anstestcase);
 
                   $ret_val2 = exec('python jream.py 2>&1', $handle);
-                  echo $ret_val2;
+            //      echo $ret_val2;
 
                   $ret3 = strstr($ret_val2, ':', true);
 
                   if($ret3 == "NameError"){
                     $ret_val = mysqli_real_escape_string($conn, $ret_val);
-                    $zero = "Update StudentResults set Score = 0, Auto_Grader = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+                    $zero = "Update TTC set Student_Points = 0, Student_Answer = '$ret_val2' where Sid = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'and TC = '$tesstingcases[$i]";
                     if ($conn->query($zero) === TRUE) {
-            //             echo "Score added successfully";
+                         echo "Score added successfully";
                      }
                      else {
                           echo "Error: " . $zero. "<br>" . $conn->error;
@@ -269,14 +270,19 @@ if(empty($answer)){
 
                   else if($ret3 == "SyntaxError"){
                       $ret_val = mysqli_real_escape_string($conn, $ret_val);
-                      $zero = "Update StudentResults set Score = 0, Auto_Grader = '$ret_val' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+                      $zero = "Update TTC set Student_Points = 1, Student_Answer ='$ret_val2' where Sid = '$sid' and Eid = '$eid' and Qid = '$qid[$i]' and TC = '$tesstingcases'";
+                      //Auto_Grader = '$ret_val'
                       if ($conn->query($zero) === TRUE) {
-              //             echo "Score added successfully";
-                       }
+                           echo "Score added successfully";
+                            }
+
+
+
                        else {
                             echo "Error: " . $zero. "<br>" . $conn->error;
                           }
                     }
+
 
                     else{
                           $ret_val2 = mysqli_real_escape_string($conn, $ret_val2);
@@ -294,14 +300,6 @@ if(empty($answer)){
 
                 //echo $testingcases . '<br/>';
           }
-      /*$score = "Update StudentResults set Score = (select Total_points from ExQuestions where Exam_id ='$eid' and Question_id = '$qid[$i]'), Results = 'Passed Preliminary and was able to run. Need Test Cases to test it more.' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
-      if ($conn->query($score) === TRUE) {
-           //echo "Score added successfully";
-       }
-       else {
-            echo "Error: " . $zero. "<br>" . $conn->error;
-          }
-          */
     }
 
 
@@ -695,20 +693,25 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$sql = "select Questions.Question, Questions.Qid, StudentResults.score, StudentResults.Answer as Student_Answer, TC.TestCase, TC.Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid where StudentResults.Student_id = '$sid' and StudentResults.Eid = '$eid' group by Questions.Question";
 
-$Difficulty_result = $conn->query($sql);
-$json_array = array();
-if ($Difficulty_result->num_rows > 0) {
-    // output data of each row
-    while($row = $Difficulty_result->fetch_assoc()) {
-        $difficulty_array[]=$row;
-    }
-    $difficulty_encoded = json_encode($difficulty_array);
 
-    echo $difficulty_encoded;
+$sel = "select Questions.Question, Questions.Qid, StudentResults.score, StudentResults.Answer as Student_Answer, TC.TestCase, TC.Answer, TTC.Student_Points, TTC.Student_Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid inner join TTC on TTC.Qid = Questions.Qid where StudentResults.Student_id ='$sid' and StudentResults.Eid = '$eid' group by TC.TestCase";
+
+  $Sel = $conn->query($sel);
+  $json_array = array();
+  if ($Sel->num_rows > 0) {
+      // output data of each row
+      while($row = $Sel->fetch_assoc()) {
+          $studentid[]=$row;
+      }
+      $student_encoded = json_encode($studentid);
+
+      echo $student_encoded;
+
 
 }
+
+
 
 
 break;
