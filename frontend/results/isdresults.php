@@ -227,7 +227,8 @@ for ($i = 0; $i<sizeof($results); $i++) {
                         <td>
                             <h3> SCORE: <?php echo $score; ?> / <?php echo $maxscore; ?> </h3><br>
                             <input type=hidden name=qid value=<?php echo $qid; ?>>
-                            <input type=hidden name=identifier value="c_comment">
+                            <!--<input type=hidden name=identifier value="c_comment">-->
+                            <input type=hidden name=identifier value="g_comment">
                             <input type=hidden name=exid value= <?php echo $eid ?>>
                             <input type=hidden name=sid value=<?php echo $sid ?>>
 
