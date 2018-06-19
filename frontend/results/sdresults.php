@@ -95,6 +95,7 @@ bad{
         }
         //Now we pretend nothing happened
         $results=$ULTIMATE;
+
         $commentarray = array(); // This will store all returned jsons from the comment seraches
         for($i=0; $i < sizeof($results); $i++){
             $ch2= curl_init();
@@ -109,6 +110,7 @@ bad{
             $comment = json_decode($return_val2, true)[0];
             $results[$i]['comment'] = $comment['Comments'];
             $results[$i]['newgrade'] = $comment['Score'];
+            array_push($comment_array, $comment);
         }
         ?>
         <?php if ($debug) : ?>
