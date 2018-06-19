@@ -105,7 +105,7 @@ bad{
             curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
             $return_val2=curl_exec($ch2);
             curl_close($ch2);
-
+            echo $return_val2;
 
             $comment = json_decode($return_val2, true)[0];
             $results[$i]['comment'] = $comment['comment'];
