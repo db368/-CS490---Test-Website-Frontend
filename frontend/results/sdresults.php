@@ -167,7 +167,7 @@ bad{
     ?>
 
     <table>
-        <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Comment </th> </tr>
+        <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Score </th> </tr>
         <?php
         foreach($results as $question){
             // First lets get our variables sorted out
@@ -217,7 +217,7 @@ bad{
                     <td>
                         <h3> SCORE: <?php echo $newgrade; ?> / <?php echo $maxscore; ?> </h3><br>
                         <?php if ($comment != "None") : ?>
-                            Comment: <p> <?php echo $comment; ?> </p> <br>
+                            Instructor Comment: <p> <?php echo $comment; ?> </p> <br>
                         <?php endif ?>
                     </td>
             </tr><?php
