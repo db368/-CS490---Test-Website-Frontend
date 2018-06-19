@@ -64,25 +64,20 @@ bad{
 
         //We need to get the comments as well
         $commentarray = array(); // This will store all returned jsons from the comment seraches
-        foreach ($results as $result){
+        for($i=0; $i < sizeof($results); $i++){
             $ch2 = curl_init();
             $ch2= curl_init();
             curl_setopt($ch2, CURLOPT_URL, "$target");
             curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
             curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment', 'questionid'=> $result['qid'], 'sid' => $sid, 'exid' => $exid)));
             curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-            $return_val=curl_exec($ch2);
+            $return_val2=curl_exec($ch2);
             curl_close($ch2);
 
-            $commentarray[$result['qid']] = $return_val;//Store this comment in the array for debug purposes
 
-            if ($return_val == null) {
-                continue;
-            } else{
-                $comment = json_decode($return_val, true);
-                $result['comment'] = $comment['comment'];
-                $result['newgrade'] = $comment['newgrade'];
-            }
+            $comment = json_decode($return_val2, true);
+            $results[$i]['comment'] = $comment['comment'];
+            $results[$i]['newgrade'] = $comment['newgrade'];
         }
         ?>
         <?php if ($debug) : ?>
@@ -110,8 +105,8 @@ bad{
     if ($testdata) { //Generate our own joke data
         $results = array();
         //Student simulator values
-        $int = rand(0,15); // a value for every type of letter grade A B C D E F
-        $strictness = rand(0,15); // a value for every type of letter grade A B C D E F
+        $int = rand(0, 15); // a value for every type of letter grade A B C D E F
+        $strictness = rand(0, 15); // a value for every type of letter grade A B C D E F
         for ($i=0; $i<$testdata; $i++){
             //Generate some nonsense
             $max = rand(5, 39);
@@ -172,7 +167,7 @@ bad{
     ?>
 
     <table>
-        <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Comment </th> </tr>
+        <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Score </th> </tr>
         <?php
         foreach($results as $question){
             // First lets get our variables sorted out
@@ -222,7 +217,7 @@ bad{
                     <td>
                         <h3> SCORE: <?php echo $newgrade; ?> / <?php echo $maxscore; ?> </h3><br>
                         <?php if ($comment != "None") : ?>
-                            Comment: <p> <?php echo $comment; ?> </p> <br>
+                            Instructor Comment: <p> <?php echo $comment; ?> </p> <br>
                         <?php endif ?>
                     </td>
             </tr><?php
