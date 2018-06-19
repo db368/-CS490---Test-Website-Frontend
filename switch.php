@@ -726,14 +726,12 @@ $sid = $_POST['sid'];
 
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
-for ($i=0; $i <sizeof($comment) ; $i++) {
-  $comment = $comment[$i];
-  $comment = $mysqli->real_escape_string($comment);
+//echo var_dump($_POST);
 
 
-
-  $sql = "update StudentResults set Score = '$newgrade[$i]', Result = '$comment' where Eid = '$eid' and Qid = '$qid' and Student_id = '$sid'";
-  if ($conn->query($comment) === TRUE) {
+  $sql = "insert into StudentResults(Qid, Score, Eid, Student_id, Comments) values ('$qid','$newgrade','$eid','$sid','$comment') ON DUPLICATE KEY
+  UPDATE Comments = '$comment', Score = '$newgrade';";
+  if ($conn->query($sql) === TRUE) {
         echo "Student score has been updated";
   }
   else {
@@ -742,6 +740,7 @@ for ($i=0; $i <sizeof($comment) ; $i++) {
 
 
   $grade = "insert into Updated_Grades(Stid, Eid, Qid, Grade) values ('$sid','$eid','$qid','$newgrade[$i]');";
+  echo $grade;
   if ($conn->query($grade) === TRUE) {
         echo "Score change has been documented";
   }
@@ -749,20 +748,20 @@ for ($i=0; $i <sizeof($comment) ; $i++) {
        echo "Error: " . $grade . "<br>" . $conn->error;}
 
 
-}
+
 
 break;
 
 case "g_comment":
 $eid = $_POST['exid'];
-$qid = $_POST['questionid'];
+$qid = $_POST['qid'];
 $sid = $_POST['sid'];
 
 
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
-$sql = "select Comments, Score from StudentResults where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
+$sql = "select Qid, Comments, Score from StudentResults where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
 
 
 $comment  = $conn->query($sql);
@@ -773,10 +772,10 @@ if ($comment->num_rows > 0) {
         $comment_row[]=$row;
     }
     $comment_encoded = json_encode($comment_row);
-
+}
     echo $comment_encoded;
 
-}
+
 
 
   break;
