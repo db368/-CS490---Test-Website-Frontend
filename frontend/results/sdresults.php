@@ -60,7 +60,6 @@ bad{
         curl_setopt($ch, curlopt_returntransfer, true);
         $return_val=curl_exec($ch);
         $results = json_decode($return_val, true);
-        curl_close($ch);
 
         //We need to get the comments as well
         $unique_qids = array();
@@ -103,15 +102,14 @@ bad{
             echo "SID -> ". $sid;
             echo "EID -> ". $eid;
             echo "QID -> ". $res_qid;
+
             var_dump($results[$i]);
-            $ch= curl_init();
             curl_setopt($ch, curlopt_url, "$target");
             curl_setopt($ch, curlopt_post, 1); // set it to post
             curl_setopt($ch, curlopt_postfields, http_build_query(array('identifier'=>'g_comment', 'eid'=> $eid, 'sid' => $sid, 'qid' => $res_qid)));
             curl_setopt($ch, curlopt_returntransfer, true);
-            $return_val=curl_exec($ch);
-            $comment = json_decode($return_val, true);
-            curl_close($ch);
+            $return_val2=curl_exec($ch);
+            $comment = json_decode($return_val2, true);
 
 
             $results[$i]['comment'] = $comment['Comments'];
