@@ -90,7 +90,7 @@ foreach($results as $result){
     $inc_answer = $result['Answer'];
 
     //It's not in the database, we must make it
-    if (!array_search($inc_qid, $unique_qids)) {
+    if (!in_array($inc_qid, $unique_qids)) {
         $inc_result = $result; //Clone this
         array_push($unique_qids, $inc_qid);
         //Save these as new arrays
