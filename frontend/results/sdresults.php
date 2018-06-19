@@ -98,11 +98,13 @@ bad{
 
         $commentarray = array(); // This will store all returned jsons from the comment seraches
         for($i=0; $i < sizeof($results); $i++){
+            $res_qid = $results[$i]['Qid'];
+
             var_dump($results[$i]);
             $ch2= curl_init();
             curl_setopt($ch2, CURLOPT_URL, "$target");
             curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
-            curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment', 'qid'=> $result['qid'], 'sid' => $sid, 'exid' => $exid)));
+            curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment', 'qid'=> $res_qid, 'sid' => $sid, 'exid' => $exid)));
             curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
             $return_val2=curl_exec($ch2);
             curl_close($ch2);
