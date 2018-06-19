@@ -95,7 +95,7 @@ foreach($results as $result){
         array_push($unique_qids, $inc_qid);
         //Save these as new arrays
         $inc_result['TestCase'] = array($inc_testcase);
-        $inc_result['Answer'] = array($inc_answer);
+        $inc_result['solution'] = array($inc_answer);
         array_push($ULTIMATE, $inc_result); //Put it in ultimate
         continue;
     }
@@ -105,14 +105,13 @@ foreach($results as $result){
             if ($ULTIMATE[$i]['Qid'] == $inc_qid) {
                 //It's a match! Add it!
                 array_push($ULTIMATE[$i]['TestCase'], $inc_testcase);
-                array_push($ULTIMATE[$i]['Answer'], $inc_answer);
+                array_push($ULTIMATE[$i]['solution'], $inc_answer);
             }
         }
     }
 }
 
 //Now we pretend nothing happened
-var_dump($unique_qids);
 $results=$ULTIMATE;
 
 //Bless this mess
