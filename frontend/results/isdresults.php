@@ -96,7 +96,7 @@ foreach($results as $result){
         //Save these as new arrays
         $inc_result['TestCase'] = array($inc_testcase);
         $inc_result['Answer'] = array($inc_answer);
-        $ULTIMATE[sizeof($ULTIMATE)]=$inc_result; //Put it in ultimate
+        $array_push($ULTIMATE, $inc_result); //Put it in ultimate
         continue;
     }
     //It's already in the database just push it
