@@ -52,12 +52,12 @@ bad{
     $_POST['identifier'] = 's_results';
 
     if (!$testdata) {
-        $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+        $target = "https://web.njit.edu/~jll25/cs490/switch.php";
         $ch= curl_init();
-        curl_setopt($ch, CURLOPT_URL, "$target");
-        curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'s_results', 'eid'=> $eid, 'sid' => $sid)));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, curlopt_url, "$target");
+        curl_setopt($ch, curlopt_post, 1); // set it to post
+        curl_setopt($ch, curlopt_postfields, http_build_query(array('identifier'=>'s_results', 'eid'=> $eid, 'sid' => $sid)));
+        curl_setopt($ch, curlopt_returntransfer, true);
         $return_val=curl_exec($ch);
         $results = json_decode($return_val, true);
         curl_close($ch);
@@ -104,18 +104,16 @@ bad{
             echo "EID -> ". $eid;
             echo "QID -> ". $res_qid;
             var_dump($results[$i]);
-            $ch2= curl_init();
-            curl_setopt($ch2, CURLOPT_URL, "$target");
-            curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
-            curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment',
-                                                                        'qid'=> $res_qid,
-                                                                        'sid' => $sid,
-                                                                        'exid' => $eid)));
-            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-            $return_val2=curl_exec($ch2);
-            echo $return_val2;
+            $ch= curl_init();
+            curl_setopt($ch, curlopt_url, "$target");
+            curl_setopt($ch, curlopt_post, 1); // set it to post
+            curl_setopt($ch, curlopt_postfields, http_build_query(array('identifier'=>'g_comment', 'eid'=> $eid, 'sid' => $sid, 'qid' => $res_qid)));
+            curl_setopt($ch, curlopt_returntransfer, true);
+            $return_val=curl_exec($ch);
+            $comment = json_decode($return_val, true);
+            curl_close($ch);
 
-            $comment = json_decode($return_val2, true);
+
             $results[$i]['comment'] = $comment['Comments'];
             $results[$i]['newgrade'] = $comment['Score'];
             array_push($comment_array, $comment);
