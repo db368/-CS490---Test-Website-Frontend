@@ -85,7 +85,7 @@ $ULTIMATE = array();
 
 foreach($results as $result){
     // Save incoming data
-    $inc_qid = $result['qid'];
+    $inc_qid = $result['Qid'];
     $inc_testcase = $result['TestCase'];
     $inc_answer = $result['Answer'];
 
