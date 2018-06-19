@@ -63,6 +63,38 @@ bad{
         curl_close($ch);
 
         //We need to get the comments as well
+        $unique_qids = array();
+        $ULTIMATE = array();
+        //Should be a similar affair for this page
+        foreach($results as $result){
+            // Save incoming data
+            $inc_qid = $result['Qid'];
+            $inc_testcase = $result['TestCase'];
+            $inc_answer = $result['Answer'];
+
+            //It's not in the database, we must make it
+            if (!in_array($inc_qid, $unique_qids)) {
+                $inc_result = $result; //Clone this
+                array_push($unique_qids, $inc_qid);
+                //Save these as new arrays
+                $inc_result['TestCase'] = array($inc_testcase);
+                $inc_result['solution'] = array($inc_answer);
+                array_push($ULTIMATE, $inc_result); //Put it in ultimate
+                continue;
+            }
+            //It's already in the database just push it
+            else{
+                for ($i=0; $i<sizeof($ULTIMATE); $i++){
+                    if ($ULTIMATE[$i]['Qid'] == $inc_qid) {
+                        //It's a match! Add it!
+                        array_push($ULTIMATE[$i]['TestCase'], $inc_testcase);
+                        array_push($ULTIMATE[$i]['solution'], $inc_answer);
+                    }
+                }
+            }
+        }
+        //Now we pretend nothing happened
+        $results=$ULTIMATE;
         $commentarray = array(); // This will store all returned jsons from the comment seraches
         for($i=0; $i < sizeof($results); $i++){
             $ch2 = curl_init();
