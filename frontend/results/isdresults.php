@@ -216,6 +216,7 @@ for($i=0; $i < sizeof($results); $i++){
                             <th class="small"> TESTCASE </th>
                             <th class="small"> RESULT </th>
                             <th class="small"> SOLUTION </th>
+                            <th class="small"> AUTO GRADER </th>
                         </tr>
                         <?php for ($i=0; $i<$tcnum; $i++): ?>
                         <tr>
@@ -229,6 +230,9 @@ for($i=0; $i < sizeof($results); $i++){
                             </td>
                             <td>
                                 <?php echo $solutions[$i]; ?>
+                            </td>
+                            <td>
+                                <?php echo $autograder[$i] ?>
                             </td>
                         </tr>
                         <?php endfor ?>
