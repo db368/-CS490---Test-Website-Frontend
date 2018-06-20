@@ -52,6 +52,7 @@
 
     //Now we're going to iterate through the array of questions to get
     //the one that matters to us
+    echo $return_val;
     $exam_questions=json_decode($return_val, true);
     foreach($exam_questions as $ex_question){
         if ($ex_question['Question_id'] == $qid){
