@@ -35,7 +35,6 @@ foreach ($eqarray as $eq)
     array_push($usedids, $eq['Qid']);
 }
 
-var_dump($usedids);
 
 
 $alarray = array();
