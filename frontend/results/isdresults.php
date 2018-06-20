@@ -190,7 +190,7 @@ for($i=0; $i < sizeof($results); $i++){
             $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
             $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
 
-            $comment = ((isset($question['comment']))) ? $quesiton['comment'] : "";
+            $comment = ((isset($question['comment']))) ? $question['comment'] : "";
             $testcases = ((isset($question['TestCase']))) ? $question['TestCase'] : array("I didn't", "read this", "correctly");
             $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
             $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
