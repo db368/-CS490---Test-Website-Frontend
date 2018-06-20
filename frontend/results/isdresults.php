@@ -237,7 +237,7 @@ for($i=0; $i < sizeof($results); $i++){
                             <input type=hidden name=sid value=<?php echo $sid ?>>
 
                             Edit <input type=number max=<?php echo $maxscore; ?> value=<?php echo $score ?> min=0 name=newgrade> <br>
-                            Comment <textarea name="comment"><?php echo $comment ?></textarea><br>
+                            Comment <textarea name="comment" placeholder=<?php echo $comment ?>><?php echo $comment ?></textarea><br>
                             <button type=submit> Submit Changes </button>
                         </td>
                     </form>
