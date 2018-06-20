@@ -104,7 +104,7 @@ bad{
             //$target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debug.php";
             $postarray = array('identifier'=>'g_comment','qid'=> $res_qid,'sid' => $sid,'exid' => $eid);
 
-            var_dump($postarray);
+            //var_dump($postarray);
             $ch= curl_init();
             curl_setopt($ch, CURLOPT_URL, "$target");//
             curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
@@ -116,7 +116,7 @@ bad{
 
             curl_close($ch);
             $comment = json_decode($return_val2, true);
-            echo $comment['comment'];
+            echo $comment[0]['comment'];
             $results[$i]['comment'] = $comment['Comments'];
             $results[$i]['newgrade'] = $comment['Score'];
             array_push($comment_array, $comment);
