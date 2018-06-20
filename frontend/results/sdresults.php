@@ -105,7 +105,7 @@ bad{
             echo "QID -> ". $res_qid;
             var_dump($results[$i]);
             $ch2= curl_init();
-            curl_setopt($ch2, CURLOPT_URL, "$target");
+            curl_setopt($ch2, CURLOPT_URL, $target);
             curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
             curl_setopt(
             $ch2, CURLOPT_POSTFIELDS, http_build_query(
