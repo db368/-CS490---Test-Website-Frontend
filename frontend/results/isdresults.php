@@ -82,7 +82,7 @@ bad{
 //ULTIMATE ARRAY
 $unique_qids = array();
 $ULTIMATE = array();
-
+/*
 foreach($results as $result){
     // Save incoming data
     $inc_qid = $result['Qid'];
@@ -110,9 +110,9 @@ foreach($results as $result){
         }
     }
 }
-
+*/
 //Now we pretend nothing happened
-$results=$ULTIMATE;
+//$results=$ULTIMATE;
 
 //Bless this mess
 $commentarray = array(); // This will store all returned jsons from the comment seraches
