@@ -46,8 +46,8 @@ foreach ($exams as $exam){
     }
 
     $release_status = (isset($exam['Release_ready'])) ? $exam['Release_ready'] : 0 ;
-
-    if (!$release_status) //Don't display this exam if it's not released
+    echo $release_status;
+    if ($release_status = 0) //Don't display this exam if it's not released
         continue;
     $exid = "error"; $exname = "error";
     if (isset($exam['Eid'])) { $exid = $exam['Eid'];
