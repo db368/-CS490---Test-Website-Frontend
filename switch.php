@@ -36,8 +36,8 @@ case "v_testbank":
     else {
         //getting results using examid
 
-        $sql= "SELECT * FROM Questions WHERE NOT EXISTS (select Questions.Qid, Questions.Question, Questions.Difficulty from ExQuestions left join Questions on Questions.Qid = ExQuestions.Question_id where ExQuestions.Exam_id = '$exam')";
-        //$sql = " select Questions.Qid, Questions.Question, Questions.Difficulty from ExQuestions left join Questions on Questions.Qid = ExQuestions.Question_id where ExQuestions.Exam_id = '$exam'";
+        $sql= "SELECT * FROM Questions WHERE NOT EXISTS (SELECT Questions.Qid, Questions.Question, Questions.Difficulty from ExQuestions left join Questions on Questions.Qid = ExQuestions.Question_id where ExQuestions.Exam_id = '$exam')";
+        //$sql = " SELECT Questions.Qid, Questions.Question, Questions.Difficulty from ExQuestions left join Questions on Questions.Qid = ExQuestions.Question_id where ExQuestions.Exam_id = '$exam'";
         $Examid_result = $conn->query($sql);
         $json_array = array();
         if ($Examid_result->num_rows > 0) {
@@ -52,7 +52,7 @@ case "v_testbank":
         }
         else {
             //if there is neither examid, or difficulty
-            $all = "select * from Questions;";
+            $all = "SELECT * from Questions;";
             $allqu = $conn->query($all);
             $all_array = array();
             if ($allqu->num_rows > 0) {
@@ -78,7 +78,7 @@ case "v_exams":
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    $viewe = "Select * from Exams;";
+    $viewe = "SELECT * from Exams;";
     $Exameview = $conn->query($viewe);
     $json_array = array();
     if ($Exameview->num_rows > 0) {
@@ -188,12 +188,12 @@ if(empty($answer)){
 
     else{
 
-          $select = "select TestCase, Answer from TC where Qid = '$qid[$i]'";
-          //echo $select;
-          $selects = $conn->query($select);
+          $SELECT = "SELECT TestCase, Answer from TC where Qid = '$qid[$i]'";
+          //echo $SELECT;
+          $SELECTs = $conn->query($SELECT);
 
-          if ($selects->num_rows > 0) {
-              while($row = $selects->fetch_assoc()) {
+          if ($SELECTs->num_rows > 0) {
+              while($row = $SELECTs->fetch_assoc()) {
                  $rows[]=$row;
 
               }
@@ -204,12 +204,12 @@ if(empty($answer)){
                 $tcanswers = $row['Answer'];
 
 
-                $maxpoint = "select Total_points from ExQuestions where Question_id = '$qid[$i]' and Exam_id='$eid';";
+                $maxpoint = "SELECT Total_points from ExQuestions where Question_id = '$qid[$i]' and Exam_id='$eid';";
                 //echo $maxpoint;
-                $selects = $conn->query($maxpoint);
+                $SELECTs = $conn->query($maxpoint);
 
-                if ($selects->num_rows > 0) {
-                    while($row = $selects->fetch_assoc()) {
+                if ($SELECTs->num_rows > 0) {
+                    while($row = $SELECTs->fetch_assoc()) {
                        $rows[]=$row;
 
                     }
@@ -219,7 +219,7 @@ if(empty($answer)){
                     foreach($rows as $row){
                       $total = $row['Total_points'];
                           }
-                  $tcpoint = "Select COUNT(TestCase) as TCount from TC where Qid = 'qid[$i];'";
+                  $tcpoint = "SELECT COUNT(TestCase) as TCount from TC where Qid = 'qid[$i];'";
                   $result = mysqli_query($conn,$tcpoint);
                   $values = mysqli_fetch_assoc($result);
                   $numtc = $values['TCount'];
@@ -239,7 +239,7 @@ if(empty($answer)){
                 //echo $inserttestcases;
                 if ($conn->query($inserttestcases) === TRUE) {
                      echo "TestCase added successfully";
-//                     $updatemaxscore = "insert into TTC(Max_Points)values('select Totalpoints div ')"
+//                     $updatemaxscore = "insert into TTC(Max_Points)values('SELECT Totalpoints div ')"
                  }
                  else {
                       echo "Error: " . $inserttestcases. "<br>" . $conn->error;
@@ -292,7 +292,7 @@ if(empty($answer)){
                         if ($conn->query($answerscore) === TRUE) {
                              echo "Score added successfully";
                               }
-                            $sppoint = "Select SUM(Student_Points) as Studentpoints from TTC where Eid = '$eid' and Sid ='$sid' and Qid = '$qid[$i]'";
+                            $sppoint = "SELECT SUM(Student_Points) as Studentpoints from TTC where Eid = '$eid' and Sid ='$sid' and Qid = '$qid[$i]'";
                               $result = mysqli_query($conn,$sppoint);
                               $values = mysqli_fetch_assoc($result);
                               $numsp = $values['Studentpoints'];
@@ -316,7 +316,7 @@ if(empty($answer)){
                               }
                     }
 
-                              $sppoint = "Select SUM(Student_Points) as Studentpoints from TTC where Eid = '$eid' and Sid ='$sid' and Qid = '$qid[$i]'";
+                              $sppoint = "SELECT SUM(Student_Points) as Studentpoints from TTC where Eid = '$eid' and Sid ='$sid' and Qid = '$qid[$i]'";
                               $result = mysqli_query($conn,$sppoint);
                               $values = mysqli_fetch_assoc($result);
                               $numsp = $values['Studentpoints'];
@@ -333,7 +333,7 @@ if(empty($answer)){
 
                       /*
                           $ret_val2 = mysqli_real_escape_string($conn, $ret_val2);
-                          $score = "Update StudentResults set Score = (select Total_points from ExQuestions where Exam_id ='$eid' and Question_id = '$qid[$i]'), Results = 'Passed Preliminary and was able to run. Need Test Cases to test it more.' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
+                          $score = "Update StudentResults set Score = (SELECT Total_points from ExQuestions where Exam_id ='$eid' and Question_id = '$qid[$i]'), Results = 'Passed Preliminary and was able to run. Need Test Cases to test it more.' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
                           if ($conn->query($score) === TRUE) {
                                //echo "Score added successfully";
                            }
@@ -366,7 +366,7 @@ case "e_get_questions":
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    $vieweq = "select Questions.Qid, Questions.Question, Questions.Difficulty, ExQuestions.Total_points from ExQuestions left join Questions on ExQuestions.Question_id = Questions.Qid where ExQuestions.Exam_id ='$eid'";
+    $vieweq = "SELECT Questions.Qid, Questions.Question, Questions.Difficulty, ExQuestions.Total_points from ExQuestions left join Questions on ExQuestions.Question_id = Questions.Qid where ExQuestions.Exam_id ='$eid'";
 
     $Exameview = $conn->query($vieweq);
     $json_array = array();
@@ -394,7 +394,7 @@ case "qb_get_question":
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    $viewe = "select Questions.Question, TC.TestCase, TC.Answer, Questions.Difficulty from Questions left join TC on Questions.Qid= TC.Qid where Questions.Qid ='$qid'";
+    $viewe = "SELECT Questions.Question, TC.TestCase, TC.Answer, Questions.Difficulty from Questions left join TC on Questions.Qid= TC.Qid where Questions.Qid ='$qid'";
     $Exameview = $conn->query($viewe);
     $json_array = array();
     if ($Exameview->num_rows > 0) {
@@ -419,7 +419,7 @@ case "e_get_question":
     if (mysqli_connect_errno()) {
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
-    $viewe = "select Questions.Question, Questions.Difficulty, ExQuestions.Total_points from ExQuestions left join Questions on ExQuestions.Question_id = Questions.Qid where ExQuestions.Exam_id = '$eid'and ExQuestions.Question_id ='$qid'";
+    $viewe = "SELECT Questions.Question, Questions.Difficulty, ExQuestions.Total_points from ExQuestions left join Questions on ExQuestions.Question_id = Questions.Qid where ExQuestions.Exam_id = '$eid'and ExQuestions.Question_id ='$qid'";
     $Exameview = $conn->query($viewe);
     $json_array = array();
     if ($Exameview->num_rows > 0) {
@@ -648,7 +648,7 @@ if ($conn->connect_error) {
     die("Connection failure" . $conn->connect_error);
 }
 
-$Students = "select Student_id, sum(score) from StudentResults where Student_id in (select Stid from Student) and StudentResults.Eid ='$eid' group by Student_id;";
+$Students = "SELECT Student_id, sum(score) from StudentResults where Student_id in (SELECT Stid from Student) and StudentResults.Eid ='$eid' group by Student_id;";
 
 $Studentsr = $conn->query($Students);
 $json_array = array();
@@ -677,7 +677,12 @@ if ($conn->connect_error) {
 
 
 
-$sel = "select Questions.Question, Questions.Qid, StudentResults.score, StudentResults.Answer as Student_Answer, StudentResults.Auto_Grader, TC.TestCase, TC.Answer, TTC.Student_Points, TTC.Student_Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid inner join TTC on TTC.Qid = Questions.Qid where StudentResults.Student_id ='$sid' and StudentResults.Eid = '$eid' group by TC.TestCase";
+$sel = "SELECT Questions.Question, Questions.Qid, StudentResults.score, StudentResults.Answer as Student_Answer, StudentResults.Auto_Grader, TC.TestCase, TC.Answer, TTC.Student_Points, TTC.Student_Answer AS TCSTUDENT_ANSWER, ExQuestions.Total_points from StudentResults 
+inner join Questions on Questions.Qid = StudentResults.Qid 
+inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id 
+inner join TC on TC.Qid = Questions.Qid 
+inner join TTC on TTC.Qid = Questions.Qid 
+where StudentResults.Student_id ='$sid' and StudentResults.Eid = '$eid' group by TC.TestCase";
 
   $Sel = $conn->query($sel);
   $json_array = array();
@@ -743,7 +748,7 @@ $sid = $_POST['sid'];
 $conn = mysqli_connect("sql1.njit.edu", "jll25", "EzzrnW0B0", "jll25");
 
 
-$sql = "select Qid, Comments, Score from StudentResults where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
+$sql = "SELECT Qid, Comments, Score from StudentResults where Eid = '$eid' and Student_id = '$sid' and Qid = '$qid';";
 
 
 $comment  = $conn->query($sql);
