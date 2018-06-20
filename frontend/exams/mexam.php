@@ -27,7 +27,7 @@ if ($return_val == null) {
     exit;
 }
     $exams = json_decode($return_val, true);
-
+    echo '<div class=login>';
     echo '<table width=100%>';
     echo '<tr><th> EXAMS </th> <th> REMOVE </th> </tr>';
 foreach ($exams as $exam){
@@ -44,7 +44,7 @@ foreach ($exams as $exam){
     echo '<input type="hidden" name="id" value="'.$exid.'">';
     echo '<td> <button type="submit" class="link-button" name="identifier" value="qb_get_question">'. $exname . '</button> </td>';
     echo '</form>';
-
+    echo '</div>';
     //In the future, if I want, I can put these buttons both in the same form using a custom looper
     //Remove Button
     echo '<form action="../loopers/aelooper.php" method="post">'; //Send message through AE looper. Exact functionality we want.

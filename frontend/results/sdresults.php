@@ -63,21 +63,59 @@ bad{
         curl_close($ch);
 
         //We need to get the comments as well
+        $unique_qids = array();
+        $ULTIMATE = array();
+        //Should be a similar affair for this page
+        foreach($results as $result){
+            // Save incoming data
+            $inc_qid = $result['Qid'];
+            $inc_testcase = $result['TestCase'];
+            $inc_answer = $result['Answer'];
+
+            //It's not in the database, we must make it
+            if (!in_array($inc_qid, $unique_qids)) {
+                $inc_result = $result; //Clone this
+                array_push($unique_qids, $inc_qid);
+                //Save these as new arrays
+                $inc_result['TestCase'] = array($inc_testcase);
+                $inc_result['solution'] = array($inc_answer);
+                array_push($ULTIMATE, $inc_result); //Put it in ultimate
+                continue;
+            }
+            //It's already in the database just push it
+            else{
+                for ($i=0; $i<sizeof($ULTIMATE); $i++){
+                    if ($ULTIMATE[$i]['Qid'] == $inc_qid) {
+                        //It's a match! Add it!
+                        array_push($ULTIMATE[$i]['TestCase'], $inc_testcase);
+                        array_push($ULTIMATE[$i]['solution'], $inc_answer);
+                    }
+                }
+            }
+        }
+        //Now we pretend nothing happened
+        $results=$ULTIMATE;
+
         $commentarray = array(); // This will store all returned jsons from the comment seraches
         for($i=0; $i < sizeof($results); $i++){
-            $ch2 = curl_init();
-            $ch2= curl_init();
-            curl_setopt($ch2, CURLOPT_URL, "$target");
-            curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
-            curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment', 'questionid'=> $result['qid'], 'sid' => $sid, 'exid' => $exid)));
-            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-            $return_val2=curl_exec($ch2);
-            curl_close($ch2);
+            $res_qid = $results[$i]['Qid'];
+            $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+            $postarray = array('identifier'=>'g_comment','qid'=> $res_qid,'sid' => $sid,'exid' => $eid);
+            $ch= curl_init();
+            curl_setopt($ch, CURLOPT_URL, "$target");//
+            curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+            curl_setopt(
+                $ch, CURLOPT_POSTFIELDS,
+                $postarray
+            );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
+            $return_val2= curl_exec($ch);
+            curl_close($ch);
 
-            $comment = json_decode($return_val2, true);
-            $results[$i]['comment'] = $comment['comment'];
-            $results[$i]['newgrade'] = $comment['newgrade'];
+            $comment = json_decode($return_val2, true)[0];
+            $results[$i]['comment'] = $comment['Comments'];
+            $results[$i]['newgrade'] = $comment['Score'];
         }
         ?>
         <?php if ($debug) : ?>
