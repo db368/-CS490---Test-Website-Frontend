@@ -53,7 +53,6 @@
     //Now we're going to iterate through the array of questions to get
     //the one that matters to us
     $exam_questions=json_decode($return_val, true);
-    var_dump($exam_questions);
     foreach($exam_questions as $ex_question){
         if ($ex_question['Qid'] == $qid){
             $points = $ex_question['Total_points'];
