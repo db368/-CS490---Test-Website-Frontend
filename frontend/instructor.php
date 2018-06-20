@@ -9,7 +9,7 @@
 <body>
      <div class="debug">
     <?php
-        $debug = 1;
+        $debug=0;
     if ($debug) { //If debug is specified, dump this post
         echo "<h3> POST ARRAY</h3>";
         var_dump($_POST);

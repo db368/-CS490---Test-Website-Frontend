@@ -33,7 +33,7 @@
     <div class=login>
 
     <?php
-    $debug = 1;
+    $debug=0;
     $eid = ((isset($_POST['eid']))) ? $_POST['eid'] : 39;
 
     $_POST['identifier'] = 'results';

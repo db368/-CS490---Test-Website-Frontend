@@ -43,7 +43,7 @@ bad{
     <?php
 
     //For the student file, most of this will be the same, but we will remove the comment section  for a non-interactive verison.
-    $debug = 1; // Enables the debug boxes
+    $debug=0; // Enables the debug boxes
     $testdata = 0; //Enables the use of live data
 
     $eid = ((isset($_POST['eid']))) ? $_POST['eid'] : 39;

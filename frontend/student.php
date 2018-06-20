@@ -10,7 +10,7 @@
 
     <?php
 
-    $debug = 1;
+    $debug=0;
     if ($debug) {
         echo '<div class="debug">';
         echo "<h3> POST ARRAY</h3>";

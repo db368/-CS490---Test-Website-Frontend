@@ -25,8 +25,8 @@ div.editquestions {
     <div class="editquestions">
     <?php
 
-    $debug = 1;
-    $debug = 1;
+    $debug=0;
+    $debug=0;
     if (!isset($_POST['id']) or $_POST['id'] == null or $_POST['identifier'] == "r_testbank") {
         echo "<h1> Add New Question </h1>";
 

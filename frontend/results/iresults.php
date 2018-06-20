@@ -47,7 +47,7 @@ tr:nth-child(even){
     <div class=login>
     <?php
 
-        $debug = 1;
+        $debug=0;
 
         //First, we get a list of exams
         $target = "https://web.njit.edu/~jll25/CS490/switch.php";

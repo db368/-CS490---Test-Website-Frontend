@@ -6,7 +6,7 @@
 <body>
 
     <?php //Initial Variable Definition
-    $debug = 1;
+    $debug=0;
     $questions = (isset($_POST['questions'])) ? $_POST['questions'] : die("No questions");
     $number = (isset($_POST['currentquestion'])) ? $_POST['currentquestion'] : die("No current quesiton number");
     $exid = (isset($_POST['exid'])) ? $_POST['exid'] : die("No Exid");
