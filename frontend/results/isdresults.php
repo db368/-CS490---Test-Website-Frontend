@@ -187,7 +187,7 @@ for($i=0; $i < sizeof($results); $i++){
             $qid = ((isset($question['Qid']))) ? $question['Qid'] : "??";
             $score = ((isset($question['score']))) ? $question['score'] : "39";
             $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
-            $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
+            $answer = ((isset($question['Answer']))) ? nl2br($question['Answer']) : "print('there's a bug?')";
 
             $comment = ((isset($question['comment']))) ? $question['comment'] : "";
             $testcases = ((isset($question['TestCase']))) ? $question['TestCase'] : array("I didn't", "read this", "correctly");
