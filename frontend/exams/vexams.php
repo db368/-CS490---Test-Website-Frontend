@@ -45,7 +45,7 @@ foreach ($exams as $exam){
         continue;
     }
 
-    $release_status = (isset($exam['Release_ready'])) ? $exam['Release_ready'] : 1 ;
+    $release_status = (isset($exam['Release_ready'])) ? $exam['Release_ready'] : 0 ;
 
     if (!$release_status) //Don't display this exam if it's not released
         continue;
