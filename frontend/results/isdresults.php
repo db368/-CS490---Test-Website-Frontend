@@ -115,23 +115,26 @@ foreach($results as $result){
 $results=$ULTIMATE;
 
 //Bless this mess
-for ($i = 0; $i<sizeof($results); $i++) {
-    $questionid = $results[$i]['Qid'];
+$commentarray = array(); // This will store all returned jsons from the comment seraches
+for($i=0; $i < sizeof($results); $i++){
+    $res_qid = $results[$i]['Qid'];
+    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+    $postarray = array('identifier'=>'g_comment','qid'=> $res_qid,'sid' => $sid,'exid' => $eid);
     $ch= curl_init();
-    curl_setopt($ch, CURLOPT_URL, "$target");
-    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_URL, "$target");//
+    curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
     curl_setopt(
-        $ch, CURLOPT_POSTFIELDS, http_build_query(
-            array('identifier'=>'g_comment', 'exid'=> $eid,'sid' => $sid, 'questionid'=> $questionid)
-        )
+        $ch, CURLOPT_POSTFIELDS,
+        $postarray
     );
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $return_val=curl_exec($ch);
-    $returnjson=json_decode($return_val, true);
+
+    $return_val2= curl_exec($ch);
     curl_close($ch);
 
-    //Add it to the result's array
-    $results[$i]['comment'] =  $return_val;
+    $comment = json_decode($return_val2, true)[0];
+    $results[$i]['comment'] = $comment['Comments'];
+    $results[$i]['newgrade'] = $comment['Score'];
 }
     }
 
