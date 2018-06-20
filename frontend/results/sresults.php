@@ -60,7 +60,7 @@
         }
         if (isset($exam['Name'])) { $exname = $exam['Name'];
         }
-        if ($exam['Release_ready']) { //THis exam isn't released, skip it
+        if (!$exam['Release_ready']) { //THis exam isn't released, skip it
             continue;
         }
         //echo '<form method="post" action="../debug.php">';

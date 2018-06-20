@@ -44,7 +44,8 @@ foreach ($exams as $exam){
     if (curl_exec($ch) == null) {
         continue;
     }
-    $exid = "error"; $exname = "error";
+
+        $exid = "error"; $exname = "error";
     if (isset($exam['Eid'])) { $exid = $exam['Eid'];
     }
     if (isset($exam['Name'])) { $exname = $exam['Name'];

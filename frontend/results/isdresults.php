@@ -128,7 +128,6 @@ for($i=0; $i < sizeof($results); $i++){
         $postarray
     );
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
     $return_val2= curl_exec($ch);
     curl_close($ch);
 
