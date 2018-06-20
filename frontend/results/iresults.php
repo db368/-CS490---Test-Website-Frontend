@@ -86,7 +86,8 @@ tr:nth-child(even){
         echo '<form method="post" action="isresults.php">';
         echo '<input type="hidden" name="eid" value="'.$exid.'">';
         echo '<td> <button type="submit" class="link-button" name="identifier" value="results"> '.$exname.' </button> </td>';
-        echo '<td> <button type="submit" name=identifier value="release"> RELEASE  </button> </td>';
+        //echo '<td> <button type="submit" name=identifier value="release" onclick=\'this.form.action="../debug.php";\'/> RELEASE  </button> </td>';
+        echo '<td> <button type="submit" name=identifier value="release" onclick=\'this.form.action="../loopers/relooper.php";\'/> RELEASE  </button> </td>';
         echo "</form></tr>";
     }
     echo "</table>";
