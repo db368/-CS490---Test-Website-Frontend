@@ -104,14 +104,15 @@ bad{
             echo "EID -> ". $eid;
             echo "QID -> ". $res_qid;
             var_dump($results[$i]);
-            $ch2= curl_init();
-            curl_setopt($ch2, CURLOPT_URL, $target);
-            curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
+
+            $ch= curl_init();
+            curl_setopt($ch, CURLOPT_URL, $target);
+            curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
             curl_setopt(
-            $ch2, CURLOPT_POSTFIELDS,
+            $ch, CURLOPT_POSTFIELDS,
                     array('identifier'=>'g_comment','qid'=> $res_qid,'sid' => $sid,'exid' => $eid));
-            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-            $return_val2=curl_exec($ch2);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $return_val2=curl_exec($ch);
             echo $return_val2;
             curl_close($ch2);
 
