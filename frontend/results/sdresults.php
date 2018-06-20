@@ -135,8 +135,8 @@ bad{
         <?php endif ?>
 
         <?php if ($return_val == null) : ?>
-             <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
-            <?php $testdata = rand(10, 20);
+             <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED </h2>
+            <?php // $testdata = rand(10, 20); Sadly, we probably won't want test data on the live release.
         endif;
     }
 

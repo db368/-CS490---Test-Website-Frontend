@@ -178,7 +178,7 @@ for($i=0; $i < sizeof($results); $i++){
     }
     ?>
 
-    <table>
+    <table class="resulttable">
         <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Comment </th> </tr>
         <?php
         foreach($results as $question){
@@ -203,7 +203,7 @@ for($i=0; $i < sizeof($results); $i++){
                     <?php echo $answer; ?> </td>
 
                 <td>
-                    <table>
+                    <table class="resulttable">
                         <tr>
                             <th class="small"> TESTCASE </th>
                             <th class="small"> RESULT </th>
