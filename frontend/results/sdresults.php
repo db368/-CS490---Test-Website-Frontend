@@ -107,13 +107,13 @@ bad{
             $ch2= curl_init();
             curl_setopt($ch2, CURLOPT_URL, "$target");
             curl_setopt($ch2, CURLOPT_POST, 1); // Set it to post
-            curl_setopt($ch2, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'g_comment',
-                                                                        'qid'=> $res_qid,
-                                                                        'sid' => $sid,
-                                                                        'exid' => $eid)));
+            curl_setopt(
+            $ch2, CURLOPT_POSTFIELDS, http_build_query(
+                    array('identifier'=>'g_comment','qid'=> $res_qid,'sid' => $sid,'exid' => $eid)));
             curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
             $return_val2=curl_exec($ch2);
             echo $return_val2;
+            curl_close($ch2);
 
             $comment = json_decode($return_val2, true);
             $results[$i]['comment'] = $comment['Comments'];
