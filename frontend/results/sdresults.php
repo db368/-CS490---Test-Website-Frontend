@@ -99,8 +99,9 @@ bad{
         $commentarray = array(); // This will store all returned jsons from the comment seraches
         for($i=0; $i < sizeof($results); $i++){
             $res_qid = $results[$i]['Qid'];
-            $target = "https://web.njit.edu/~jll25/CS490/switch.php";
-            $target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/loopers/debuglooper.php";
+            //$target = "https://web.njit.edu/~jll25/CS490/switch.php";
+            //$target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/loopers/debuglooper.php";
+            $target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debug.php";
             $postarray = array('identifier'=>'g_comment','qid'=> $res_qid,'sid' => $sid,'exid' => $eid);
 
             var_dump($postarray);
@@ -115,7 +116,6 @@ bad{
 
 
             echo $return_val2;
-
             curl_close($ch);
             $comment = json_decode($return_val2, true);
             $results[$i]['comment'] = $comment['Comments'];
