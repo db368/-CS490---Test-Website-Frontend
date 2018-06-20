@@ -309,7 +309,7 @@ if(empty($answer)){
 
                       else{
 
-                        $answerscore = "update TTC set Student_Answer = '$ret_val2' ,Student_Points = 2 where Sid = '$sid' and Eid = '$eid' and Qid = '$qid[$i]' and TC = '$testingcases'";
+                        $answerscore = "update TTC set Student_Answer = '$ret_val2' ,Student_Points = 0 where Sid = '$sid' and Eid = '$eid' and Qid = '$qid[$i]' and TC = '$testingcases'";
 
                         if ($conn->query($answerscore) === TRUE) {
                              echo "Score added successfully";
