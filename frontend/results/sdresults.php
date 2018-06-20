@@ -259,7 +259,7 @@ bad{
                                 <?php echo $solutions[$i]; ?>
                             </td>
                             <td>
-                                <?php echo $autograder; ?>
+                                <?php echo $autograder[$i]; ?>
                             </td>
                         </tr>
                         <?php endfor ?>
