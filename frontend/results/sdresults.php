@@ -69,16 +69,22 @@ bad{
         foreach($results as $result){
             // Save incoming data
             $inc_qid = $result['Qid'];
-            $inc_testcase = $result['TestCase'];
-            $inc_answer = $result['Answer'];
+
+            $inc_testcase = $result['TestCase'];        //Testcase
+            $inc_solution = $result['Answer'];           //Solution to Testcase
+            $inc_output = $result['TCSTUDENT_ANSWER']; //Output
+            $inc_ag = $result['Auto_Grader'];          //Autograder Comment
 
             //It's not in the database, we must make it
             if (!in_array($inc_qid, $unique_qids)) {
                 $inc_result = $result; //Clone this
                 array_push($unique_qids, $inc_qid);
                 //Save these as new arrays
+
                 $inc_result['TestCase'] = array($inc_testcase);
-                $inc_result['solution'] = array($inc_answer);
+                $inc_result['solution'] = array($inc_solution);
+                $inc_result['output'] = array($inc_output);
+                $inc_result['autograder'] = array($inc_ag);
                 array_push($ULTIMATE, $inc_result); //Put it in ultimate
                 continue;
             }
@@ -88,11 +94,14 @@ bad{
                     if ($ULTIMATE[$i]['Qid'] == $inc_qid) {
                         //It's a match! Add it!
                         array_push($ULTIMATE[$i]['TestCase'], $inc_testcase);
-                        array_push($ULTIMATE[$i]['solution'], $inc_answer);
+                        array_push($ULTIMATE[$i]['solution'], $inc_solution);
+                        array_push($ULTIMATE[$i]['output'], $inc_output);
+                        array_push($ULTIMATE[$i]['autograder'], $inc_ag);
                     }
                 }
             }
         }
+
         //Now we pretend nothing happened
         $results=$ULTIMATE;
 
@@ -208,19 +217,18 @@ bad{
         <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Score </th> </tr>
         <?php
         foreach($results as $question){
-            // First lets get our variables sorted out
-            $maxscore = ((isset($question['maxscore']))) ? $question['maxscore'] : "39";
-            $qid = ((isset($question['qid']))) ? $question['qid'] : "??";
+            $maxscore = ((isset($question['Total_points']))) ? $question['Total_points'] : "39";
+            $qid = ((isset($question['Qid']))) ? $question['Qid'] : "??";
             $score = ((isset($question['score']))) ? $question['score'] : "39";
             $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
-            $answer = ((isset($question['Answer']))) ? nl2br($question['Answer']) : "print('there's a bug?')";
+            $answer = ((isset($question['Student_Answer']))) ? nl2br($question['Student_Answer']) : "print('there's a bug?')";
 
-            $testcases = ((isset($question['testcase']))) ? $question['testcase'] : array("I didn't", "read this", "correctly");
+            $comment = ((isset($question['comment']))) ? $question['comment'] : "";
+            $testcases = ((isset($question['TestCase']))) ? $question['TestCase'] : array("I didn't", "read this", "correctly");
             $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
             $output = ((isset($question['output']))) ? $question['output'] : array("Fix", "This", "Bug");
+            $autograder = ((isset($question['autograder']))) ? $question['autograder'] : array("program", "dont", "work");
 
-            $comment = ((isset($question['comment']))) ? $question['comment'] : "None";
-            $newgrade = ((isset($question['newgrade']))) ? $question['newgrade'] : $score; // If this isn't set, then the question's score is unmodified
             $tcnum = sizeof($testcases);
             ?>
             <tr>
@@ -235,6 +243,7 @@ bad{
                             <th class="small"> TESTCASE </th>
                             <th class="small"> RESULT </th>
                             <th class="small"> SOLUTION </th>
+                            <th class="small"> AUTOGRADER </th>
                         </tr>
                         <?php for ($i=0; $i<$tcnum; $i++): ?>
                         <tr>
@@ -248,6 +257,9 @@ bad{
                             </td>
                             <td>
                                 <?php echo $solutions[$i]; ?>
+                            </td>
+                            <td>
+                                <?php echo $autograder[$i]; ?>
                             </td>
                         </tr>
                         <?php endfor ?>
