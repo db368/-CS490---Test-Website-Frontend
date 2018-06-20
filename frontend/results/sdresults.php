@@ -112,7 +112,8 @@ bad{
             $ch, CURLOPT_POSTFIELDS,
                     $postarray);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $return_val2=curl_exec($ch);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $return_val2= curl_exec($ch) ;
 
 
             echo $return_val2;
