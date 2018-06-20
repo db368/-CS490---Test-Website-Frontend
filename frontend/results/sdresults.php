@@ -113,11 +113,10 @@ bad{
                     $postarray);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $return_val2= curl_exec($ch) ;
-            echo $return_val2;
 
             curl_close($ch);
-            var_dump(json_decode($return_val2, true));
             $comment = json_decode($return_val2, true);
+            echo $comment['comment'];
             $results[$i]['comment'] = $comment['Comments'];
             $results[$i]['newgrade'] = $comment['Score'];
             array_push($comment_array, $comment);
