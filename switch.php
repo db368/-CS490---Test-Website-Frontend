@@ -247,7 +247,7 @@ if(empty($answer)){
 
 
                 $my_file = 'jream.py';
-                $anstestcase = $answer . " " .$testingcases;
+                $anstestcase = $answer."\n".$testingcases;
                 $handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file);
                 fwrite($handle, $anstestcase);
 
@@ -285,6 +285,52 @@ if(empty($answer)){
 
 
                     else{
+
+                      if ($ret_val2 == $tcanswers) {
+                        $answerscore = "update TTC set Student_Answer = '$ret_val2' , Student_Points = '$maxtestcase' where Sid = '$sid' and Eid = '$eid' and Qid = '$qid[$i]' and TC = '$testingcases'";
+
+                        if ($conn->query($answerscore) === TRUE) {
+                             echo "Score added successfully";
+                              }
+                      }
+                      
+                      $sppoint = "Select SUM(Student_Points) as Studentpoints from TTC where Eid = '$eid' and Sid ='$sid' and Qid = '$qid[$i]'";
+                      $result = mysqli_query($conn,$sppoint);
+                              $values = mysqli_fetch_assoc($result);
+                              $numsp = $values['Studentpoints'];
+
+
+                            $updatestudentscore = "update StudentResults set Score = '$numsp', Auto_Grader ='Correct' where Eid = '$eid' and Student_id ='$sid'and Qid = '$qid[$i]'";
+                            if ($conn->query($updatestudentscore) === TRUE) {
+                             echo "Score added successfully";
+                                                  }
+                              else {
+                                    echo "Error: " . $zero. "<br>" . $conn->error;}
+
+                      else{
+
+                        $answerscore = "update TTC set Student_Answer = '$ret_val2' ,Student_Points = 2 where Sid = '$sid' and Eid = '$eid' and Qid = '$qid[$i]' and TC = '$testingcases'";
+
+                        if ($conn->query($answerscore) === TRUE) {
+                             echo "Score added successfully";
+                              }
+                    }
+
+                              $sppoint = "Select SUM(Student_Points) as Studentpoints from TTC where Eid = '$eid' and Sid ='$sid' and Qid = '$qid[$i]'";
+                              $result = mysqli_query($conn,$sppoint);
+                              $values = mysqli_fetch_assoc($result);
+                              $numsp = $values['Studentpoints'];
+
+
+                            $updatestudentscore = "update StudentResults set Score = '$numsp', Auto_Grader ='While your program does run, it does not give the correct answers for the test cases' where Eid = '$eid' and Student_id ='$sid'and Qid = '$qid[$i]'";
+                            if ($conn->query($updatestudentscore) === TRUE) {
+                             echo "Score added successfully";
+                                                  }
+                              else {
+                                    echo "Error: " . $zero. "<br>" . $conn->error;
+                                               }
+
+
                       /*
                           $ret_val2 = mysqli_real_escape_string($conn, $ret_val2);
                           $score = "Update StudentResults set Score = (select Total_points from ExQuestions where Exam_id ='$eid' and Question_id = '$qid[$i]'), Results = 'Passed Preliminary and was able to run. Need Test Cases to test it more.' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
@@ -434,36 +480,6 @@ case "e_question":
         $add= "Insert into Questions(Question, Difficulty) values ('$question', '$difficulty');";
 
 
-
-/*
-    $updatetc =  "UPDATE TC SET TestCase = '$testcases' where Question_id ='$qid'";
-    $updateq = $conn->query($updatq);
-
-    $updatetc =  "UPDATE TC SET TestCase = '$answer' where Question_id ='$qid'";
-    $updateq = $conn->query($updatq);
-
-    /*
-    $update = "UPDATE Questions SET Question='$question','Difficulty'='$difficulty' WHERE Qid = '$qid'";
-    $addresult = $conn->query($update);
-    if($addresult)
-    {
-    if(!isset($_POST['testcases'])){ return 1;}
-    else {
-    if(!isset($_POST['solutions'])){return 1;}
-    else{
-    $update2 = "UPDATE 'TC' SET TestCase= '$testcases', Answer ='$answer' WHERE Qid = '$qid'";
-    $updateresult =  $conn->query($update2);
-    if($updateresult)
-    {return 1;}
-    else{ $update2 = "UPDATE 'TC' SET 'Case'='$testcases'WHERE Qid = '$qid'";
-    $updateresult =  $conn->query($update2);
-    if($updateresult)
-    {return 1;}
-    else{return 0;}
-    }
-    }
-    }
-    }*/
     break;
 
 //delete
@@ -528,41 +544,6 @@ case "a_testbank":
             echo "Error: " . $query . $conn->error;}
           }
 
-                /*foreach($case as $index=>$col){
-                $query = "insert into TC( TestCase, Answer) values('$case[$index]','$solution[$index]'),";
-
-
-                $query = rtrim( $query, ',');
-
-                 if ($conn->query($query) === TRUE) {
-                    	echo "TestCase added successfully";
-                	}
-                	else {
-                   		 echo "Error: " . $query . $conn->error;}
-                     }
-
-      /*for ($i=0; $i < sizeof($case) ; $i++) {
-        $testcaseresult = "Insert into TC(Eid,TestCase,Answer) values '$getairesult','$case[$i]','$solution[$i]';";
- 			  $testcaseresultq= $conn->query($testcaseresult);
- 			  if(!$testcaseresultq){echo "error";}
-
-      }
-
-
-
-    /*
-    foreach($case as $index=>$col){
-    $query = "insert into TC(TestCase, Answer) values('".$case[$index]."','".$solution[$index]."');";
-    }
-
-    $query = rtrim( $query, ',');
-    mysqli_query($conn,$query);
-     if ($conn->query($query) === TRUE) {
-        	echo "TestCase added successfully";
-    	}
-    	else {
-       		 echo "Error: " . $query . "<br>" . $conn->error;}
-*/
     break;
 
 //add question to exam
@@ -696,7 +677,7 @@ if ($conn->connect_error) {
 
 
 
-$sel = "select Questions.Question, Questions.Qid, StudentResults.score, StudentResults.Answer as Student_Answer, TC.TestCase, TC.Answer, TTC.Student_Points, TTC.Student_Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid inner join TTC on TTC.Qid = Questions.Qid where StudentResults.Student_id ='$sid' and StudentResults.Eid = '$eid' group by TC.TestCase";
+$sel = "select Questions.Question, Questions.Qid, StudentResults.score, StudentResults.Answer as Student_Answer, StudentResults.Auto_Grader, TC.TestCase, TC.Answer, TTC.Student_Points, TTC.Student_Answer, ExQuestions.Total_points from StudentResults inner join Questions on Questions.Qid = StudentResults.Qid inner join ExQuestions on StudentResults.Eid = ExQuestions.Exam_id inner join TC on TC.Qid = Questions.Qid inner join TTC on TTC.Qid = Questions.Qid where StudentResults.Student_id ='$sid' and StudentResults.Eid = '$eid' group by TC.TestCase";
 
   $Sel = $conn->query($sel);
   $json_array = array();
