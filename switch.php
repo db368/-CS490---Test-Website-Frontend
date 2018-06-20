@@ -285,6 +285,7 @@ if(empty($answer)){
 
 
                     else{
+                      /*
                           $ret_val2 = mysqli_real_escape_string($conn, $ret_val2);
                           $score = "Update StudentResults set Score = (select Total_points from ExQuestions where Exam_id ='$eid' and Question_id = '$qid[$i]'), Results = 'Passed Preliminary and was able to run. Need Test Cases to test it more.' where Student_id = '$sid' and Eid = '$eid' and Qid = '$qid[$i]'";
                           if ($conn->query($score) === TRUE) {
@@ -293,7 +294,7 @@ if(empty($answer)){
                            else {
                                 echo "Error: " . $zero. "<br>" . $conn->error;
                               }
-
+                                  */
                     }
 
 
