@@ -44,6 +44,11 @@ foreach ($exams as $exam){
     if (curl_exec($ch) == null) {
         continue;
     }
+
+    $release_status = (isset($exam['Release_ready'])) ? 1 : 0 ;
+
+    if (!$release_status) //Don't display this exam if it's not released
+        continue;
     $exid = "error"; $exname = "error";
     if (isset($exam['Eid'])) { $exid = $exam['Eid'];
     }
