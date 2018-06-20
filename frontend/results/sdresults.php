@@ -115,7 +115,7 @@ bad{
             $return_val2= curl_exec($ch);
             echo $return_val2;
             curl_close($ch);
-            $comment = json_decode($return_val2, true);
+            $comment = json_decode($return_val2, true)[0];
             var_dump($comment);
             $results[$i]['comment'] = $comment['Comments'];
             $results[$i]['newgrade'] = $comment['Score'];
