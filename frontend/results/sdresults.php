@@ -100,26 +100,22 @@ bad{
         for($i=0; $i < sizeof($results); $i++){
             $res_qid = $results[$i]['Qid'];
             $target = "https://web.njit.edu/~jll25/CS490/switch.php";
-            //$target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/loopers/debuglooper.php";
-            //$target = "https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/debug.php";
             $postarray = array('identifier'=>'g_comment','qid'=> $res_qid,'sid' => $sid,'exid' => $eid);
-
-            //var_dump($postarray);
             $ch= curl_init();
             curl_setopt($ch, CURLOPT_URL, "$target");//
             curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
             curl_setopt(
-            $ch, CURLOPT_POSTFIELDS,
-                    $postarray);
+                $ch, CURLOPT_POSTFIELDS,
+                $postarray
+            );
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
             $return_val2= curl_exec($ch);
-            echo $return_val2;
             curl_close($ch);
+
             $comment = json_decode($return_val2, true)[0];
-            var_dump($comment);
             $results[$i]['comment'] = $comment['Comments'];
             $results[$i]['newgrade'] = $comment['Score'];
-            array_push($comment_array, $comment);
         }
         ?>
         <?php if ($debug) : ?>
