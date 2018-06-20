@@ -292,10 +292,8 @@ if(empty($answer)){
                         if ($conn->query($answerscore) === TRUE) {
                              echo "Score added successfully";
                               }
-                      }
-                      
-                      $sppoint = "Select SUM(Student_Points) as Studentpoints from TTC where Eid = '$eid' and Sid ='$sid' and Qid = '$qid[$i]'";
-                      $result = mysqli_query($conn,$sppoint);
+                            $sppoint = "Select SUM(Student_Points) as Studentpoints from TTC where Eid = '$eid' and Sid ='$sid' and Qid = '$qid[$i]'";
+                              $result = mysqli_query($conn,$sppoint);
                               $values = mysqli_fetch_assoc($result);
                               $numsp = $values['Studentpoints'];
 
@@ -305,7 +303,9 @@ if(empty($answer)){
                              echo "Score added successfully";
                                                   }
                               else {
-                                    echo "Error: " . $zero. "<br>" . $conn->error;}
+                                    echo "Error: " . $zero. "<br>" . $conn->error;
+                                               }  
+                      }
 
                       else{
 
