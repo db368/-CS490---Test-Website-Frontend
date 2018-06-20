@@ -135,8 +135,8 @@ bad{
         <?php endif ?>
 
         <?php if ($return_val == null) : ?>
-             <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED, USING TEST DATA </h2>
-            <?php $testdata = rand(10, 20);
+             <h2> ERROR: ANSWERS COULD NOT BE RETRIEVED </h2>
+            <?php // $testdata = rand(10, 20); Sadly, we probably won't want test data on the live release.
         endif;
     }
 
@@ -204,7 +204,7 @@ bad{
     }
     ?>
 
-    <table class="resulttable">
+    <table>
         <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Score </th> </tr>
         <?php
         foreach($results as $question){
@@ -230,7 +230,7 @@ bad{
                     <?php echo $answer; ?> </td>
 
                 <td>
-                    <table class="resulttable">
+                    <table>
                         <tr>
                             <th class="small"> TESTCASE </th>
                             <th class="small"> RESULT </th>
