@@ -204,7 +204,7 @@ bad{
     }
     ?>
 
-    <table>
+    <table class="resulttable">
         <tr> <th> Question </th> <th> Answer </th> <th> Testcase Results </th> <th> Score </th> </tr>
         <?php
         foreach($results as $question){
@@ -230,7 +230,7 @@ bad{
                     <?php echo $answer; ?> </td>
 
                 <td>
-                    <table>
+                    <table class="resulttable">
                         <tr>
                             <th class="small"> TESTCASE </th>
                             <th class="small"> RESULT </th>
