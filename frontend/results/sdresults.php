@@ -219,7 +219,7 @@ bad{
         foreach($results as $question){
             $maxscore = ((isset($question['Total_points']))) ? $question['Total_points'] : "39";
             $qid = ((isset($question['Qid']))) ? $question['Qid'] : "??";
-            $score = ((isset($question['score']))) ? $question['score'] : "39";
+            $score = ((isset($question['newgrade']))) ? $question['newgrade'] : $question['score'];
             $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
             $answer = ((isset($question['Student_Answer']))) ? nl2br($question['Student_Answer']) : "print('there's a bug?')";
 
