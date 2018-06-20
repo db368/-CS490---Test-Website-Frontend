@@ -112,11 +112,9 @@ bad{
             $ch, CURLOPT_POSTFIELDS,
                     $postarray);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $return_val2= curl_exec($ch) ;
 
 
-            echo $return_val2;
             curl_close($ch);
             $comment = json_decode($return_val2, true);
             $results[$i]['comment'] = $comment['Comments'];
