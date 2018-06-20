@@ -45,11 +45,7 @@ foreach ($exams as $exam){
         continue;
     }
 
-    $release_status = (isset($exam['Release_ready'])) ? $exam['Release_ready'] : 0 ;
-    echo $release_status;
-    if ($release_status == 0) //Don't display this exam if it's not released
-        continue;
-    $exid = "error"; $exname = "error";
+        $exid = "error"; $exname = "error";
     if (isset($exam['Eid'])) { $exid = $exam['Eid'];
     }
     if (isset($exam['Name'])) { $exname = $exam['Name'];
