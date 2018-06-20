@@ -120,8 +120,7 @@ $eid = $_POST['exid'];
 $qid = $_POST['questions'];
 $answers = $_POST['answer'];
 
-var_dump($answers);
-var_dump($qid);
+
 
 if(!is_array($qid)){echo "no array";}
 else{var_dump($qid);}
@@ -131,8 +130,21 @@ for ($i=0; $i <sizeof($_POST['questions']) ; $i++) {
   $question_id = $qid[$i];
   $answer = $answers[$i];
   $answer = mysqli_real_escape_string($conn, $answer);
+  
+  
+  
+  $tcpoint = "SELECT Total_points from TC where Question_id = 'qid[$i]' and Exam_id ='$eid';";
+                  $result = mysqli_query($conn,$tcpoint);
+                  $values = mysqli_fetch_assoc($result);
+                  $num = $values['Total_points'];
 
-  $insertquery = "Insert into StudentResults(Student_id, Eid, Qid, Answer) values ('$sid', '$eid', '$qid[$i]', '$answer')
+$maxscores = "update StudentResults set MaxScore = '$num' where Question_id = '$qid[$i] and Exam_id ='$eid' "; 
+if ($conn->query($maxscores) === TRUE) {
+       echo "Scores updated added successfully";
+   }
+   
+
+  $insertquery = "Insert into StudentResults(Student_id, Eid, Qid, Answer) values ('$sid', '$eid', '$qid[$i]', '$answer');
   ON DUPLICATE KEY
   UPDATE Answer = '$answer';";
   //echo '<br>';
@@ -143,6 +155,9 @@ for ($i=0; $i <sizeof($_POST['questions']) ; $i++) {
    else {
         echo "Error: " . $insertquery . "<br>" . $conn->error;
       }
+
+
+
 
 
 if(empty($answer)){
