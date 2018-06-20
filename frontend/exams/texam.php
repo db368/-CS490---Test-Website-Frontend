@@ -40,10 +40,30 @@
 
     $question=json_decode($return_val, true)[0];
     $qtext = $question["Question"];
+
+    //    $target = "https://web.njit.edu/~jll25/CS490/switch.php";
+    $ch= curl_init();
+    curl_setopt($ch, CURLOPT_URL, $target);
+    curl_setopt($ch, CURLOPT_POST, 1); // Set it to post
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('identifier'=>'e_get_question', 'id' => $exid)));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $return_val=curl_exec($ch);
+    curl_close($ch);
+
+    //Now we're going to iterate through the array of questions to get
+    //the one that matters to us
+    $exam_questions=json_decode($return_val, true);
+    foreach($exam_questions as $ex_question){
+        if ($ex_question['Question_id'] == $qid){
+            $points = $ex_question['Total_points'];
+            break;
+        }
+    }
     ?>
 
     <div class=login>
         <h1> QUESTION <?php echo $number +1?> : </h1>
+        <h2> <?php echo $points ?> Points </h2>
         <p> <?php echo $qtext ?> </p><br>
 
         <form method="post" action="texam.php">
