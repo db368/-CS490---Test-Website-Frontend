@@ -11,7 +11,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $return_val=curl_exec($ch);
 curl_close($ch);
 
-
+$_POST['eid']=$_POST['exid'];
 $target = 'https://web.njit.edu/~db368/CS490_git/CS490-Test-Website-Frontend/frontend/results/isdresults.php';
 $ch= curl_init();
 curl_setopt($ch, CURLOPT_URL, "$target");
