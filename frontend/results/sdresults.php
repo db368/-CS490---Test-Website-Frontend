@@ -213,7 +213,7 @@ bad{
             $qid = ((isset($question['qid']))) ? $question['qid'] : "??";
             $score = ((isset($question['score']))) ? $question['score'] : "39";
             $qtext = ((isset($question['Question']))) ? $question['Question'] : "How could this happen?!?!?";
-            $answer = ((isset($question['Answer']))) ? $question['Answer'] : "print('there's a bug?')";
+            $answer = ((isset($question['Answer']))) ? nl2br($question['Answer']) : "print('there's a bug?')";
 
             $testcases = ((isset($question['testcase']))) ? $question['testcase'] : array("I didn't", "read this", "correctly");
             $solutions = ((isset($question['solution']))) ? $question['solution'] : array("This didn't", "happen like", "I expected");
